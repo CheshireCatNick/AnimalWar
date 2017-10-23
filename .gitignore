@@ -3,3 +3,4 @@ Library
 *.sln
 *.csproj
 .vs
+server/npm-debug.log
