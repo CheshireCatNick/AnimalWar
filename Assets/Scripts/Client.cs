@@ -22,7 +22,7 @@ public class Client : MonoBehaviour {
 
     private stage nowStage = stage.Character;
 
-    private Vector2 nowCoordinate = new Vector2(0, 0);
+    public Vector2 nowCoordinate = new Vector2(0, 0);
 
     private ActionObject [] actionObject;
 
@@ -152,7 +152,7 @@ public class Client : MonoBehaviour {
             if (nowStage == stage.Attack)
             {
                 actionObject[nowCharacterID].attackTarget = nowCoordinate;
-                //if it is the final naimal then go to Complete, else go to Character
+                //if it is the final animal then go to Complete, else go to Character
                 nowStage = stage.Complete;
             }
         }
