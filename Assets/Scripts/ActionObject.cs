@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ActionObject{
 
-    public int characterId;
+    public int characterID;
     public Vector2 moveTarget, attackTarget;
     public string weapon;
     public bool isSet;
 
-    public ActionObject(int charaterId)
+    public ActionObject(int charaterID)
     {
-        this.characterId = charaterId;
+        this.characterID = charaterID;
         this.isSet = false;
         this.weapon = "skip";
         this.moveTarget = Vector2.zero;
