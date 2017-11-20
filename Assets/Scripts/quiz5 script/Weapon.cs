@@ -7,15 +7,16 @@ public class Weapon : MonoBehaviour {
 	public Transform firePoint;
 	public LayerMask whatToHit;
 	
-	// Update is called once per frame
+/*
+    // Update is called once per frame
 	void Update () {
 		//按下Fire鍵 發射子彈
 		if (Input.GetButtonDown ("Fire1")) {
 			Shoot();
 		}
 	}
-	
-	void Shoot () {
+*/
+	public void Shoot () {
 		//子彈發射角度
 		float rotZ = firePoint.rotation.eulerAngles.z;
 		//如果Player X scale為-1(向左) 角度需做修正
