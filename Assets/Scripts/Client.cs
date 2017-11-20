@@ -14,7 +14,7 @@ public class Client : MonoBehaviour
 
     private Vector2 moveDelta, attackDelta;
 
-    private int nowCharacterID = 0;
+    private int nowCharacterID;
     private Weapons[] weapons = new Weapons[maxWeaponNum];
     private Weapons nowWeapon;
 
@@ -43,6 +43,7 @@ public class Client : MonoBehaviour
         connectionManager = new ConnectionManager();
         playerID = int.Parse(connectionManager.Receive());
         Debug.Log("PlayerID: " + playerID);
+
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i] = new ActionObject(i);
@@ -51,7 +52,10 @@ public class Client : MonoBehaviour
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
         nowWeapon = weapons[0];
-        
+        nowCharacterID = 0;
+        moveDelta = Vector2.zero;
+        attackDelta = Vector2.zero;
+
         //set timer
         time_int = periodTime;
         InvokeRepeating("Timecount", 1, 1);
@@ -248,6 +252,11 @@ public class Client : MonoBehaviour
         }
 
         nowStage = stage.Character;
+        nowCharacterID = 0;
+        nowWeapon = weapons[0];
+        moveDelta = Vector2.zero;
+        attackDelta = Vector2.zero;
+
         //set timer
         time_int = periodTime;
         InvokeRepeating("Timecount", 1, 1);
