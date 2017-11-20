@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManger : MonoBehaviour {
-    private Client client;
+    public Client client;
     // Use this for initialization
     void Start()
     {
