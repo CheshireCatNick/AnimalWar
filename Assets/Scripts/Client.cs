@@ -249,7 +249,7 @@ public class Client : MonoBehaviour
 
     private string TextFormat ()
     {
-        return "Time : " + time_int + " Now Stage : " + nowStage.ToString("g");
+        return "Time : " + time_int + "\nNow Stage : " + nowStage.ToString("g");
     }
 
     void Timecount()
