@@ -201,13 +201,14 @@ public class Client : MonoBehaviour
         }
         if (nowStage == stage.Complete)
         {
-            Send();
 
             time_UI.text = TextFormat();
 
             CancelInvoke("Timecount");
 
             time_int = periodTime;
+
+            Send();
         }
     }
 
