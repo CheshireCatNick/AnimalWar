@@ -24,16 +24,16 @@ public class Client : MonoBehaviour {
         Complete
     };
 
-    private stage nowStage = stage.Character;
+    private stage nowStage = stage.Complete;
 
-    private ActionObject [] actionObjects;
+    private ActionObject [] actionObjects = new ActionObject[maxCharacterNum];
 
     private void Start()
     {
         connectionManager = new ConnectionManager();
         playerID = int.Parse(connectionManager.Receive());
-        Debug.Log(playerID);
-        for (int i = 0; i < 2*maxCharacterNum; i++)
+        Debug.Log("PlayerID: " + playerID);
+        for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i] = new ActionObject(i);
         }
@@ -185,22 +185,33 @@ public class Client : MonoBehaviour {
     //receive actionArray from server
     public void Send()
     {
-        connectionManager.Send("0|action from 0");
-        connectionManager.Close();
-
-
-        // receive
-        //Replay();
+        string msg = "";
+        foreach (ActionObject action in actionObjects)
+            msg += action.ToString() + "/";
+        //connectionManager.Send(msg);
+        //string opponentActionStr = connectionManager.Receive();
+        string[] opponentActions = msg.Split('/');
+        ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
+        int i = 0;
+        for (; i < maxCharacterNum * 2; i++)
+        {
+            if (i < maxCharacterNum)
+                replayActionObjects[i] = actionObjects[i];
+            else
+                replayActionObjects[i] = new ActionObject(opponentActions[i - maxCharacterNum]);
+        }
+        Replay(replayActionObjects);
     }
 
     //show the result
     public void Replay (ActionObject [] actionArray)
     {
-
-
-
         nowStage = stage.Character;
     }
 
+    private void OnDestroy()
+    {
+        connectionManager.Close();
+    }
 
 }
