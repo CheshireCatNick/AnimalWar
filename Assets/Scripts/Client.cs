@@ -18,7 +18,7 @@ public class Client : MonoBehaviour
 
     private Vector2 moveDelta, attackDelta;
 
-    private int nowCharacterID = 0;
+    private int nowCharacterID;
     private Weapons[] weapons = new Weapons[maxWeaponNum];
     private Weapons nowWeapon;
 
@@ -47,6 +47,7 @@ public class Client : MonoBehaviour
         connectionManager = new ConnectionManager();
         playerID = int.Parse(connectionManager.Receive());
         Debug.Log("PlayerID: " + playerID);
+
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i] = new ActionObject(i);
@@ -61,8 +62,14 @@ public class Client : MonoBehaviour
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
         nowWeapon = weapons[0];
-        time_UI.text = TextFormat();
+        nowCharacterID = 0;
+        moveDelta = Vector2.zero;
+        attackDelta = Vector2.zero;
+
+        //set timer
+        time_int = periodTime;
         InvokeRepeating("Timecount", 1, 1);
+        time_UI.text = TextFormat();
     }
 
     private void Update()
@@ -78,7 +85,6 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Character)
                 {
                     nowCharacterID = i - KeyCode.Alpha0;
-                    moveDelta = Vector2.zero;
                 }
 
                 //user select target weapon
@@ -87,7 +93,6 @@ public class Client : MonoBehaviour
                     if (i - KeyCode.Alpha0 < maxWeaponNum)
                     {
                         nowWeapon = weapons[i - KeyCode.Alpha0];
-                        attackDelta = Vector2.zero;
                     }
                 }
 
@@ -203,7 +208,11 @@ public class Client : MonoBehaviour
                 {
                     if (!actionObject.isSet)
                     {
+                        nowCharacterID = actionObject.characterID;
                         nowStage = stage.Character;
+                        moveDelta = Vector2.zero;
+                        attackDelta = Vector2.zero;
+                        nowWeapon = weapons[0];
                         break;
                     }
                 }
@@ -211,13 +220,12 @@ public class Client : MonoBehaviour
         }
         if (nowStage == stage.Complete)
         {
-            Send();
 
             time_UI.text = TextFormat();
 
             CancelInvoke("Timecount");
 
-            time_int = periodTime;
+            Send();
         }
     }
 
@@ -232,8 +240,8 @@ public class Client : MonoBehaviour
         string opponentActionStr = connectionManager.Receive();
         string[] opponentActions = opponentActionStr.Split('/');
         ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
-        int i = 0;
-        for (; i < maxCharacterNum * 2; i++)
+        
+        for (int i = 0; i < maxCharacterNum * 2; i++)
         {
             if (i < maxCharacterNum)
                 replayActionObjects[i] = actionObjects[i];
@@ -249,13 +257,22 @@ public class Client : MonoBehaviour
         {
             print(a.ToString());
         }
-        nowStage = stage.Character;
-        time_UI.text = TextFormat();
-        InvokeRepeating("Timecount", 1, 1);
+        
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i].isSet = false;
         }
+
+        nowStage = stage.Character;
+        nowCharacterID = 0;
+        nowWeapon = weapons[0];
+        moveDelta = Vector2.zero;
+        attackDelta = Vector2.zero;
+
+        //set timer
+        time_int = periodTime;
+        InvokeRepeating("Timecount", 1, 1);
+        time_UI.text = TextFormat();
     }
 
     private void OnDestroy()
@@ -276,12 +293,8 @@ public class Client : MonoBehaviour
 
         if (time_int == 0)
         {   
-
-            time_UI.text = TextFormat();
-
             CancelInvoke("Timecount");
 
-            time_int = periodTime;
             Timeout();
         }
 
