@@ -178,19 +178,19 @@ public class Client : MonoBehaviour {
         }
         if (nowStage == stage.Complete)
         {
-            Send();
+            //Send();
         }
     }
 
     //receive actionArray from server
     public void Send()
     {
-        string msg = "";
+        string msg = playerID + "|";
         foreach (ActionObject action in actionObjects)
             msg += action.ToString() + "/";
-        //connectionManager.Send(msg);
-        //string opponentActionStr = connectionManager.Receive();
-        string[] opponentActions = msg.Split('/');
+        connectionManager.Send(msg);
+        string opponentActionStr = connectionManager.Receive();
+        string[] opponentActions = opponentActionStr.Split('/');
         ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
         int i = 0;
         for (; i < maxCharacterNum * 2; i++)
