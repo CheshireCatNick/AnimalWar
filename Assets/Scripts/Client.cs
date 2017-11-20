@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; //使用Unity UI程式庫。
 
-public class Client : MonoBehaviour {
+public class Client : MonoBehaviour
+{
 
     private const int maxCharacterNum = 2, maxWeaponNum = 2;
+
     public int scale = 10;
 
     public int playerID;
 
     private Vector2 moveDelta, attackDelta;
+
     private int nowCharacterID = 0;
     private Weapons[] weapons = new Weapons[maxWeaponNum];
     private Weapons nowWeapon;
@@ -33,31 +36,31 @@ public class Client : MonoBehaviour {
 
     private stage nowStage = stage.Character;
 
-    private ActionObject [] actionObjects = new ActionObject[maxCharacterNum];
+    private ActionObject[] actionObjects = new ActionObject[maxCharacterNum];
 
     private void Start()
     {
-        //connectionManager = new ConnectionManager();
-        //playerID = int.Parse(connectionManager.Receive());
-        //Debug.Log(playerID);
+        connectionManager = new ConnectionManager();
+        playerID = int.Parse(connectionManager.Receive());
+        Debug.Log("PlayerID: " + playerID);
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i] = new ActionObject(i);
         }
-       
-        weapons[0] = new Weapons();
-        weapons[0].name = "skip";
-        weapons[1] = new Weapons();
-        weapons[1].name = "gun";
+
+        weapons[0] = new Weapons("skip");
+        weapons[1] = new Weapons("gun");
 
         time_UI.text = "Time : " + time_int + "";
         InvokeRepeating("Timecount", 1, 1);
     }
 
-    private void Update () {
+    private void Update()
+    {
         //check Timeout, if true, set nowStaget to Complete and Replay
         print(nowStage);
-        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha0 + maxCharacterNum; i++) {
+        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha0 + maxCharacterNum; i++)
+        {
             if (Input.GetKeyDown(i))
             {
                 print(i);
@@ -67,7 +70,7 @@ public class Client : MonoBehaviour {
                     nowCharacterID = i - KeyCode.Alpha0;
                     moveDelta = Vector2.zero;
                 }
-                
+
                 //user select target weapon
                 else if (nowStage == stage.Weapon)
                 {
@@ -145,7 +148,7 @@ public class Client : MonoBehaviour {
                 attackDelta += Vector2.right * scale;
             }
         }
-        
+
         /*
         //get mouse left click
         if (Input.GetMouseButtonDown(0))
@@ -209,21 +212,26 @@ public class Client : MonoBehaviour {
     //receive actionArray from server
     public void Send()
     {
-        //connectionManager.Send("0|action from 0");
-        //connectionManager.Close();
-
-
-        // receive
-        Replay(actionObjects);
+        string msg = "";
+        foreach (ActionObject action in actionObjects)
+            msg += action.ToString() + "/";
+        //connectionManager.Send(msg);
+        //string opponentActionStr = connectionManager.Receive();
+        string[] opponentActions = msg.Split('/');
+        ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
+        int i = 0;
+        for (; i < maxCharacterNum * 2; i++)
+        {
+            if (i < maxCharacterNum)
+                replayActionObjects[i] = actionObjects[i];
+            else
+                replayActionObjects[i] = new ActionObject(opponentActions[i - maxCharacterNum]);
+        }
+        Replay(replayActionObjects);
     }
-
-
     //show the result
-    public void Replay (ActionObject [] actionArray)
+    public void Replay(ActionObject[] actionArray)
     {
-
-
-
         nowStage = stage.Character;
         time_UI.text = "Time : " + time_int + "";
         InvokeRepeating("Timecount", 1, 1);
@@ -231,6 +239,11 @@ public class Client : MonoBehaviour {
         {
             actionObjects[i].isSet = false;
         }
+    }
+
+    private void OnDestroy()
+    {
+        connectionManager.Close();
     }
 
     void Timecount()
@@ -251,7 +264,7 @@ public class Client : MonoBehaviour {
 
     }
 
-    void Timeout ()
+    void Timeout()
     {
         print("Timeout");
         for (int i = 0; i < maxCharacterNum; i++)

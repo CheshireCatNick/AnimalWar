@@ -17,5 +17,8 @@ public class Weapons{
         this.name = name;
     }
 
-    public Weapons() { }
+    public Weapons(string name)
+    {
+        this.name = name;
+    }
 }
