@@ -74,7 +74,10 @@ public class Client : MonoBehaviour
                 //use select target Character
                 if (nowStage == stage.Character)
                 {
-                    nowCharacterID = i - KeyCode.Alpha0;
+                    if (i - KeyCode.Alpha0 < maxCharacterNum)
+                    {
+                        nowCharacterID = i - KeyCode.Alpha0;
+                    }
                 }
 
                 //user select target weapon
