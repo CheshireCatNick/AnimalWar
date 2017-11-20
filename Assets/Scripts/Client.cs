@@ -51,7 +51,7 @@ public class Client : MonoBehaviour
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
 
-        time_UI.text = "Time : " + time_int + "";
+        time_UI.text = TextFormat();
         InvokeRepeating("Timecount", 1, 1);
     }
 
@@ -233,7 +233,7 @@ public class Client : MonoBehaviour
     public void Replay(ActionObject[] actionArray)
     {
         nowStage = stage.Character;
-        time_UI.text = "Time : " + time_int + "";
+        time_UI.text = TextFormat();
         InvokeRepeating("Timecount", 1, 1);
         for (int i = 0; i < maxCharacterNum; i++)
         {
@@ -246,16 +246,21 @@ public class Client : MonoBehaviour
         connectionManager.Close();
     }
 
+    private string TextFormat ()
+    {
+        return "Time : " + time_int + "\n" + "Now Stage : " + nowStage + "\n";
+    }
+
     void Timecount()
     {
         time_int -= 1;
 
-        time_UI.text = "Time : " + time_int + "";
+        time_UI.text = TextFormat();
 
         if (time_int == 0)
         {
 
-            time_UI.text = "Time : 0";
+            time_UI.text = TextFormat();
 
             CancelInvoke("Timecount");
 

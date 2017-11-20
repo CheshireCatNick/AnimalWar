@@ -49,7 +49,7 @@ public class Playermove: MonoBehaviour {
 	void Update () {
         MovementX();
         //目前速度
-        speedX = player1Regidbody2D.velocity.x;
+        speedX = playerRigidbody2D.velocity.x;
         ControlSpeed();
 
 	}
