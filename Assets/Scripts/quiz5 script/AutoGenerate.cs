@@ -16,6 +16,6 @@ public class AutoGenerate : MonoBehaviour {
 
 	void CreateEnemy(){
 		//隨機X軸位置產生敵人
-		Instantiate(enemy, new Vector3(Random.Range(Xmin,Xmax), createHeight, 10f), enemy.rotation);
+		Instantiate(enemy, new Vector3(Random.Range(Xmin,Xmax), createHeight, 0f), enemy.rotation);
 	}
 }
