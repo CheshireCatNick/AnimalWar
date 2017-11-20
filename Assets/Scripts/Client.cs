@@ -55,7 +55,7 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < 2*maxCharacterNum; i++)
         {
-            players[i] = Instantiate<GameObject>(player,new Vector3(-7.5f+(i*5),0.0f, 0.0f), player.transform.rotation);
+            players[i] = (GameObject)Instantiate(player,new Vector3(-7.5f+(i*5),0.0f, 0.0f), player.transform.rotation);
             players[i].name = "player" + i.ToString();
         }
 
