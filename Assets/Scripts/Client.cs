@@ -50,7 +50,7 @@ public class Client : MonoBehaviour
 
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
-
+        nowWeapon = weapons[0];
         time_UI.text = TextFormat();
         InvokeRepeating("Timecount", 1, 1);
     }
@@ -188,24 +188,20 @@ public class Client : MonoBehaviour
                 actionObjects[nowCharacterID].attackTarget += attackDelta;
                 actionObjects[nowCharacterID].isSet = true;
                 //if it is the final animal then go to Complete, else go to Character
-                bool flag = false;
+                nowStage = stage.Complete;
                 foreach (ActionObject actionObject in actionObjects)
                 {
-                    if (actionObject.isSet == false)
+                    if (!actionObject.isSet)
                     {
-                        flag = true;
+                        nowStage = stage.Character;
                         break;
                     }
                 }
-                if (flag)
-                    nowStage = stage.Character;
-                else
-                    nowStage = stage.Complete;
             }
         }
         if (nowStage == stage.Complete)
         {
-            //Send();
+            Send();
         }
     }
 
@@ -215,6 +211,7 @@ public class Client : MonoBehaviour
         string msg = playerID + "|";
         foreach (ActionObject action in actionObjects)
             msg += action.ToString() + "/";
+        return;
         connectionManager.Send(msg);
         string opponentActionStr = connectionManager.Receive();
         string[] opponentActions = opponentActionStr.Split('/');
