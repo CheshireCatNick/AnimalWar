@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManger : MonoBehaviour {
-    private ConnectionManager connectionManager;
-
+    private Client client;
     // Use this for initialization
     void Start()
     {
-        connectionManager = new ConnectionManager();
-        connectionManager.Send("encrypt");
-        Debug.Log(connectionManager.Receive());
-        connectionManager.Close();
-
+        client = new Client();
     }
 
 	// Update is called once per frame

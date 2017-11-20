@@ -5,10 +5,14 @@ using UnityEngine;
 public class Client : MonoBehaviour {
 
     private const int maxCharacterNum = 2;
-    
+    public int scale = 10;
+
+    public int playerID;
+
+    private Vector2 moveDelta, attackDelta;
     private int nowCharacterID = 0, nowWeapon;
 
-    private ConnectionManager connectionManager = new ConnectionManager();
+    private ConnectionManager connectionManager;
     
     //Animal Object need a flag to show if it is completed  
     private enum stage
@@ -22,15 +26,16 @@ public class Client : MonoBehaviour {
 
     private stage nowStage = stage.Character;
 
-    public Vector2 nowCoordinate = new Vector2(0, 0);
-
-    private ActionObject [] actionObject;
+    private ActionObject [] actionObjects;
 
     private void Start()
     {
+        connectionManager = new ConnectionManager();
+        playerID = int.Parse(connectionManager.Receive());
+        Debug.Log(playerID);
         for (int i = 0; i < 2*maxCharacterNum; i++)
         {
-            actionObject[i] = new ActionObject();
+            actionObjects[i] = new ActionObject(i);
         }
     }
 
@@ -43,12 +48,14 @@ public class Client : MonoBehaviour {
                 if (nowStage == stage.Character)
                 {
                     nowCharacterID = i - KeyCode.Alpha0;
+                    moveDelta = Vector2.zero;
                 }
                 
                 //user select target weapon
                 else if (nowStage == stage.Weapon)
                 {
                     nowWeapon = i - KeyCode.Alpha0;
+                    attackDelta = Vector2.zero;
                 }
 
                 else { }
@@ -61,13 +68,13 @@ public class Client : MonoBehaviour {
             //Character move
             if (nowStage == stage.Move)
             {
-                nowCoordinate += Vector2.up;
+                moveDelta += Vector2.up * scale;
             }
 
             //weapon target
             if (nowStage == stage.Attack)
             {
-                nowCoordinate += Vector2.up;
+                attackDelta += Vector2.up * scale;
             }
         }
 
@@ -77,13 +84,13 @@ public class Client : MonoBehaviour {
             //Character move
             if (nowStage == stage.Move)
             {
-                nowCoordinate += Vector2.down;
+                moveDelta += Vector2.down * scale;
             }
 
             //weapon target
             if (nowStage == stage.Attack)
             {
-                nowCoordinate += Vector2.down;
+                attackDelta += Vector2.down * scale;
             }
         }
 
@@ -93,13 +100,13 @@ public class Client : MonoBehaviour {
             //Character move
             if (nowStage == stage.Move)
             {
-                nowCoordinate += Vector2.left;
+                moveDelta += Vector2.left * scale;
             }
 
             //weapon target
             if (nowStage == stage.Attack)
             {
-                nowCoordinate += Vector2.left;
+                attackDelta += Vector2.left * scale;
             }
         }
 
@@ -109,13 +116,13 @@ public class Client : MonoBehaviour {
             //Character move
             if (nowStage == stage.Move)
             {
-                nowCoordinate += Vector2.right;
+                moveDelta += Vector2.right * scale;
             }
 
             //weapon target
             if (nowStage == stage.Attack)
             {
-                nowCoordinate += Vector2.right;
+                attackDelta += Vector2.right * scale;
             }
         }
         
@@ -125,7 +132,7 @@ public class Client : MonoBehaviour {
             print(Input.mousePosition);
             if (nowStage == stage.Attack)
             {
-                nowCoordinate = Input.mousePosition;
+                moveDelta = Input.mousePosition;
             }
         }
 
@@ -133,40 +140,65 @@ public class Client : MonoBehaviour {
         {
             if (nowStage == stage.Character)
             {
-                actionObject[nowCharacterID].characterId = nowCharacterID;
+                actionObjects[nowCharacterID].characterId = nowCharacterID;
                 nowStage = stage.Move;
             }
 
             if (nowStage == stage.Move)
             {
-                actionObject[nowCharacterID].moveTarget = nowCoordinate;
+                actionObjects[nowCharacterID].moveTarget += moveDelta;
                 nowStage = stage.Weapon;
             }
 
             if (nowStage == stage.Weapon)
             {
-                actionObject[nowCharacterID].weapon = "gun";
+                actionObjects[nowCharacterID].weapon = "gun";
                 nowStage = stage.Attack;
             }
 
             if (nowStage == stage.Attack)
             {
-                actionObject[nowCharacterID].attackTarget = nowCoordinate;
+                actionObjects[nowCharacterID].attackTarget += attackDelta;
+                actionObjects[nowCharacterID].isSet = true;
                 //if it is the final animal then go to Complete, else go to Character
-                nowStage = stage.Complete;
+                bool flag = false;
+                foreach (ActionObject actionObject in actionObjects)
+                {
+                    if (actionObject.isSet == false)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag)
+                    nowStage = stage.Character;
+                else
+                    nowStage = stage.Complete;
             }
+        }
+        if (nowStage == stage.Complete)
+        {
+            Send();
         }
     }
 
-    //set attack target
-    public void SelectCell (Vector2 coordinate) { }
-
     //receive actionArray from server
-    public void Send () { }
+    public void Send()
+    {
+        connectionManager.Send("0|action from 0");
+        connectionManager.Close();
+
+
+        // receive
+        //Replay();
+    }
 
     //show the result
     public void Replay (ActionObject [] actionArray)
     {
+
+
+
         nowStage = stage.Character;
     }
 
