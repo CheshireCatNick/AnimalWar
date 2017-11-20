@@ -6,7 +6,7 @@ using UnityEngine.UI; //使用Unity UI程式庫。
 public class Client : MonoBehaviour
 {
 
-    private const int maxCharacterNum = 2, maxWeaponNum = 2;
+    private const int maxCharacterNum = 2, maxWeaponNum = 2, periodTime = 45;
 
     public int scale = 10;
 
@@ -20,7 +20,7 @@ public class Client : MonoBehaviour
 
     private ConnectionManager connectionManager;
 
-    int time_int = 45;
+    int time_int = periodTime;
     public Text time_UI;
 
 
@@ -211,7 +211,7 @@ public class Client : MonoBehaviour
         string msg = playerID + "|";
         foreach (ActionObject action in actionObjects)
             msg += action.ToString() + "/";
-        return;
+        //return;
         connectionManager.Send(msg);
         string opponentActionStr = connectionManager.Receive();
         string[] opponentActions = opponentActionStr.Split('/');
@@ -228,7 +228,11 @@ public class Client : MonoBehaviour
     }
     //show the result
     public void Replay(ActionObject[] actionArray)
-    {
+    { 
+        foreach (ActionObject a in actionArray)
+        {
+            print(a.ToString());
+        }
         nowStage = stage.Character;
         time_UI.text = TextFormat();
         InvokeRepeating("Timecount", 1, 1);
@@ -255,12 +259,13 @@ public class Client : MonoBehaviour
         time_UI.text = TextFormat();
 
         if (time_int == 0)
-        {
+        {   
 
             time_UI.text = TextFormat();
 
             CancelInvoke("Timecount");
 
+            time_int = periodTime;
             Timeout();
         }
 
