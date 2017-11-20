@@ -12,6 +12,10 @@ public class Client : MonoBehaviour
 
     public int playerID;
 
+    public GameObject player;
+
+    public GameObject[] players = new GameObject[4];
+
     private Vector2 moveDelta, attackDelta;
 
     private int nowCharacterID = 0;
@@ -46,6 +50,12 @@ public class Client : MonoBehaviour
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i] = new ActionObject(i);
+        }
+
+        for (int i = 0; i < 2*maxCharacterNum; i++)
+        {
+            players[i] = Instantiate<GameObject>(player,new Vector3(-7.5f+(i*5),0.0f, 0.0f), player.transform.rotation);
+            players[i].name = "player" + i.ToString();
         }
 
         weapons[0] = new Weapons("skip");
