@@ -4,3 +4,5 @@ Library
 *.csproj
 .vs
 server/npm-debug.log
+UnityPackageManager/*
+Animal war.userprefs

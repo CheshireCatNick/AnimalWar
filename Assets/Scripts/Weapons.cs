@@ -16,4 +16,6 @@ public class Weapons{
         this.isSingle = isSingle;
         this.name = name;
     }
+
+    public Weapons() { }
 }

@@ -6,14 +6,14 @@ public class ActionObject{
 
     public int characterID;
     public Vector2 moveTarget, attackTarget;
-    public string weapon;
+    public Weapons weapon;
     public bool isSet;
 
     public ActionObject(int charaterID)
     {
         this.characterID = charaterID;
         this.isSet = false;
-        this.weapon = "skip";
+        this.weapon = new Weapons();
         this.moveTarget = Vector2.zero;
         this.attackTarget = Vector2.zero;
     }

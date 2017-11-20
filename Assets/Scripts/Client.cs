@@ -1,19 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; //使用Unity UI程式庫。
 
 public class Client : MonoBehaviour {
 
-    private const int maxCharacterNum = 2;
+    private const int maxCharacterNum = 2, maxWeaponNum = 2;
     public int scale = 10;
 
     public int playerID;
 
     private Vector2 moveDelta, attackDelta;
-    private int nowCharacterID = 0, nowWeapon;
+    private int nowCharacterID = 0;
+    private Weapons[] weapons = new Weapons[maxWeaponNum];
+    private Weapons nowWeapon;
 
     private ConnectionManager connectionManager;
-    
+
+    int time_int = 45;
+    public Text time_UI;
+
+
     //Animal Object need a flag to show if it is completed  
     private enum stage
     {
@@ -26,24 +33,34 @@ public class Client : MonoBehaviour {
 
     private stage nowStage = stage.Character;
 
-    private ActionObject [] actionObjects;
+    private ActionObject [] actionObjects = new ActionObject[maxCharacterNum];
 
     private void Start()
     {
-        connectionManager = new ConnectionManager();
-        playerID = int.Parse(connectionManager.Receive());
-        Debug.Log(playerID);
-        for (int i = 0; i < 2*maxCharacterNum; i++)
+        //connectionManager = new ConnectionManager();
+        //playerID = int.Parse(connectionManager.Receive());
+        //Debug.Log(playerID);
+        for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i] = new ActionObject(i);
         }
+       
+        weapons[0] = new Weapons();
+        weapons[0].name = "skip";
+        weapons[1] = new Weapons();
+        weapons[1].name = "gun";
+
+        time_UI.text = "Time : " + time_int + "";
+        InvokeRepeating("Timecount", 1, 1);
     }
 
     private void Update () {
         //check Timeout, if true, set nowStaget to Complete and Replay
+        print(nowStage);
         for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha0 + maxCharacterNum; i++) {
             if (Input.GetKeyDown(i))
             {
+                print(i);
                 //use select target Character
                 if (nowStage == stage.Character)
                 {
@@ -54,8 +71,11 @@ public class Client : MonoBehaviour {
                 //user select target weapon
                 else if (nowStage == stage.Weapon)
                 {
-                    nowWeapon = i - KeyCode.Alpha0;
-                    attackDelta = Vector2.zero;
+                    if (i - KeyCode.Alpha0 < maxWeaponNum)
+                    {
+                        nowWeapon = weapons[i - KeyCode.Alpha0];
+                        attackDelta = Vector2.zero;
+                    }
                 }
 
                 else { }
@@ -126,6 +146,7 @@ public class Client : MonoBehaviour {
             }
         }
         
+        /*
         //get mouse left click
         if (Input.GetMouseButtonDown(0))
         {
@@ -134,29 +155,32 @@ public class Client : MonoBehaviour {
             {
                 moveDelta = Input.mousePosition;
             }
-        }
+        }*/
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
+            print(KeyCode.Return);
             if (nowStage == stage.Character)
             {
+                print("in " + nowCharacterID);
                 actionObjects[nowCharacterID].characterID = nowCharacterID;
                 nowStage = stage.Move;
+                print("after " + nowStage);
             }
 
-            if (nowStage == stage.Move)
+            else if (nowStage == stage.Move)
             {
                 actionObjects[nowCharacterID].moveTarget += moveDelta;
                 nowStage = stage.Weapon;
             }
 
-            if (nowStage == stage.Weapon)
+            else if (nowStage == stage.Weapon)
             {
-                actionObjects[nowCharacterID].weapon = "gun";
+                actionObjects[nowCharacterID].weapon = nowWeapon;
                 nowStage = stage.Attack;
             }
 
-            if (nowStage == stage.Attack)
+            else if (nowStage == stage.Attack)
             {
                 actionObjects[nowCharacterID].attackTarget += attackDelta;
                 actionObjects[nowCharacterID].isSet = true;
@@ -185,13 +209,14 @@ public class Client : MonoBehaviour {
     //receive actionArray from server
     public void Send()
     {
-        connectionManager.Send("0|action from 0");
-        connectionManager.Close();
+        //connectionManager.Send("0|action from 0");
+        //connectionManager.Close();
 
 
         // receive
-        //Replay();
+        Replay(actionObjects);
     }
+
 
     //show the result
     public void Replay (ActionObject [] actionArray)
@@ -200,7 +225,51 @@ public class Client : MonoBehaviour {
 
 
         nowStage = stage.Character;
+        time_UI.text = "Time : " + time_int + "";
+        InvokeRepeating("Timecount", 1, 1);
+        for (int i = 0; i < maxCharacterNum; i++)
+        {
+            actionObjects[i].isSet = false;
+        }
     }
 
+    void Timecount()
+    {
+        time_int -= 1;
 
+        time_UI.text = "Time : " + time_int + "";
+
+        if (time_int == 0)
+        {
+
+            time_UI.text = "Time : 0";
+
+            CancelInvoke("Timecount");
+
+            Timeout();
+        }
+
+    }
+
+    void Timeout ()
+    {
+        print("Timeout");
+        for (int i = 0; i < maxCharacterNum; i++)
+        {
+            if (!actionObjects[i].isSet)
+            {
+                actionObjects[i].weapon = weapons[0];
+            }
+        }
+        if (!actionObjects[nowCharacterID].isSet)
+        {
+            if (nowStage - stage.Weapon >= 0)
+                actionObjects[nowCharacterID].weapon = nowWeapon;
+            else
+                actionObjects[nowCharacterID].weapon = weapons[0];
+            actionObjects[nowCharacterID].moveTarget += moveDelta;
+            actionObjects[nowCharacterID].attackTarget += attackDelta;
+        }
+        Send();
+    }
 }
