@@ -51,8 +51,11 @@ public class Client : MonoBehaviour
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
         nowWeapon = weapons[0];
-        time_UI.text = TextFormat();
+        
+        //set timer
+        time_int = periodTime;
         InvokeRepeating("Timecount", 1, 1);
+        time_UI.text = TextFormat();
     }
 
     private void Update()
@@ -206,8 +209,6 @@ public class Client : MonoBehaviour
 
             CancelInvoke("Timecount");
 
-            time_int = periodTime;
-
             Send();
         }
     }
@@ -223,8 +224,8 @@ public class Client : MonoBehaviour
         string opponentActionStr = connectionManager.Receive();
         string[] opponentActions = opponentActionStr.Split('/');
         ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
-        int i = 0;
-        for (; i < maxCharacterNum * 2; i++)
+        
+        for (int i = 0; i < maxCharacterNum * 2; i++)
         {
             if (i < maxCharacterNum)
                 replayActionObjects[i] = actionObjects[i];
@@ -240,13 +241,17 @@ public class Client : MonoBehaviour
         {
             print(a.ToString());
         }
-        nowStage = stage.Character;
-        time_UI.text = TextFormat();
-        InvokeRepeating("Timecount", 1, 1);
+        
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i].isSet = false;
         }
+
+        nowStage = stage.Character;
+        //set timer
+        time_int = periodTime;
+        InvokeRepeating("Timecount", 1, 1);
+        time_UI.text = TextFormat();
     }
 
     private void OnDestroy()
@@ -267,12 +272,8 @@ public class Client : MonoBehaviour
 
         if (time_int == 0)
         {   
-
-            time_UI.text = TextFormat();
-
             CancelInvoke("Timecount");
 
-            time_int = periodTime;
             Timeout();
         }
 
