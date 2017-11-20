@@ -7,7 +7,7 @@ public class GameManger : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        client = new Client();
+        client = gameObject.AddComponent<Client>();
     }
 
 	// Update is called once per frame

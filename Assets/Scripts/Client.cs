@@ -24,16 +24,27 @@ public class Client : MonoBehaviour {
         Complete
     };
 
+<<<<<<< HEAD
     private stage nowStage = stage.Character;
 
     private ActionObject [] actionObjects;
+=======
+    private stage nowStage = stage.Complete;
+
+    private ActionObject [] actionObjects = new ActionObject[maxCharacterNum];
+>>>>>>> 8c59259d690dba4c5ebf257c4815cd744a32a661
 
     private void Start()
     {
         connectionManager = new ConnectionManager();
         playerID = int.Parse(connectionManager.Receive());
+<<<<<<< HEAD
         Debug.Log(playerID);
         for (int i = 0; i < 2*maxCharacterNum; i++)
+=======
+        Debug.Log("PlayerID: " + playerID);
+        for (int i = 0; i < maxCharacterNum; i++)
+>>>>>>> 8c59259d690dba4c5ebf257c4815cd744a32a661
         {
             actionObjects[i] = new ActionObject(i);
         }
@@ -185,10 +196,36 @@ public class Client : MonoBehaviour {
     //receive actionArray from server
     public void Send()
     {
-        connectionManager.Send("0|action from 0");
+        string msg = "";
+        foreach (ActionObject action in actionObjects)
+            msg += action.ToString() + "/";
+        //connectionManager.Send(msg);
+        //string opponentActionStr = connectionManager.Receive();
+        string[] opponentActions = msg.Split('/');
+        ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
+        int i = 0;
+        for (; i < maxCharacterNum * 2; i++)
+        {
+            if (i < maxCharacterNum)
+                replayActionObjects[i] = actionObjects[i];
+            else
+                replayActionObjects[i] = new ActionObject(opponentActions[i - maxCharacterNum]);
+        }
+        Replay(replayActionObjects);
+    }
+
+    //show the result
+    public void Replay (ActionObject [] actionArray)
+    {
+        nowStage = stage.Character;
+    }
+
+    private void OnDestroy()
+    {
         connectionManager.Close();
+    }
 
-
+<<<<<<< HEAD
         // receive
         //Replay();
     }
@@ -203,4 +240,6 @@ public class Client : MonoBehaviour {
     }
 
 
+=======
+>>>>>>> 8c59259d690dba4c5ebf257c4815cd744a32a661
 }

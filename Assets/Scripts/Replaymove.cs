@@ -15,7 +15,7 @@ public class Replaymove : MonoBehaviour
     {
         now_position.x = this.transform.position.x;
         now_position.y = this.transform.position.y;
-        end_position = this.GetComponent<Client>().nowCoordinate;
+        //end_position = this.GetComponent<Client>().nowCoordinate;
         step = (end_position-now_position) / 100;
         count = 0;
     }
