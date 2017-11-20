@@ -140,7 +140,7 @@ public class Client : MonoBehaviour {
         {
             if (nowStage == stage.Character)
             {
-                actionObjects[nowCharacterID].characterId = nowCharacterID;
+                actionObjects[nowCharacterID].characterID = nowCharacterID;
                 nowStage = stage.Move;
             }
 
