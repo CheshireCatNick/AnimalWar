@@ -75,7 +75,6 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Character)
                 {
                     nowCharacterID = i - KeyCode.Alpha0;
-                    moveDelta = Vector2.zero;
                 }
 
                 //user select target weapon
@@ -84,7 +83,6 @@ public class Client : MonoBehaviour
                     if (i - KeyCode.Alpha0 < maxWeaponNum)
                     {
                         nowWeapon = weapons[i - KeyCode.Alpha0];
-                        attackDelta = Vector2.zero;
                     }
                 }
 
@@ -200,7 +198,11 @@ public class Client : MonoBehaviour
                 {
                     if (!actionObject.isSet)
                     {
+                        nowCharacterID = actionObject.characterID;
                         nowStage = stage.Character;
+                        moveDelta = Vector2.zero;
+                        attackDelta = Vector2.zero;
+                        nowWeapon = weapons[0];
                         break;
                     }
                 }
