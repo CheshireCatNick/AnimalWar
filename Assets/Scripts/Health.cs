@@ -8,7 +8,6 @@ public class Health : MonoBehaviour
     public static Health Instance;
 	public Image life;
 	public float maxhp;
-	private float hp;
 
 	int currentLives;				//目前血量
 	bool alive = true;              //生或死
@@ -18,14 +17,13 @@ public class Health : MonoBehaviour
     }
     void Start () {	
 		currentLives = numberOfLives;
-		hp = maxhp;	
 	}	
 	void Update () {
-		life.transform.localPosition= new Vector3 (( -2 + 2*(hp/maxhp)), 0.0f, 0.0f);
+		life.transform.localPosition= new Vector3 (( -2 + 2*(currentLives/maxhp)), 0.0f, 0.0f);
 	}
     public float GetHP()
     {
-        return maxhp;
+        return currentLives;
     }
 	void OnCollisionEnter (Collision other)
 	{
@@ -34,8 +32,7 @@ public class Health : MonoBehaviour
 			return;
 		
 		currentLives -= 1;
-		hp -= 1;
-        HPControl.Instance.SubHP(1);
+        //HPControl.Instance.SubHP(1);
 
         //如果沒血了
         if (currentLives <= 0)
