@@ -50,7 +50,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4305154316444948}
   - component: {fileID: 212499245288198040}
-  - component: {fileID: 114804175965678900}
   m_Layer: 0
   m_Name: gun
   m_TagString: Untagged
@@ -72,6 +71,7 @@ GameObject:
   - component: {fileID: 50307339472698178}
   - component: {fileID: 61253087552870750}
   - component: {fileID: 114211435169573312}
+  - component: {fileID: 114283917654936906}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Player
@@ -251,13 +251,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcc47ee93c2b484e8f32f7abd1062f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Destination: {x: 10, y: 20}
---- !u!114 &114804175965678900
+  Destination: {x: 0, y: 0}
+  isArrive: 0
+--- !u!114 &114283917654936906
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1599571991947214}
+  m_GameObject: {fileID: 1833823956488550}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f94a78cd737734ca0f11931d20bb8c, type: 3}

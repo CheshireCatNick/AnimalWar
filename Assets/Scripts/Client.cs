@@ -316,12 +316,13 @@ public class Client : MonoBehaviour
         {
             players[i].GetComponent<Playermove>().Destination = new Vector2(0.0f, 0.0f);
         }
-
+        /*
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
             if(actionArray[i].weapon.name == "gun")
-                players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
+                players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(0.0f, 0.0f));
         }
+        */
     }
 
     private void OnDestroy()

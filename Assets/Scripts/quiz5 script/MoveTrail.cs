@@ -3,13 +3,13 @@ using System.Collections;
 
 public class MoveTrail : MonoBehaviour {
 	
-	public int moveSpeed = 150;
+	public int moveSpeed = 50;
 	
 	// Update is called once per frame
 	void Update () {
 		//往右移動
 		transform.Translate (Vector3.right * Time.deltaTime * moveSpeed);
 		//1秒後刪除
-		Destroy (gameObject, 1);
+		Destroy (gameObject, 2);
 	}
 }
