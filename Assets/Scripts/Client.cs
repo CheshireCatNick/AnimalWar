@@ -210,7 +210,7 @@ public class Client : MonoBehaviour
 
             else if (nowStage == stage.Attack)
             {
-                actionObjects[nowCharacterID].attackTarget += attackDelta;
+                actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
                 actionObjects[nowCharacterID].isSet = true;
                 //if it is the final animal then go to Complete, else go to Character
                 nowStage = stage.Complete;
@@ -328,7 +328,7 @@ public class Client : MonoBehaviour
             else
                 actionObjects[nowCharacterID].weapon = weapons[0];
             actionObjects[nowCharacterID].moveTarget += moveDelta;
-            actionObjects[nowCharacterID].attackTarget += attackDelta;
+            actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
         }
         Send();
     }
