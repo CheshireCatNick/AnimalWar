@@ -55,8 +55,15 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < 2*maxCharacterNum; i++)
         {
-            players[i] = (GameObject)Instantiate(player,new Vector3(-7.5f+(i*5),0.0f, 0.0f), player.transform.rotation);
+            players[i] = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,0.0f,0.0f),player.transform.rotation);
+            if (i == 0 || i == 1)
+            {
+                Vector3 theScale = transform.localScale;
+                theScale.x *= -1;
+                players[i].transform.localScale = theScale;
+            }
             players[i].name = "player" + i.ToString();
+            players[i].gameObject.layer = 10 + i;
         }
 
         weapons[0] = new Weapons("skip");
@@ -264,6 +271,7 @@ public class Client : MonoBehaviour
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i].isSet = false;
+            players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
         }
 
         nowStage = stage.Character;
