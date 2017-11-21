@@ -16,6 +16,8 @@ public class Client : MonoBehaviour
 
     public GameObject[] players = new GameObject[4];
 
+    public Animal[] animals = new Animal[4];
+
     private Vector2 moveDelta, attackDelta;
 
     private int nowCharacterID;
@@ -56,9 +58,11 @@ public class Client : MonoBehaviour
             actionObjects[i] = new ActionObject(i);
         }
 
-        for (int i = 0; i < 2*maxCharacterNum; i++)
-        {
+        for (int i = 0; i < 2 * maxCharacterNum; i++)
+        { 
+            animals[i] = new Animal(i);
             players[i] = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,0.0f,0.0f),player.transform.rotation);
+            //Do Flip
             if (i == 0 || i == 1)
             {
                 Vector3 theScale = transform.localScale;
@@ -67,6 +71,8 @@ public class Client : MonoBehaviour
             }
             players[i].name = "player" + i.ToString();
             players[i].gameObject.layer = 10 + i;
+            //add player to Animal class
+            animals[i].SetAnimal(players[i]);
         }
 
         weapons[0] = new Weapons("skip");
@@ -259,9 +265,22 @@ public class Client : MonoBehaviour
         if (nowStage == stage.Replay)
         {
             time_UI.text = TextFormat();
-            /*
-            if all animals isFinish
-                nowStage = stage.Character;
+            nowStage = stage.Character;
+            foreach (Animal animal in animals)
+            {
+                if (!animal.isFinish)
+                {
+                    nowStage = stage.Replay;
+                    break;
+                }
+            }
+            if (nowStage == stage.Character)
+            {
+                for (int i = 0; i < maxCharacterNum; i++)
+                    actionObjects[i].isSet = false;
+                for (int i = 0; i < maxCharacterNum * 2; i++)
+                    animals[i].isFinish = false;
+
                 nowCharacterID = 0;
                 nowWeapon = weapons[0];
                 moveDelta = Vector2.zero;
@@ -271,7 +290,7 @@ public class Client : MonoBehaviour
                 time_int = periodTime;
                 InvokeRepeating("Timecount", 1, 1);
                 time_UI.text = TextFormat();
-             */     
+            }
         }
 
     }
@@ -292,10 +311,14 @@ public class Client : MonoBehaviour
         {
             print(a.ToString());
         }
-        
+
         for (int i = 0; i < maxCharacterNum; i++)
         {
-            actionObjects[i].isSet = false;
+            players[i].GetComponent<Playermove>().Destination = new Vector2(0.0f, 0.0f);
+        }
+
+        for (int i = 0; i < maxCharacterNum; i++)
+        {
             players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
         }
     }
