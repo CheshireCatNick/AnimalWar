@@ -21,7 +21,7 @@ public class Playermove: MonoBehaviour {
         Vector2 currentPosition = playerRigidbody2D.transform.position;
         
         if (Destination != currentPosition) {
-            float speed = 150;
+            float speed = 5;
 
             if (Vector2.Distance(currentPosition, Destination) < 0.01f)
             {

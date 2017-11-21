@@ -20,7 +20,7 @@ public class Weapon : MonoBehaviour {
 		//子彈發射角度
 		float rotZ = firePoint.rotation.eulerAngles.z;
 		//如果Player X scale為-1(向左) 角度需做修正
-		if(transform.parent.parent.localScale.x == -1)
+		if(transform.parent.localScale.x == -1)
 			rotZ = rotZ-180;
 		//產生子彈軌跡
 		Instantiate (BulletTrailPrefab, firePoint.position, Quaternion.Euler (0f, 0f, rotZ));

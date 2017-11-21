@@ -61,7 +61,7 @@ public class Client : MonoBehaviour
         for (int i = 0; i < 2 * maxCharacterNum; i++)
         { 
             animals[i] = new Animal(i);
-            players[i] = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,0.0f,0.0f),player.transform.rotation);
+            players[i] = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
             //Do Flip
             if (i == 0 || i == 1)
             {
@@ -312,14 +312,15 @@ public class Client : MonoBehaviour
             print(a.ToString());
         }
 
-        for (int i = 0; i < maxCharacterNum; i++)
+        for (int i = 0; i < maxCharacterNum*2; i++)
         {
             players[i].GetComponent<Playermove>().Destination = new Vector2(0.0f, 0.0f);
         }
 
-        for (int i = 0; i < maxCharacterNum; i++)
+        for (int i = 0; i < maxCharacterNum*2; i++)
         {
-            players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
+            if(actionArray[i].weapon.name == "gun")
+                players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
         }
     }
 
