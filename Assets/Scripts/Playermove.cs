@@ -13,6 +13,7 @@ public class Playermove: MonoBehaviour {
     void Start()
     {
         playerRigidbody2D = GetComponent<Rigidbody2D>();
+        Destination = playerRigidbody2D.transform.position;
     }
 
     public void Move()  {
