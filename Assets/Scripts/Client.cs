@@ -8,7 +8,7 @@ public class Client : MonoBehaviour
 
     private const int maxCharacterNum = 2, maxWeaponNum = 2, periodTime = 45;
 
-    public int scale = 2;
+    public int scale;
 
     public int playerID;
 

@@ -326,11 +326,6 @@ EdgeCollider2D:
   - {x: 12.501335, y: 1.8108912}
   - {x: 14.205441, y: 1.8477039}
   - {x: 17.066668, y: 0}
---- !u!4 &1054086742 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4234149025537182, guid: d5dbacbefeae3c442b523c906e6d81be,
-    type: 2}
-  m_PrefabInternal: {fileID: 1653057045}
 --- !u!1 &1067426602
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,8 +533,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114283917654936906, guid: d5dbacbefeae3c442b523c906e6d81be, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d5dbacbefeae3c442b523c906e6d81be, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1928272184
@@ -613,24 +607,3 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &2080361636 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1599571991947214, guid: d5dbacbefeae3c442b523c906e6d81be,
-    type: 2}
-  m_PrefabInternal: {fileID: 1653057045}
---- !u!114 &2080361637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2080361636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8f94a78cd737734ca0f11931d20bb8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BulletTrailPrefab: {fileID: 400000, guid: 5484132bad969b54ebc15ff1426c4148, type: 2}
-  firePoint: {fileID: 1054086742}
-  whatToHit:
-    serializedVersion: 2
-    m_Bits: 0
