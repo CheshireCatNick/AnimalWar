@@ -12,6 +12,8 @@ public class Playermove: MonoBehaviour {
 
     public bool isArrive;
 
+    public bool isFinish;
+
     public bool isStart;
 
     const string HORIZONTAL = "Horizontal";
@@ -21,6 +23,7 @@ public class Playermove: MonoBehaviour {
         StartCoroutine(Wait());
         isStart = false;
         isArrive = false;
+        isFinish = false;
     }
 
     IEnumerator Wait()
@@ -60,6 +63,7 @@ public class Playermove: MonoBehaviour {
         {
             this.GetComponentInChildren<Weapon>().Shoot(target);
             isArrive = false;
+            isFinish = true;
         }
     }
     

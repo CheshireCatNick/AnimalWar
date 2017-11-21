@@ -277,9 +277,9 @@ public class Client : MonoBehaviour
         {
             time_UI.text = TimeTextFormat();
             nowStage = stage.Character;
-            foreach (Animal animal in animals)
+            foreach (GameObject player in players)
             {
-                if (!animal.isFinish)
+                if (!player.GetComponent<Playermove>().isFinish)
                 {
                     nowStage = stage.Replay;
                     break;
@@ -290,7 +290,7 @@ public class Client : MonoBehaviour
                 for (int i = 0; i < maxCharacterNum; i++)
                     actionObjects[i].isSet = false;
                 for (int i = 0; i < maxCharacterNum * 2; i++)
-                    animals[i].isFinish = false;
+                    players[i].GetComponent<Playermove>().isFinish = false;
 
                 nowCharacterID = 0;
                 nowWeapon = weapons[0];
