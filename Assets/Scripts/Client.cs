@@ -310,8 +310,9 @@ public class Client : MonoBehaviour
     private void SendActions()
     {
         string msg = playerID + "|";
-        foreach (ActionObject action in actionObjects)
-            msg += action.ToString() + "/";
+        // send reversely
+        for (int i = maxCharacterNum - 1; i >= 0; i--)
+            msg += actionObjects[i].ToString() + "/";
         connectionManager.Send(msg);
         return;
     }
