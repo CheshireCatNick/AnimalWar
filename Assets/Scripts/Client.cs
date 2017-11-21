@@ -267,11 +267,15 @@ public class Client : MonoBehaviour
         {
             print(a.ToString());
         }
-        
+
+        for (int i = 0; i < maxCharacterNum; i++)
+        {
+            players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
+        }
+        //init next round arguments
         for (int i = 0; i < maxCharacterNum; i++)
         {
             actionObjects[i].isSet = false;
-            players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
         }
 
         nowStage = stage.Character;
