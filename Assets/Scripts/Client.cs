@@ -8,7 +8,7 @@ public class Client : MonoBehaviour
 
     private const int maxCharacterNum = 2, maxWeaponNum = 2, periodTime = 45;
 
-    public int scale = 10;
+    public int scale = 2;
 
     public int playerID;
 
@@ -314,15 +314,15 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
-            players[i].GetComponent<Playermove>().Destination = new Vector2(0.0f, 0.0f);
+            players[i].GetComponent<Playermove>().Destination = actionArray[i].moveTarget;
         }
-        /*
+        
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
             if(actionArray[i].weapon.name == "gun")
                 players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(0.0f, 0.0f));
         }
-        */
+        
     }
 
     private void OnDestroy()
