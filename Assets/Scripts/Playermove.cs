@@ -6,6 +6,9 @@ public class Playermove: MonoBehaviour {
 
     Rigidbody2D playerRigidbody2D;
 
+    //傳進Destination
+
+
     [Header("水平速度")]
     public float speedX;
     [Header("垂直速度")]
@@ -41,8 +44,6 @@ public class Playermove: MonoBehaviour {
         while ( playerRigidbody2D.position.x != Destinaiton.x ) {
             playerRigidbody2D.AddForce(new Vector2(xForce * horizontalDir, 0));
         }
-        
-
     }
 
 	// Update is called once per frame
