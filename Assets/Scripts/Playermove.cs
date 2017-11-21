@@ -8,17 +8,16 @@ public class Playermove: MonoBehaviour {
 
     public Vector2 Destination;
 
-    Vector2 INITDESTINATION = new Vector2(1000,1000);
     const string HORIZONTAL = "Horizontal";
 
     public void Move()  {
         //獲得當前位置
-        Vector2 curenPosition = playerRigidbody2D.transform.position;
+        Vector2 currentPosition = playerRigidbody2D.transform.position;
         
-        if (Destination != INITDESTINATION) {
+        if (Destination != currentPosition) {
             float speed = 150;
 
-            if (Vector2.Distance(curenPosition, Destination) < 0.01f)
+            if (Vector2.Distance(currentPosition, Destination) < 0.01f)
             {
                 transform.position = Destination;
             }
@@ -27,15 +26,13 @@ public class Playermove: MonoBehaviour {
                 //插值移動
                 //距離就等於 間隔時間乘以速度
                 float maxDistanceDelta = Time.deltaTime * speed;
-                transform.position = Vector2.MoveTowards(curenPosition, Destination, maxDistanceDelta);
+                transform.position = Vector2.MoveTowards(currentPosition, Destination, maxDistanceDelta);
             }
         }
     }
-
-
+    
 	// Update is called once per frame
 	void Update () {
         Move();
-        
 	}
 }
