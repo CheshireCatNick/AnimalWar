@@ -8,14 +8,18 @@ public class Playermove: MonoBehaviour {
 
     public Vector2 Destination;
 
+    public Vector2 target;
+
     public bool isArrive;
+
+    public bool isStart;
 
     const string HORIZONTAL = "Horizontal";
 
     void Start()
     {
         StartCoroutine(Wait());
-        
+        isStart = false;
         isArrive = false;
     }
 
@@ -31,7 +35,7 @@ public class Playermove: MonoBehaviour {
         if (playerRigidbody2D != null) {
             Vector2 currentPosition = playerRigidbody2D.transform.position;
             
-            if (Destination.x - currentPosition.x <= 0.5) {
+            if (Mathf.Abs(Destination.x - currentPosition.x) >= 0.5) {
                 float speed = 5;
 
                 if (Vector2.Distance(currentPosition, Destination) < 0.01f)
@@ -46,6 +50,16 @@ public class Playermove: MonoBehaviour {
                     transform.position = Vector2.MoveTowards(currentPosition, Destination, maxDistanceDelta);
                 }
             }
+            else if (isStart == true)
+            {
+                isStart = false;
+                isArrive = true;
+            }
+        }
+        if(isArrive == true)
+        {
+            this.GetComponentInChildren<Weapon>().Shoot(target);
+            isArrive = false;
         }
     }
     
