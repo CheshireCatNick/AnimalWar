@@ -30,8 +30,8 @@ public class Playermove: MonoBehaviour {
         //獲得當前位置
         if (playerRigidbody2D != null) {
             Vector2 currentPosition = playerRigidbody2D.transform.position;
-
-            if (Destination != currentPosition) {
+            
+            if (Destination.x - currentPosition.x <= 0.5) {
                 float speed = 5;
 
                 if (Vector2.Distance(currentPosition, Destination) < 0.01f)
