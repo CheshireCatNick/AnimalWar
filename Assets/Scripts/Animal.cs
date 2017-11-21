@@ -16,7 +16,7 @@ public class Animal{
         this.characterID = ID;
         this.isSet = false;
         this.type = "animal";
-        this.animal = new GameObject();
+        //this.animal = new GameObject();
         this.isFinish = false;
         this.action = new ActionObject(this.characterID);
     }
