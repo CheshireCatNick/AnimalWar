@@ -16,6 +16,8 @@ public class Client : MonoBehaviour
 
     public GameObject[] players = new GameObject[4];
 
+    public Animal[] animals = new Animal[4];
+
     private Vector2 moveDelta, attackDelta;
 
     private int nowCharacterID;
@@ -53,9 +55,11 @@ public class Client : MonoBehaviour
             actionObjects[i] = new ActionObject(i);
         }
 
-        for (int i = 0; i < 2*maxCharacterNum; i++)
-        {
+        for (int i = 0; i < 2 * maxCharacterNum; i++)
+        { 
+            animals[i] = new Animal(i);
             players[i] = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,0.0f,0.0f),player.transform.rotation);
+            //Do Flip
             if (i == 0 || i == 1)
             {
                 Vector3 theScale = transform.localScale;
@@ -64,6 +68,8 @@ public class Client : MonoBehaviour
             }
             players[i].name = "player" + i.ToString();
             players[i].gameObject.layer = 10 + i;
+            //add player to Animal class
+            animals[i].SetAnimal(players[i]);
         }
 
         weapons[0] = new Weapons("skip");
