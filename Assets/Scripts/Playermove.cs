@@ -10,6 +10,11 @@ public class Playermove: MonoBehaviour {
 
     const string HORIZONTAL = "Horizontal";
 
+    void Start()
+    {
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
     public void Move()  {
         //獲得當前位置
         Vector2 currentPosition = playerRigidbody2D.transform.position;

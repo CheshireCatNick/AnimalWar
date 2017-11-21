@@ -278,6 +278,11 @@ public class Client : MonoBehaviour
         {
             players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
         }
+
+        for (int i = 0; i < maxCharacterNum; i++)
+        {
+            players[i].GetComponent<Playermove>().Destination = new Vector2(0.0f,0.0f);
+        }
         //init next round arguments
         for (int i = 0; i < maxCharacterNum; i++)
         {
