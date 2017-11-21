@@ -65,6 +65,7 @@ public class Client : MonoBehaviour
             //Do Flip
             if (i == 0 || i == 1)
             {
+                actionObjects[i].moveTarget = new Vector2(7.5f - i * 5, -0.5f);
                 Vector3 theScale = transform.localScale;
                 theScale.x *= -1;
                 players[i].transform.localScale = theScale;
