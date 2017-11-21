@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 58010503857789036}
   - component: {fileID: 50307339472698178}
   - component: {fileID: 61253087552870750}
+  - component: {fileID: 114211435169573312}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Player
@@ -100,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1167712184078958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.068, y: 0.017, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4305154316444948}
@@ -239,6 +240,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114211435169573312
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1833823956488550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcc47ee93c2b484e8f32f7abd1062f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Destination: {x: 10, y: 20}
 --- !u!114 &114804175965678900
 MonoBehaviour:
   m_ObjectHideFlags: 1
