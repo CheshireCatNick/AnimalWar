@@ -28,7 +28,7 @@ public class Client : MonoBehaviour
 
     int time_int = periodTime;
     public Text time_UI;
-
+    public Text command_UI;
 
     //Animal Object need a flag to show if it is completed  
     private enum stage
@@ -86,7 +86,8 @@ public class Client : MonoBehaviour
         //set timer
         time_int = periodTime;
         InvokeRepeating("Timecount", 1, 1);
-        time_UI.text = TextFormat();
+        time_UI.text = TimeTextFormat();
+        command_UI.text = CommandTextFormat("", "0 : first Character\n1 : second Character");
     }
 
     private void Update()
@@ -101,8 +102,10 @@ public class Client : MonoBehaviour
                 //use select target Character
                 if (nowStage == stage.Character)
                 {
+                    
                     if (i - KeyCode.Alpha0 < maxCharacterNum)
                     {
+                        command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
                         nowCharacterID = i - KeyCode.Alpha0;
                     }
                 }
@@ -110,8 +113,10 @@ public class Client : MonoBehaviour
                 //user select target weapon
                 else if (nowStage == stage.Weapon)
                 {
+                    
                     if (i - KeyCode.Alpha0 < maxWeaponNum)
                     {
+                        command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : skip attack\n1 : gun");
                         nowWeapon = weapons[i - KeyCode.Alpha0];
                     }
                 }
@@ -123,6 +128,7 @@ public class Client : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             print("UPArrow");
+            command_UI.text = CommandTextFormat("Up", "");
             //Character move
             if (nowStage == stage.Move)
             {
@@ -139,6 +145,7 @@ public class Client : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             print("DownArrow");
+            command_UI.text = CommandTextFormat("Down", "");
             //Character move
             if (nowStage == stage.Move)
             {
@@ -155,6 +162,7 @@ public class Client : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             print("LeftArrow");
+            command_UI.text = CommandTextFormat("Left", "");
             //Character move
             if (nowStage == stage.Move)
             {
@@ -171,6 +179,7 @@ public class Client : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             print("RightArrow");
+            command_UI.text = CommandTextFormat("Right", "");
             //Character move
             if (nowStage == stage.Move)
             {
@@ -198,6 +207,7 @@ public class Client : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             print(KeyCode.Return);
+            command_UI.text = CommandTextFormat("Enter", "");
             if (nowStage == stage.Character)
             {
                 print("in " + nowCharacterID);
@@ -240,14 +250,14 @@ public class Client : MonoBehaviour
         }
         if (nowStage == stage.Complete)
         {
-            time_UI.text = TextFormat();
+            time_UI.text = TimeTextFormat();
             CancelInvoke("Timecount");
             SendActions();
             nowStage = stage.WaitOpponent;
         }
         if (nowStage == stage.WaitOpponent)
         {
-            time_UI.text = TextFormat();
+            time_UI.text = TimeTextFormat();
             string opponentActionStr = connectionManager.ReceiveActionStr();
             if (opponentActionStr != "")
             {
@@ -265,7 +275,7 @@ public class Client : MonoBehaviour
         }
         if (nowStage == stage.Replay)
         {
-            time_UI.text = TextFormat();
+            time_UI.text = TimeTextFormat();
             nowStage = stage.Character;
             foreach (Animal animal in animals)
             {
@@ -290,7 +300,7 @@ public class Client : MonoBehaviour
                 //set timer
                 time_int = periodTime;
                 InvokeRepeating("Timecount", 1, 1);
-                time_UI.text = TextFormat();
+                time_UI.text = TimeTextFormat();
             }
         }
 
@@ -333,7 +343,12 @@ public class Client : MonoBehaviour
         connectionManager.Close();
     }
 
-    private string TextFormat ()
+    private string CommandTextFormat (string command, string msg)
+    {
+        return "Your input : " + command + "\n" + msg;
+    }
+
+    private string TimeTextFormat ()
     {
         return "Time : " + time_int + "\nNow Stage : " + nowStage.ToString("g");
     }
@@ -342,7 +357,7 @@ public class Client : MonoBehaviour
     {
         time_int -= 1;
 
-        time_UI.text = TextFormat();
+        time_UI.text = TimeTextFormat();
 
         if (time_int == 0)
         {   
