@@ -315,14 +315,16 @@ public class Client : MonoBehaviour
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
             players[i].GetComponent<Playermove>().Destination = actionArray[i].moveTarget;
+            players[i].GetComponent<Playermove>().target = actionArray[i].attackTarget;
+            players[i].GetComponent<Playermove>().isStart = true;
         }
-        
+     /*   
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
             if(actionArray[i].weapon.name == "gun")
                 players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(0.0f, 0.0f));
         }
-        
+       */ 
     }
 
     private void OnDestroy()
