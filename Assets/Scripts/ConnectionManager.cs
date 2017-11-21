@@ -7,9 +7,18 @@ public class ConnectionManager {
     private StreamReader sr;
     private StreamWriter sw;
 
-    public string Receive()
+    // blocking
+    public string ReceiveID()
     {
         return sr.ReadLine();
+    }
+
+    // non-blocking
+    public string ReceiveActionStr()
+    {
+        if (client.Available > 0)
+            return sr.ReadLine();
+        return "";
     }
 
     public void Send(string str)

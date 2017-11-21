@@ -35,17 +35,20 @@ public class Client : MonoBehaviour
         Move,
         Weapon,
         Attack,
-        Complete
+        Complete,
+        WaitOpponent,
+        Replay
     };
 
     private stage nowStage = stage.Character;
 
     private ActionObject[] actionObjects = new ActionObject[maxCharacterNum];
+    private ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
 
     private void Start()
     {
         connectionManager = new ConnectionManager();
-        playerID = int.Parse(connectionManager.Receive());
+        playerID = int.Parse(connectionManager.ReceiveID());
         Debug.Log("PlayerID: " + playerID);
 
         for (int i = 0; i < maxCharacterNum; i++)
@@ -230,35 +233,57 @@ public class Client : MonoBehaviour
         }
         if (nowStage == stage.Complete)
         {
-
             time_UI.text = TextFormat();
-
             CancelInvoke("Timecount");
-
-            Send();
+            SendActions();
+            nowStage = stage.WaitOpponent;
         }
+        if (nowStage == stage.WaitOpponent)
+        {
+            time_UI.text = TextFormat();
+            string opponentActionStr = connectionManager.ReceiveActionStr();
+            if (opponentActionStr != "")
+            {
+                string[] opponentActions = opponentActionStr.Split('/');
+                for (int i = 0; i < maxCharacterNum * 2; i++)
+                {
+                    if (i < maxCharacterNum)
+                        replayActionObjects[i] = actionObjects[i];
+                    else
+                        replayActionObjects[i] = new ActionObject(opponentActions[i - maxCharacterNum]);
+                }
+                Replay(replayActionObjects);
+                nowStage = stage.Replay;
+            }
+        }
+        if (nowStage == stage.Replay)
+        {
+            time_UI.text = TextFormat();
+            /*
+            if all animals isFinish
+                nowStage = stage.Character;
+                nowCharacterID = 0;
+                nowWeapon = weapons[0];
+                moveDelta = Vector2.zero;
+                attackDelta = Vector2.zero;
+
+                //set timer
+                time_int = periodTime;
+                InvokeRepeating("Timecount", 1, 1);
+                time_UI.text = TextFormat();
+             */     
+        }
+
     }
 
     //receive actionArray from server
-    public void Send()
+    private void SendActions()
     {
         string msg = playerID + "|";
         foreach (ActionObject action in actionObjects)
             msg += action.ToString() + "/";
-        //return;
         connectionManager.Send(msg);
-        string opponentActionStr = connectionManager.Receive();
-        string[] opponentActions = opponentActionStr.Split('/');
-        ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
-        
-        for (int i = 0; i < maxCharacterNum * 2; i++)
-        {
-            if (i < maxCharacterNum)
-                replayActionObjects[i] = actionObjects[i];
-            else
-                replayActionObjects[i] = new ActionObject(opponentActions[i - maxCharacterNum]);
-        }
-        Replay(replayActionObjects);
+        return;
     }
     //show the result
     public void Replay(ActionObject[] actionArray)
@@ -273,17 +298,6 @@ public class Client : MonoBehaviour
             actionObjects[i].isSet = false;
             players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(-10, 2));
         }
-
-        nowStage = stage.Character;
-        nowCharacterID = 0;
-        nowWeapon = weapons[0];
-        moveDelta = Vector2.zero;
-        attackDelta = Vector2.zero;
-
-        //set timer
-        time_int = periodTime;
-        InvokeRepeating("Timecount", 1, 1);
-        time_UI.text = TextFormat();
     }
 
     private void OnDestroy()
@@ -330,6 +344,6 @@ public class Client : MonoBehaviour
             actionObjects[nowCharacterID].moveTarget += moveDelta;
             actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
         }
-        Send();
+        nowStage = stage.Complete;
     }
 }
