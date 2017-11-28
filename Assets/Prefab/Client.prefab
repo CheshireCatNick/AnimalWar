@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc5a1520ffe38044be18043d3323748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 2
+  scale: 1
   playerID: 0
   player: {fileID: 1833823956488550, guid: d5dbacbefeae3c442b523c906e6d81be, type: 2}
   players:
