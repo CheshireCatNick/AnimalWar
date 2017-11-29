@@ -276,12 +276,19 @@ public class Client : MonoBehaviour
             if (opponentActionStr != "")
             {
                 string[] opponentActions = opponentActionStr.Split('/');
-                for (int i = 0; i < maxCharacterNum * 2; i++)
+                if (playerID == 0)
                 {
-                    if (i < maxCharacterNum)
-                        replayActionObjects[i] = actionObjects[i];
-                    else
-                        replayActionObjects[i] = new ActionObject(opponentActions[i - maxCharacterNum]);
+                    replayActionObjects[0] = new ActionObject(opponentActionStr[0]);
+                    replayActionObjects[1] = new ActionObject(opponentActionStr[1]);
+                    replayActionObjects[2] = actionObjects[1];
+                    replayActionObjects[3] = actionObjects[0];
+                }
+                else if (playerID == 1)
+                {
+                    replayActionObjects[0] = actionObjects[0];
+                    replayActionObjects[1] = actionObjects[1];
+                    replayActionObjects[2] = new ActionObject(opponentActionStr[1]);
+                    replayActionObjects[3] = new ActionObject(opponentActionStr[0]);
                 }
                 Replay(replayActionObjects);
                 nowStage = stage.Replay;
@@ -324,8 +331,7 @@ public class Client : MonoBehaviour
     private void SendActions()
     {
         string msg = playerID + "|";
-        // send reversely
-        for (int i = maxCharacterNum - 1; i >= 0; i--)
+        for (int i = 0; i < maxCharacterNum; i++)
             msg += actionObjects[i].ToString() + "/";
         connectionManager.Send(msg);
         return;

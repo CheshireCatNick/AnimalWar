@@ -22,9 +22,9 @@ public class ActionObject {
     {
         string[] properties = data.Split(',');
         this.characterID = int.Parse(properties[0]);
-        this.moveTarget = new Vector2(-float.Parse(properties[1]), float.Parse(properties[2]));
+        this.moveTarget = new Vector2(float.Parse(properties[1]), float.Parse(properties[2]));
         this.weapon = new Weapons(properties[3]);
-        this.attackTarget = new Vector2(-float.Parse(properties[4]), float.Parse(properties[5]));
+        this.attackTarget = new Vector2(float.Parse(properties[4]), float.Parse(properties[5]));
     }
 
     public override string ToString()
