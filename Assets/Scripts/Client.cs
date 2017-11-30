@@ -111,7 +111,8 @@ public class Client : MonoBehaviour
                         nowCharacterID = i - KeyCode.Alpha0;
                         if (shadows[(i - KeyCode.Alpha0)] == null)
                         {
-                            shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(players[(i - KeyCode.Alpha0)]);
+                            int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
+                            shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(players[playerIndex]);
                         }
                     }
                 }
