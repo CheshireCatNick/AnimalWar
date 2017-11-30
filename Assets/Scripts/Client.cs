@@ -96,169 +96,175 @@ public class Client : MonoBehaviour
     {
         //check Timeout, if true, set nowStaget to Complete and Replay
         print(nowStage);
-        for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha0 + maxCharacterNum; i++)
+        if (nowStage == stage.Character || nowStage == stage.Weapon)
         {
-            if (Input.GetKeyDown(i))
+            for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha0 + maxCharacterNum; i++)
             {
-                print(i);
-                //use select target Character
-                if (nowStage == stage.Character)
+                if (Input.GetKeyDown(i))
                 {
-                    
-                    if (i - KeyCode.Alpha0 < maxCharacterNum)
+                    print(i);
+                    //use select target Character
+                    if (nowStage == stage.Character)
                     {
-                        command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
-                        nowCharacterID = i - KeyCode.Alpha0;
-                        if (shadows[(i - KeyCode.Alpha0)] == null)
+
+                        if (i - KeyCode.Alpha0 < maxCharacterNum)
                         {
-                            int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
-                            shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(players[playerIndex]);
+                            command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
+                            nowCharacterID = i - KeyCode.Alpha0;
+                            if (shadows[(i - KeyCode.Alpha0)] == null)
+                            {
+                                int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
+                                shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(players[playerIndex]);
+                            }
                         }
                     }
+
+                    //user select target weapon
+                    else if (nowStage == stage.Weapon)
+                    {
+
+                        if (i - KeyCode.Alpha0 < maxWeaponNum)
+                        {
+                            command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : skip attack\n1 : gun");
+                            nowWeapon = weapons[i - KeyCode.Alpha0];
+                        }
+                    }
+
+                }
+            }
+        }
+        if (nowStage == stage.Move || nowStage == stage.Attack)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                print("UPArrow");
+                command_UI.text = CommandTextFormat("Up", "");
+                //Character move
+                if (nowStage == stage.Move)
+                {
+                    moveDelta += Vector2.up * scale;
+                    shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.up * scale);
                 }
 
-                //user select target weapon
+                //weapon target
+                if (nowStage == stage.Attack)
+                {
+                    attackDelta += Vector2.up * scale;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                print("DownArrow");
+                command_UI.text = CommandTextFormat("Down", "");
+                //Character move
+                if (nowStage == stage.Move)
+                {
+                    moveDelta += Vector2.down * scale;
+                    shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.down * scale);
+                }
+
+                //weapon target
+                if (nowStage == stage.Attack)
+                {
+                    attackDelta += Vector2.down * scale;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                print("LeftArrow");
+                command_UI.text = CommandTextFormat("Left", "");
+                //Character move
+                if (nowStage == stage.Move)
+                {
+                    moveDelta += Vector2.left * scale;
+                    shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.left * scale);
+                }
+
+                //weapon target
+                if (nowStage == stage.Attack)
+                {
+                    attackDelta += Vector2.left * scale;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                print("RightArrow");
+                command_UI.text = CommandTextFormat("Right", "");
+                //Character move
+                if (nowStage == stage.Move)
+                {
+                    moveDelta += Vector2.right * scale;
+                    shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.right * scale);
+                }
+
+                //weapon target
+                if (nowStage == stage.Attack)
+                {
+                    attackDelta += Vector2.right * scale;
+                }
+            }
+
+            /*
+            //get mouse left click
+            if (Input.GetMouseButtonDown(0))
+            {
+                print(Input.mousePosition);
+                if (nowStage == stage.Attack)
+                {
+                    moveDelta = Input.mousePosition;
+                }
+            }*/
+        }
+        if (nowStage >= stage.Character && nowStage <= stage.Attack)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                print(KeyCode.Return);
+                command_UI.text = CommandTextFormat("Enter", "");
+                if (nowStage == stage.Character)
+                {
+                    print("in " + nowCharacterID);
+                    actionObjects[nowCharacterID].characterID = nowCharacterID;
+                    nowStage = stage.Move;
+                    print("after " + nowStage);
+                    command_UI.text = CommandTextFormat("", "Please use the arrow key to move your animal.");
+                }
+
+                else if (nowStage == stage.Move)
+                {
+                    actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
+                    nowStage = stage.Weapon;
+                    command_UI.text = CommandTextFormat("", "0 : skip attack\n1 : gun");
+                }
+
                 else if (nowStage == stage.Weapon)
                 {
-                    
-                    if (i - KeyCode.Alpha0 < maxWeaponNum)
-                    {
-                        command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : skip attack\n1 : gun");
-                        nowWeapon = weapons[i - KeyCode.Alpha0];
-                    }
+                    actionObjects[nowCharacterID].weapon = nowWeapon;
+                    nowStage = stage.Attack;
+                    command_UI.text = CommandTextFormat("", "Please use the arrow key to choose the target you want to attack.");
                 }
 
-                else { }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            print("UPArrow");
-            command_UI.text = CommandTextFormat("Up", "");
-            //Character move
-            if (nowStage == stage.Move)
-            {
-                moveDelta += Vector2.up * scale;
-                shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.up * scale);
-            }
-
-            //weapon target
-            if (nowStage == stage.Attack)
-            {
-                attackDelta += Vector2.up * scale;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            print("DownArrow");
-            command_UI.text = CommandTextFormat("Down", "");
-            //Character move
-            if (nowStage == stage.Move)
-            {
-                moveDelta += Vector2.down * scale;
-                shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.down * scale);
-            }
-
-            //weapon target
-            if (nowStage == stage.Attack)
-            {
-                attackDelta += Vector2.down * scale;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            print("LeftArrow");
-            command_UI.text = CommandTextFormat("Left", "");
-            //Character move
-            if (nowStage == stage.Move)
-            {
-                moveDelta += Vector2.left * scale;
-                shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.left * scale);
-            }
-
-            //weapon target
-            if (nowStage == stage.Attack)
-            {
-                attackDelta += Vector2.left * scale;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            print("RightArrow");
-            command_UI.text = CommandTextFormat("Right", "");
-            //Character move
-            if (nowStage == stage.Move)
-            {
-                moveDelta += Vector2.right * scale;
-                shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.right * scale);
-            }
-
-            //weapon target
-            if (nowStage == stage.Attack)
-            {
-                attackDelta += Vector2.right * scale;
-            }
-        }
-
-        /*
-        //get mouse left click
-        if (Input.GetMouseButtonDown(0))
-        {
-            print(Input.mousePosition);
-            if (nowStage == stage.Attack)
-            {
-                moveDelta = Input.mousePosition;
-            }
-        }*/
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            print(KeyCode.Return);
-            command_UI.text = CommandTextFormat("Enter", "");
-            if (nowStage == stage.Character)
-            {
-                print("in " + nowCharacterID);
-                actionObjects[nowCharacterID].characterID = nowCharacterID;
-                nowStage = stage.Move;
-                print("after " + nowStage);
-                command_UI.text = CommandTextFormat("", "Please use the arrow key to move your animal.");
-            }
-
-            else if (nowStage == stage.Move)
-            {
-                actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
-                nowStage = stage.Weapon;
-                command_UI.text = CommandTextFormat("", "0 : skip attack\n1 : gun");
-            }
-
-            else if (nowStage == stage.Weapon)
-            {
-                actionObjects[nowCharacterID].weapon = nowWeapon;
-                nowStage = stage.Attack;
-                command_UI.text = CommandTextFormat("", "Please use the arrow key to choose the target you want to attack.");
-            }
-
-            else if (nowStage == stage.Attack)
-            {
-                actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
-                actionObjects[nowCharacterID].isSet = true;
-                //if it is the final animal then go to Complete, else go to Character
-                nowStage = stage.Complete;
-                foreach (ActionObject actionObject in actionObjects)
+                else if (nowStage == stage.Attack)
                 {
-                    if (!actionObject.isSet)
+                    actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
+                    actionObjects[nowCharacterID].isSet = true;
+                    //if it is the final animal then go to Complete, else go to Character
+                    nowStage = stage.Complete;
+                    foreach (ActionObject actionObject in actionObjects)
                     {
-                        nowCharacterID = actionObject.characterID;
-                        nowStage = stage.Character;
-                        moveDelta = Vector2.zero;
-                        attackDelta = Vector2.zero;
-                        nowWeapon = weapons[0];
-                        command_UI.text = CommandTextFormat("", "0 : first Character\n1 : second Character");
-                        break;
+                        if (!actionObject.isSet)
+                        {
+                            nowCharacterID = actionObject.characterID;
+                            nowStage = stage.Character;
+                            moveDelta = Vector2.zero;
+                            attackDelta = Vector2.zero;
+                            nowWeapon = weapons[0];
+                            command_UI.text = CommandTextFormat("", "0 : first Character\n1 : second Character");
+                            break;
+                        }
                     }
                 }
             }
@@ -273,6 +279,7 @@ public class Client : MonoBehaviour
         if (nowStage == stage.WaitOpponent)
         {
             time_UI.text = TimeTextFormat();
+
             string opponentActionStr = connectionManager.ReceiveActionStr();
             if (opponentActionStr != "")
             {
@@ -298,6 +305,13 @@ public class Client : MonoBehaviour
         if (nowStage == stage.Replay)
         {
             time_UI.text = TimeTextFormat();
+
+            //Destroy shadows
+            for (int i = 0; i < maxCharacterNum; i++)
+            {
+                Destroy(shadows[i]);
+            }
+
             nowStage = stage.Character;
             foreach (GameObject player in players)
             {
