@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: 1
   playerID: 0
-  player: {fileID: 1833823956488550, guid: d5dbacbefeae3c442b523c906e6d81be, type: 2}
+  player: {fileID: 1784092545548606, guid: b5e8ded027b120840b10b2d653852132, type: 2}
   players:
   - {fileID: 0}
   - {fileID: 0}
@@ -339,7 +339,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1926936583943782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -248, y: 118, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224007474460891984}
@@ -357,7 +357,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710021592069610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -248, y: 21, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224007474460891984}
