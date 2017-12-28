@@ -271,7 +271,7 @@ public class Client : MonoBehaviour
 
                 else if (nowStage == stage.Attack)
                 {
-                    actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
+					actionObjects[nowCharacterID].attackTarget = targets[nowCharacterID].transform.localPosition;
                     actionObjects[nowCharacterID].isSet = true;
                     //if it is the final animal then go to Complete, else go to Character
                     nowStage = stage.Complete;
@@ -448,7 +448,7 @@ public class Client : MonoBehaviour
 				shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
 			}
             actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
-            actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
+			actionObjects[nowCharacterID].attackTarget = targets[nowCharacterID].transform.localPosition;
         }
         nowStage = stage.Complete;
     }
