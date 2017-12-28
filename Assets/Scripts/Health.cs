@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-	public int numberOfLives;	//設定塔的血有多少
+	public int numberOfLives;	//設定血有多少
     public static Health Instance;
 	public Image life;
 	public float maxhp;
