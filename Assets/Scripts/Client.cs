@@ -277,10 +277,10 @@ public class Client : MonoBehaviour
                 string[] opponentActions = opponentActionStr.Split('/');
                 if (playerID == 0)
                 {
-                    replayActionObjects[3] = new ActionObject(opponentActions[0]);
-                    replayActionObjects[2] = new ActionObject(opponentActions[1]);
-                    replayActionObjects[1] = actionObjects[1];
-                    replayActionObjects[0] = actionObjects[0];
+                    replayActionObjects[0] = new ActionObject(opponentActions[0]);
+                    replayActionObjects[1] = new ActionObject(opponentActions[1]);
+                    replayActionObjects[2] = actionObjects[1];
+                    replayActionObjects[3] = actionObjects[0];
                 }
                 else if (playerID == 1)
                 {
