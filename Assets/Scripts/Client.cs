@@ -107,7 +107,7 @@ public class Client : MonoBehaviour
                     if (nowStage == stage.Character)
                     {
 
-						if ((i - KeyCode.Alpha0 < maxCharacterNum) && (actionObjects[i - KeyCode.Alpha0] != null))
+						if ((i - KeyCode.Alpha0 < maxCharacterNum) && (players[i - KeyCode.Alpha0] != null))
                         {
                             command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
                             nowCharacterID = i - KeyCode.Alpha0;
