@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Weapon : MonoBehaviour {
+public class Gun : MonoBehaviour {
 
 	public Transform BulletTrailPrefab;
 	public Transform firePoint;
@@ -35,7 +35,7 @@ public class Weapon : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast (firePointPosition, mousePosition-firePointPosition, 100, whatToHit);
 		//如果命中物體且是敵人則刪除他
 		if (hit.collider != null && hit.collider.tag == "Enemy") {
-			Destroy(hit.collider.gameObject);
+			//Destroy(hit.collider.gameObject);
 		}
 	}
 }

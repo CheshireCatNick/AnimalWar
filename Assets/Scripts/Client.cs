@@ -93,7 +93,7 @@ public class Client : MonoBehaviour
         {
             for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha0 + maxCharacterNum; i++)
             {
-                if (Input.GetKeyDown(i))
+                if (Input.GetKey(i))
                 {
                     print(i);
                     //use select target Character
@@ -122,7 +122,7 @@ public class Client : MonoBehaviour
         }
         if (nowStage == stage.Move || nowStage == stage.Attack)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.UpArrow))
             {
                 print("UPArrow");
                 command_UI.text = CommandTextFormat("Up", "");
@@ -144,7 +144,7 @@ public class Client : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.DownArrow))
             {
                 print("DownArrow");
                 command_UI.text = CommandTextFormat("Down", "");
@@ -166,7 +166,7 @@ public class Client : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
                 print("LeftArrow");
                 command_UI.text = CommandTextFormat("Left", "");
@@ -188,7 +188,7 @@ public class Client : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow))
             {
                 print("RightArrow");
                 command_UI.text = CommandTextFormat("Right", "");
@@ -399,13 +399,13 @@ public class Client : MonoBehaviour
         {
 			animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
         }
-     /*   
+        
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
             if(actionArray[i].weapon.name == "gun")
-                players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(0.0f, 0.0f));
+                animals[i].player.GetComponentInChildren<Gun>().Shoot(actionArray[i].attackTarget);
         }
-       */ 
+       
     }
 
     private void OnDestroy()
@@ -460,7 +460,8 @@ public class Client : MonoBehaviour
 				shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
 			}
             actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
-			actionObjects[nowCharacterID].attackTarget = targets[nowCharacterID].transform.localPosition;
+			if (actionObjects[nowCharacterID].weapon != weapons[0])
+				actionObjects[nowCharacterID].attackTarget = targets[nowCharacterID].transform.localPosition;
         }
         nowStage = stage.Complete;
     }
