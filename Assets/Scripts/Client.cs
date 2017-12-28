@@ -429,6 +429,11 @@ public class Client : MonoBehaviour
                 actionObjects[nowCharacterID].weapon = nowWeapon;
             else
                 actionObjects[nowCharacterID].weapon = weapons[0];
+			if (shadows[nowCharacterID] == null)
+			{
+				int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+				shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
+			}
             actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
             actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
         }
