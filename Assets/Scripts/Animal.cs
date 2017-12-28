@@ -7,7 +7,7 @@ public class Animal{
     public int characterID;
     public bool isSet;
     public string type;
-    public GameObject animal;
+    public GameObject player;
     public bool isFinish;
     public ActionObject action;
 

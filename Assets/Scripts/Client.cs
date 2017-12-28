@@ -14,8 +14,6 @@ public class Client : MonoBehaviour
 
     public GameObject player;
 
-    public GameObject[] players = new GameObject[2*maxCharacterNum];
-
 	public Animal[] animals = new Animal[2*maxCharacterNum];
 
     private Vector2 moveDelta, attackDelta;
@@ -63,19 +61,17 @@ public class Client : MonoBehaviour
         for (int i = 0; i < 2 * maxCharacterNum; i++)
         { 
             animals[i] = new Animal(i);
-            players[i] = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
+            animals[i].player = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
             //Do Flip
-            if (i == 0 || i == 1)
+            if (i >= 0 && i < maxCharacterNum)
             {
                 actionObjects[i].moveTarget = new Vector2(7.5f - i * 5, -0.5f);
                 Vector3 theScale = transform.localScale;
                 theScale.x *= -1;
-                players[i].transform.localScale = theScale;
+                animals[i].player.transform.localScale = theScale;
             }
-            players[i].name = "player" + i.ToString();
-            players[i].gameObject.layer = 10 + i;
-            //add player to Animal class
-            animals[i].SetAnimal(players[i]);
+			animals[i].player.name = "player" + i.ToString();
+			animals[i].player.gameObject.layer = 10 + i;
         }
 
         weapons[0] = new Weapons("skip");
@@ -107,14 +103,14 @@ public class Client : MonoBehaviour
                     if (nowStage == stage.Character)
                     {
 
-						if ((i - KeyCode.Alpha0 < maxCharacterNum) && (players[i - KeyCode.Alpha0] != null))
+						if ((i - KeyCode.Alpha0 < maxCharacterNum) && (animals[i - KeyCode.Alpha0].player != null))
                         {
                             command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
                             nowCharacterID = i - KeyCode.Alpha0;
                             if (shadows[(i - KeyCode.Alpha0)] == null)
                             {
                                 int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
-                                shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(players[playerIndex]);
+                                shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(animals[playerIndex].player);
                             }
                         }
                     }
@@ -313,9 +309,9 @@ public class Client : MonoBehaviour
             }
 
             nowStage = stage.Character;
-            foreach (GameObject player in players)
+			foreach (Animal animal in animals)
             {
-                if (!player.GetComponent<Playermove>().isFinish)
+                if (!animal.player.GetComponent<Playermove>().isFinish)
                 {
                     nowStage = stage.Replay;
                     break;
@@ -326,7 +322,7 @@ public class Client : MonoBehaviour
                 for (int i = 0; i < maxCharacterNum; i++)
                     actionObjects[i].isSet = false;
                 for (int i = 0; i < maxCharacterNum * 2; i++)
-                    players[i].GetComponent<Playermove>().isFinish = false;
+					animals[i].player.GetComponent<Playermove>().isFinish = false;
 
                 nowCharacterID = 0;
                 nowWeapon = weapons[0];
@@ -361,9 +357,9 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
-            players[i].GetComponent<Playermove>().Destination = actionArray[i].moveTarget;
-            players[i].GetComponent<Playermove>().target = actionArray[i].attackTarget;
-            players[i].GetComponent<Playermove>().isStart = true;
+			animals[i].player.GetComponent<Playermove>().Destination = actionArray[i].moveTarget;
+            animals[i].player.GetComponent<Playermove>().target = actionArray[i].attackTarget;
+            animals[i].player.GetComponent<Playermove>().isStart = true;
         }
      /*   
         for (int i = 0; i < maxCharacterNum*2; i++)
