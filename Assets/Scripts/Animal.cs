@@ -22,6 +22,12 @@ public class Animal{
 		this.player.transform.localScale = scale;
 		this.player.name = "player" + ID.ToString();
 		this.player.gameObject.layer = 10 + ID;
+        if (scale.x < 0)
+        {
+            Vector3 childscale = this.player.transform.GetChild(3).transform.localScale;
+            childscale.x *= -1;
+            this.player.transform.GetChild(3).transform.localScale = childscale;
+        }
     }
 
     public void SetisSet(bool set)
