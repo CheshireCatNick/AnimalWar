@@ -32,7 +32,6 @@ public class Health : MonoBehaviour
 			return;
 		
 		currentLives -= 1;
-        //HPControl.Instance.SubHP(1);
 
         //如果沒血了
         if (currentLives <= 0)

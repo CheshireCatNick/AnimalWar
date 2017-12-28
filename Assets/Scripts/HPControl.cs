@@ -7,12 +7,8 @@ public class HPControl : MonoBehaviour
 
     private float m_hp;
     private Text m_text;
-    public static HPControl Instance;
+
     // Use this for initialization
-    void Awake()
-    {
-        Instance = this;
-    }
     void Start()
     {
         m_text = GetComponent<Text>();
@@ -23,10 +19,6 @@ public class HPControl : MonoBehaviour
     void Update()
     {
         m_text.text ="HP : "+ m_hp.ToString();
-    }
-
-    public void SubHP(int point)
-    {
-        m_hp -= point;
+        m_hp = Health.Instance.GetHP();
     }
 }

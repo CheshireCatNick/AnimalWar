@@ -66,9 +66,14 @@ public class Client : MonoBehaviour
             if (i >= 0 && i < maxCharacterNum)
             {
                 actionObjects[i].moveTarget = new Vector2(7.5f - i * 5, -0.5f);
+
                 Vector3 theScale = transform.localScale;
                 theScale.x *= -1;
                 animals[i].player.transform.localScale = theScale;
+
+                Vector3 childscale = animals[i].player.transform.GetChild(3).transform.localScale;
+                childscale.x *= -1;
+                animals[i].player.transform.GetChild(3).transform.localScale = childscale;
             }
 			animals[i].player.name = "player" + i.ToString();
 			animals[i].player.gameObject.layer = 10 + i;
