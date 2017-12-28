@@ -12,9 +12,9 @@ public class Client : MonoBehaviour
 
     public int playerID;
 
-    public GameObject player;
-
 	public Animal[] animals = new Animal[2*maxCharacterNum];
+
+	public GameObject fox;
 
     private Vector2 moveDelta, attackDelta;
 
@@ -60,24 +60,13 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < 2 * maxCharacterNum; i++)
         { 
-            animals[i] = new Animal(i);
-            animals[i].player = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
-            //Do Flip
-            if (i >= 0 && i < maxCharacterNum)
-            {
-                actionObjects[i].moveTarget = new Vector2(7.5f - i * 5, -0.5f);
-
-                Vector3 theScale = transform.localScale;
-                theScale.x *= -1;
-                animals[i].player.transform.localScale = theScale;
-
-                Vector3 childscale = animals[i].player.transform.GetChild(3).transform.localScale;
-                childscale.x *= -1;
-                animals[i].player.transform.GetChild(3).transform.localScale = childscale;
-            }
-			animals[i].player.name = "player" + i.ToString();
-			animals[i].player.gameObject.layer = 10 + i;
-        }
+			Vector3 scale = transform.localScale;
+			if (i >= 0 && i < maxCharacterNum) {
+				actionObjects [i].moveTarget = new Vector2 (7.5f - i * 5, -0.5f);
+				scale.x *= -1;
+			}
+			animals [i] = new Animal (i, scale, fox);
+		}
 
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
@@ -287,8 +276,8 @@ public class Client : MonoBehaviour
                 string[] opponentActions = opponentActionStr.Split('/');
                 if (playerID == 0)
                 {
-                    replayActionObjects[0] = new ActionObject(opponentActionStr[0]);
-                    replayActionObjects[1] = new ActionObject(opponentActionStr[1]);
+                    replayActionObjects[0] = new ActionObject(opponentActions[0]);
+                    replayActionObjects[1] = new ActionObject(opponentActions[1]);
                     replayActionObjects[2] = actionObjects[1];
                     replayActionObjects[3] = actionObjects[0];
                 }
@@ -296,9 +285,10 @@ public class Client : MonoBehaviour
                 {
                     replayActionObjects[0] = actionObjects[0];
                     replayActionObjects[1] = actionObjects[1];
-                    replayActionObjects[2] = new ActionObject(opponentActionStr[1]);
-                    replayActionObjects[3] = new ActionObject(opponentActionStr[0]);
+                    replayActionObjects[2] = new ActionObject(opponentActions[1]);
+                    replayActionObjects[3] = new ActionObject(opponentActions[0]);
                 }
+                
                 Replay(replayActionObjects);
                 nowStage = stage.Replay;
             }
@@ -316,7 +306,7 @@ public class Client : MonoBehaviour
             nowStage = stage.Character;
 			foreach (Animal animal in animals)
             {
-                if (!animal.player.GetComponent<Playermove>().isFinish)
+				if (!animal.IsFinish())
                 {
                     nowStage = stage.Replay;
                     break;
@@ -327,7 +317,7 @@ public class Client : MonoBehaviour
                 for (int i = 0; i < maxCharacterNum; i++)
                     actionObjects[i].isSet = false;
                 for (int i = 0; i < maxCharacterNum * 2; i++)
-					animals[i].player.GetComponent<Playermove>().isFinish = false;
+					animals[i].SetFinish(false);
 
                 nowCharacterID = 0;
                 nowWeapon = weapons[0];
@@ -362,9 +352,7 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
-			animals[i].player.GetComponent<Playermove>().Destination = actionArray[i].moveTarget;
-            animals[i].player.GetComponent<Playermove>().target = actionArray[i].attackTarget;
-            animals[i].player.GetComponent<Playermove>().isStart = true;
+			animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
         }
      /*   
         for (int i = 0; i < maxCharacterNum*2; i++)
