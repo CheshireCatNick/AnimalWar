@@ -8,7 +8,6 @@ public class Animal{
     public bool isSet;
     public string type;
     public GameObject player;
-    public bool isFinish;
     public ActionObject action;
 
     public Animal(int ID )
@@ -36,13 +35,25 @@ public class Animal{
         this.player = player;
     }
 
-    public void SetFinish(bool finish)
-    {
-        this.isFinish = finish;
-    }
-
     public void SetAction(ActionObject action)
     {
         this.action = action;
     }
+
+	public void SetFinish(bool b)
+	{
+		this.player.GetComponent<Playermove> ().isFinish = b;
+	}
+
+	public bool IsFinish()
+	{
+		return this.player.GetComponent<Playermove> ().isFinish;
+	}
+
+	public void Move(Vector2 moveTarget, Vector2 attackTarget)
+	{
+		this.player.GetComponent<Playermove> ().Destination = moveTarget;
+		this.player.GetComponent<Playermove> ().target = attackTarget;
+		this.player.GetComponent<Playermove> ().isStart = true;
+	}
 }
