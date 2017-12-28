@@ -105,7 +105,6 @@ public class Client : MonoBehaviour
                             {
                                 int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
                                 shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(animals[playerIndex].player);
-                                //shadows[(i - KeyCode.Alpha0)].GetComponent<SpriteRenderer>().color;
                             }
                         }
                     }
@@ -307,7 +306,7 @@ public class Client : MonoBehaviour
             nowStage = stage.Character;
 			foreach (Animal animal in animals)
             {
-                if (!animal.player.GetComponent<Playermove>().isFinish)
+				if (!animal.IsFinish())
                 {
                     nowStage = stage.Replay;
                     break;
