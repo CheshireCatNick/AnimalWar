@@ -16,6 +16,9 @@ public class Client : MonoBehaviour
 
 	public GameObject fox;
 
+	public GameObject targetPrefab;
+	private GameObject [] targets = new GameObject[maxCharacterNum];
+
     private Vector2 moveDelta, attackDelta;
 
     private int nowCharacterID;
@@ -135,6 +138,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.up * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.up * scale);
                 }
             }
 
@@ -153,6 +157,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.down * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.down * scale);
                 }
             }
 
@@ -171,6 +176,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.left * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.left * scale);
                 }
             }
 
@@ -189,6 +195,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.right * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.right * scale);
                 }
             }
 
@@ -237,24 +244,29 @@ public class Client : MonoBehaviour
 					command_UI.text = CommandTextFormat("", "Please use the arrow key to choose the target you want to attack.");
 					//if nowWeapon is skip, then skip attack stage
 					if (nowWeapon == weapons [0]) {
-						actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget;
-						actionObjects[nowCharacterID].isSet = true;
+						actionObjects [nowCharacterID].attackTarget = actionObjects [nowCharacterID].moveTarget;
+						actionObjects [nowCharacterID].isSet = true;
 						nowStage = stage.Complete;
-						foreach (ActionObject actionObject in actionObjects)
-						{
-							if (!actionObject.isSet)
-							{
+						foreach (ActionObject actionObject in actionObjects) {
+							if (!actionObject.isSet) {
 								nowCharacterID = actionObject.characterID;
 								nowStage = stage.Character;
 								moveDelta = Vector2.zero;
 								attackDelta = Vector2.zero;
-								nowWeapon = weapons[0];
-								command_UI.text = CommandTextFormat("", "0 : first Character\n1 : second Character");
+								nowWeapon = weapons [0];
+								command_UI.text = CommandTextFormat ("", "0 : first Character\n1 : second Character");
 								break;
 							}
 						}
 					}
-                    
+					else {
+						if (targets[nowCharacterID] == null)
+						{
+							print ("new targets");
+							int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+							targets[nowCharacterID] = GameObject.Instantiate(targetPrefab, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
+						}
+					}
                 }
 
                 else if (nowStage == stage.Attack)
@@ -321,6 +333,7 @@ public class Client : MonoBehaviour
             for (int i = 0; i < maxCharacterNum; i++)
             {
                 Destroy(shadows[i]);
+				Destroy(targets [i]);
             }
 
             nowStage = stage.Character;
