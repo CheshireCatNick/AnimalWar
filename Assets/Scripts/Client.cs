@@ -387,13 +387,13 @@ public class Client : MonoBehaviour
         {
 			animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
         }
-     /*   
+        
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
             if(actionArray[i].weapon.name == "gun")
-                players[i].GetComponentInChildren<Weapon>().Shoot(new Vector2(0.0f, 0.0f));
+                animals[i].player.GetComponentInChildren<Gun>().Shoot(actionArray[i].attackTarget);
         }
-       */ 
+       
     }
 
     private void OnDestroy()

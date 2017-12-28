@@ -62,7 +62,7 @@ public class Playermove: MonoBehaviour {
         }
         if(isArrive == true)
         {
-            this.GetComponentInChildren<Weapon>().Shoot(target);
+            //this.GetComponentInChildren<Gun>().Shoot(target);
             isArrive = false;
             isFinish = true;
         }
