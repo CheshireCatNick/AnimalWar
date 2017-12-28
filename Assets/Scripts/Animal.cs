@@ -10,13 +10,18 @@ public class Animal{
     public GameObject player;
     public ActionObject action;
 
-    public Animal(int ID )
+	public Animal(int ID, Vector3 scale, GameObject prefab)
     {
         this.characterID = ID;
         this.isSet = false;
         this.type = "animal";
         //this.animal = new GameObject();
         this.action = new ActionObject(this.characterID);
+
+		this.player = (GameObject)GameObject.Instantiate(prefab, new Vector3(7.5f-ID*5,-0.5f,0.0f), prefab.transform.rotation);
+		this.player.transform.localScale = scale;
+		this.player.name = "player" + ID.ToString();
+		this.player.gameObject.layer = 10 + ID;
     }
 
     public void SetisSet(bool set)
