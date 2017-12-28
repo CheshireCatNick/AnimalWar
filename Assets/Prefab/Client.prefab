@@ -172,12 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: 1
   playerID: 0
-  player: {fileID: 1041036579761448, guid: c50547486b1155442902a6571bceb09f, type: 2}
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  fox: {fileID: 1041036579761448, guid: c50547486b1155442902a6571bceb09f, type: 2}
   time_UI: {fileID: 114690094600198542}
   command_UI: {fileID: 114628214586994804}
 --- !u!114 &114628214586994804
