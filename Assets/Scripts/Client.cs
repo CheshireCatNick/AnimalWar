@@ -274,12 +274,11 @@ public class Client : MonoBehaviour
             string opponentActionStr = connectionManager.ReceiveActionStr();
             if (opponentActionStr != "")
             {
-                //string[] opponentActions = opponentActionStr.Split('/');
-                
+                string[] opponentActions = opponentActionStr.Split('/');
                 if (playerID == 0)
                 {
-                    replayActionObjects[3] = new ActionObject(opponentActionStr[0]);
-                    replayActionObjects[2] = new ActionObject(opponentActionStr[1]);
+                    replayActionObjects[3] = new ActionObject(opponentActions[0]);
+                    replayActionObjects[2] = new ActionObject(opponentActions[1]);
                     replayActionObjects[1] = actionObjects[1];
                     replayActionObjects[0] = actionObjects[0];
                 }
@@ -287,8 +286,8 @@ public class Client : MonoBehaviour
                 {
                     replayActionObjects[0] = actionObjects[0];
                     replayActionObjects[1] = actionObjects[1];
-                    replayActionObjects[2] = new ActionObject(opponentActionStr[1]);
-                    replayActionObjects[3] = new ActionObject(opponentActionStr[0]);
+                    replayActionObjects[2] = new ActionObject(opponentActions[1]);
+                    replayActionObjects[3] = new ActionObject(opponentActions[0]);
                 }
                 
                 Replay(replayActionObjects);
