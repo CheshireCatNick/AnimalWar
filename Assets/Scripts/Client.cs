@@ -101,11 +101,6 @@ public class Client : MonoBehaviour
                         {
                             command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
                             nowCharacterID = i - KeyCode.Alpha0;
-                            if (shadows[(i - KeyCode.Alpha0)] == null)
-                            {
-                                int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
-                                shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(animals[playerIndex].player);
-                            }
                         }
                     }
 
@@ -218,6 +213,11 @@ public class Client : MonoBehaviour
                 {
                     print("in " + nowCharacterID);
                     actionObjects[nowCharacterID].characterID = nowCharacterID;
+					if (shadows[nowCharacterID] == null)
+					{
+						int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+						shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
+					}
                     nowStage = stage.Move;
                     print("after " + nowStage);
                     command_UI.text = CommandTextFormat("", "Please use the arrow key to move your animal.");
@@ -234,7 +234,27 @@ public class Client : MonoBehaviour
                 {
                     actionObjects[nowCharacterID].weapon = nowWeapon;
                     nowStage = stage.Attack;
-                    command_UI.text = CommandTextFormat("", "Please use the arrow key to choose the target you want to attack.");
+					command_UI.text = CommandTextFormat("", "Please use the arrow key to choose the target you want to attack.");
+					//if nowWeapon is skip, then skip attack stage
+					if (nowWeapon == weapons [0]) {
+						actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget;
+						actionObjects[nowCharacterID].isSet = true;
+						nowStage = stage.Complete;
+						foreach (ActionObject actionObject in actionObjects)
+						{
+							if (!actionObject.isSet)
+							{
+								nowCharacterID = actionObject.characterID;
+								nowStage = stage.Character;
+								moveDelta = Vector2.zero;
+								attackDelta = Vector2.zero;
+								nowWeapon = weapons[0];
+								command_UI.text = CommandTextFormat("", "0 : first Character\n1 : second Character");
+								break;
+							}
+						}
+					}
+                    
                 }
 
                 else if (nowStage == stage.Attack)
