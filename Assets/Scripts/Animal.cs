@@ -31,9 +31,9 @@ public class Animal{
         this.type = type;
     }
 
-    public void SetAnimal(GameObject animal)
+    public void SetPlayer(GameObject player)
     {
-        this.animal = animal;
+        this.player = player;
     }
 
     public void SetFinish(bool finish)
