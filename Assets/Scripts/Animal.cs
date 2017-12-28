@@ -31,7 +31,6 @@ public class Animal{
     public GameObject player;
     public ActionObject action;
     public Ability ability;
-    
 
     public Animal(int ID, Vector3 scale, GameObject prefab)
     {
@@ -46,7 +45,12 @@ public class Animal{
 		this.player.transform.localScale = scale;
 		this.player.name = "player" + ID.ToString();
 		this.player.gameObject.layer = 10 + ID;
-
+        if (scale.x < 0)
+        {
+            Vector3 childscale = this.player.transform.GetChild(3).transform.localScale;
+            childscale.x *= -1;
+            this.player.transform.GetChild(3).transform.localScale = childscale;
+        }
     }
 
     public void SetisSet(bool set)
@@ -88,9 +92,16 @@ public class Animal{
             moveDelta.y > this.ability.moveLimit.y)
             return false;*/
         // check boundary
-        Vector3 pos = this.player.transform.localPosition + new Vector3(moveDelta[0], moveDelta[1], 0);
-        Vector2 leftBoundary = new Vector2(-0.4f, 4.2f);
-        Vector2 rightBoundary = new Vector2(42.0f, 4.2f);
+        Vector3 pos = new Vector2(
+            this.player.transform.localPosition.x * this.player.transform.localScale.x,
+            this.player.transform.localPosition.y)
+            + new Vector2(moveDelta[0], moveDelta[1]);
+
+        Vector2 leftBoundary = new Vector2(-11.5f, 4.2f);
+        Vector2 rightBoundary = new Vector2(11.5f, 4.2f);
+
+        Debug.Log(pos.x);
+        
         if (pos.x < leftBoundary.x || pos.x > rightBoundary.x ||
             pos.y > leftBoundary.y || pos.y > rightBoundary.y)
             return false;

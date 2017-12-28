@@ -38,7 +38,8 @@ public class Playermove: MonoBehaviour {
         if (playerRigidbody2D != null) {
             Vector2 currentPosition = playerRigidbody2D.transform.position;
             
-            if (Mathf.Abs(Destination.x - currentPosition.x) >= 0.5) {
+            if (Mathf.Abs(Destination.x - currentPosition.x) >= 0 ||
+                Mathf.Abs(Destination.y - currentPosition.y) >= 0.5) {
                 float speed = 5;
 
                 if (Vector2.Distance(currentPosition, Destination) < 0.01f)
@@ -55,6 +56,7 @@ public class Playermove: MonoBehaviour {
             }
             else if (isStart == true)
             {
+                //transform.position = Destination;
                 isStart = false;
                 isArrive = true;
             }

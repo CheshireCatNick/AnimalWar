@@ -16,6 +16,9 @@ public class Client : MonoBehaviour
 
 	public GameObject fox;
 
+	public GameObject targetPrefab;
+	private GameObject [] targets = new GameObject[maxCharacterNum];
+
     private Vector2 moveDelta, attackDelta;
 
     private int nowCharacterID;
@@ -96,17 +99,10 @@ public class Client : MonoBehaviour
                     //use select target Character
                     if (nowStage == stage.Character)
                     {
-
 						if ((i - KeyCode.Alpha0 < maxCharacterNum) && (animals[i - KeyCode.Alpha0].player != null))
                         {
                             command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
                             nowCharacterID = i - KeyCode.Alpha0;
-                            if (shadows[(i - KeyCode.Alpha0)] == null)
-                            {
-                                int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
-                                shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(animals[playerIndex].player);
-                                shadows[(i - KeyCode.Alpha0)].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
-                            }
                         }
                     }
 
@@ -144,6 +140,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.up * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.up * scale);
                 }
             }
 
@@ -165,6 +162,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.down * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.down * scale);
                 }
             }
 
@@ -186,6 +184,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.left * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.left * scale);
                 }
             }
 
@@ -207,6 +206,7 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.right * scale;
+					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.right * scale);
                 }
             }
 
@@ -231,6 +231,12 @@ public class Client : MonoBehaviour
                 {
                     print("in " + nowCharacterID);
                     actionObjects[nowCharacterID].characterID = nowCharacterID;
+					if (shadows[nowCharacterID] == null)
+					{
+						int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+						shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
+                        shadows[nowCharacterID].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+                    }
                     nowStage = stage.Move;
                     print("after " + nowStage);
                     command_UI.text = CommandTextFormat("", "Please use the arrow key to move your animal.");
@@ -247,12 +253,37 @@ public class Client : MonoBehaviour
                 {
                     actionObjects[nowCharacterID].weapon = nowWeapon;
                     nowStage = stage.Attack;
-                    command_UI.text = CommandTextFormat("", "Please use the arrow key to choose the target you want to attack.");
+					command_UI.text = CommandTextFormat("", "Please use the arrow key to choose the target you want to attack.");
+					//if nowWeapon is skip, then skip attack stage
+					if (nowWeapon == weapons [0]) {
+						actionObjects [nowCharacterID].attackTarget = actionObjects [nowCharacterID].moveTarget;
+						actionObjects [nowCharacterID].isSet = true;
+						nowStage = stage.Complete;
+						foreach (ActionObject actionObject in actionObjects) {
+							if (!actionObject.isSet) {
+								nowCharacterID = actionObject.characterID;
+								nowStage = stage.Character;
+								moveDelta = Vector2.zero;
+								attackDelta = Vector2.zero;
+								nowWeapon = weapons [0];
+								command_UI.text = CommandTextFormat ("", "0 : first Character\n1 : second Character");
+								break;
+							}
+						}
+					}
+					else {
+						if (targets[nowCharacterID] == null)
+						{
+							print ("new targets");
+							int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+							targets[nowCharacterID] = GameObject.Instantiate(targetPrefab, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
+						}
+					}
                 }
 
                 else if (nowStage == stage.Attack)
                 {
-                    actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
+					actionObjects[nowCharacterID].attackTarget = targets[nowCharacterID].transform.localPosition;
                     actionObjects[nowCharacterID].isSet = true;
                     //if it is the final animal then go to Complete, else go to Character
                     nowStage = stage.Complete;
@@ -314,6 +345,7 @@ public class Client : MonoBehaviour
             for (int i = 0; i < maxCharacterNum; i++)
             {
                 Destroy(shadows[i]);
+				Destroy(targets [i]);
             }
 
             nowStage = stage.Character;
@@ -422,8 +454,13 @@ public class Client : MonoBehaviour
                 actionObjects[nowCharacterID].weapon = nowWeapon;
             else
                 actionObjects[nowCharacterID].weapon = weapons[0];
+			if (shadows[nowCharacterID] == null)
+			{
+				int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+				shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
+			}
             actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
-            actionObjects[nowCharacterID].attackTarget = actionObjects[nowCharacterID].moveTarget + attackDelta;
+			actionObjects[nowCharacterID].attackTarget = targets[nowCharacterID].transform.localPosition;
         }
         nowStage = stage.Complete;
     }
