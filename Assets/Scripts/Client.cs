@@ -112,6 +112,7 @@ public class Client : MonoBehaviour
                             {
                                 int playerIndex = (playerID == 1) ? i - KeyCode.Alpha0 : maxCharacterNum * 2 - 1 - (i - KeyCode.Alpha0);
                                 shadows[(i - KeyCode.Alpha0)] = GameObject.Instantiate(animals[playerIndex].player);
+                                //shadows[(i - KeyCode.Alpha0)].GetComponent<SpriteRenderer>().color;
                             }
                         }
                     }
