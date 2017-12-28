@@ -14,9 +14,9 @@ public class Client : MonoBehaviour
 
     public GameObject player;
 
-    public GameObject[] players = new GameObject[4];
+    public GameObject[] players = new GameObject[2*maxCharacterNum];
 
-    public Animal[] animals = new Animal[4];
+	public Animal[] animals = new Animal[2*maxCharacterNum];
 
     private Vector2 moveDelta, attackDelta;
 
@@ -94,7 +94,7 @@ public class Client : MonoBehaviour
 
     private void Update()
     {
-        //check Timeout, if true, set nowStaget to Complete and Replay
+        //check Timeout, if true, set nowStages to Complete and Replay
         print(nowStage);
         if (nowStage == stage.Character || nowStage == stage.Weapon)
         {
@@ -107,7 +107,7 @@ public class Client : MonoBehaviour
                     if (nowStage == stage.Character)
                     {
 
-                        if (i - KeyCode.Alpha0 < maxCharacterNum)
+						if ((i - KeyCode.Alpha0 < maxCharacterNum) && (actionObjects[i - KeyCode.Alpha0] != null))
                         {
                             command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
                             nowCharacterID = i - KeyCode.Alpha0;
