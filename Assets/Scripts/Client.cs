@@ -61,7 +61,7 @@ public class Client : MonoBehaviour
         for (int i = 0; i < 2 * maxCharacterNum; i++)
         { 
             animals[i] = new Animal(i);
-            GameObject player = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
+            player = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
             //Do Flip
             if (i >= 0 && i < maxCharacterNum)
             {
