@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: 1
   playerID: 0
-  player: {fileID: 1784092545548606, guid: b5e8ded027b120840b10b2d653852132, type: 2}
+  player: {fileID: 1041036579761448, guid: c50547486b1155442902a6571bceb09f, type: 2}
   players:
   - {fileID: 0}
   - {fileID: 0}
