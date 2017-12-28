@@ -61,7 +61,7 @@ public class Client : MonoBehaviour
         for (int i = 0; i < 2 * maxCharacterNum; i++)
         { 
             animals[i] = new Animal(i);
-            animals[i].player = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
+            player = (GameObject)GameObject.Instantiate(player, new Vector3(7.5f-i*5,-0.5f,0.0f),player.transform.rotation);
             //Do Flip
             if (i >= 0 && i < maxCharacterNum)
             {
@@ -70,8 +70,9 @@ public class Client : MonoBehaviour
                 theScale.x *= -1;
                 animals[i].player.transform.localScale = theScale;
             }
-			animals[i].player.name = "player" + i.ToString();
-			animals[i].player.gameObject.layer = 10 + i;
+			player.name = "player" + i.ToString();
+			player.gameObject.layer = 10 + i;
+			animals [i].SetPlayer (player);
         }
 
         weapons[0] = new Weapons("skip");
@@ -324,7 +325,7 @@ public class Client : MonoBehaviour
                 for (int i = 0; i < maxCharacterNum; i++)
                     actionObjects[i].isSet = false;
                 for (int i = 0; i < maxCharacterNum * 2; i++)
-					animals[i].player.GetComponent<Playermove>().isFinish = false;
+					animals[i].SetFinish(false);
 
                 nowCharacterID = 0;
                 nowWeapon = weapons[0];
@@ -359,9 +360,7 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
-			animals[i].player.GetComponent<Playermove>().Destination = actionArray[i].moveTarget;
-            animals[i].player.GetComponent<Playermove>().target = actionArray[i].attackTarget;
-            animals[i].player.GetComponent<Playermove>().isStart = true;
+			animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
         }
      /*   
         for (int i = 0; i < maxCharacterNum*2; i++)
