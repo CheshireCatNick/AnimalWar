@@ -42,4 +42,8 @@ public class Health : MonoBehaviour
 			Destroy(this.gameObject);
 		}
 	}
+
+	public void DecreaseHealth (int damage) {
+		currentLives -= damage;
+	}
 }

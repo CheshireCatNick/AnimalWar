@@ -356,7 +356,10 @@ public class Client : MonoBehaviour
 
             if (nowStage == stage.Character)
             {
-                for (int i = 0; i < maxCharacterNum; i++)
+				animals [0].player.GetComponent<Health> ().DecreaseHealth (1);
+				animals [1].player.GetComponent<Health> ().DecreaseHealth (1);
+
+				for (int i = 0; i < maxCharacterNum; i++)
                     actionObjects[i].isSet = false;
                 for (int i = 0; i < maxCharacterNum * 2; i++)
 					animals[i].SetFinish(false);
@@ -386,6 +389,7 @@ public class Client : MonoBehaviour
 							actionObjects [maxCharacterNum - 1 - i].isSet = true;
 					}
 				}
+
 				for (int i = 0; i < 2; i++) {
 					if (flags [i]) {
 						command_UI.text = CommandTextFormat ("", "Player " + i.ToString() + " win!!\nPlease press enter to restart game,\n Or press esc to quit.");
@@ -393,6 +397,12 @@ public class Client : MonoBehaviour
 						CancelInvoke ("Timecount");
 						nowStage = stage.GameOver;
 					}
+				}
+				if (flags [0] && flags [1]) {
+					command_UI.text = CommandTextFormat ("", "Draw!!\nPlease press enter to restart game,\n Or press esc to quit.");
+					time_UI.text = TimeTextFormat ();
+					CancelInvoke ("Timecount");
+					nowStage = stage.GameOver;
 				}
 			}
 		}
