@@ -22,9 +22,12 @@ public class Animal{
         }
     };
     public Ability[] animalAbilities = {
-        new Ability(new Vector2(5f, 0f), new Vector2(0, 0)),
-        new Ability(new Vector2(5f, 0f), new Vector2(0, 0)),
-        new Ability(new Vector2(5f, 0f), new Vector2(0, 0)),
+        // Fox
+        new Ability(new Vector2(5f, 0.001f), new Vector2(0, 0)),
+        // Frog
+        new Ability(new Vector2(5f, 0.001f), new Vector2(0, 0)),
+        // Eagle
+        new Ability(new Vector2(5f, 10f), new Vector2(0, 0)),
     };
 
     public int characterID;
@@ -93,6 +96,7 @@ public class Animal{
         Vector2 scale = this.player.transform.localScale;
         Vector2 rPos = new Vector2(pos.x * scale.x, pos.y);
         Vector2 moveDelta = shadowPos - rPos;
+        Debug.Log(moveDelta.y);
         if (Mathf.Abs(moveDelta.x) > this.ability.moveLimit.x ||
             Mathf.Abs(moveDelta.y) > this.ability.moveLimit.y)
             return false;
