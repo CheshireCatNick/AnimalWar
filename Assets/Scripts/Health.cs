@@ -25,14 +25,17 @@ public class Health : MonoBehaviour
     {
         return currentLives;
     }
-	void OnCollisionEnter (Collision other)
+	void OnCollisionEnter2D (Collision2D other)
 	{
 		//當敵人碰到塔就受傷
-		if ((other.gameObject.tag != "Sphere" && other.gameObject.tag != "enemy") || !alive)
+		if ((other.gameObject.tag != "Sphere" && other.gameObject.tag != "Enemy") || !alive) {
+			print ("jizz");
 			return;
+		}
 		
 		currentLives -= 1;
 
+		print (currentLives);
         //如果沒血了
         if (currentLives <= 0)
 		{
