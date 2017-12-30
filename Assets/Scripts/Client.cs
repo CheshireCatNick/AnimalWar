@@ -389,7 +389,7 @@ public class Client : MonoBehaviour
 				}
 				for (int i = 0; i < 2; i++) {
 					if (flags [i]) {
-						command_UI.text = CommandTextFormat ("", "Player " + i.ToString + " win!!\nPlease press enter to restart game,\n Or press esc to quit.");
+						command_UI.text = CommandTextFormat ("", "Player " + i.ToString() + " win!!\nPlease press enter to restart game,\n Or press esc to quit.");
 						time_UI.text = TimeTextFormat ();
 						CancelInvoke ("Timecount");
 						nowStage = stage.GameOver;
