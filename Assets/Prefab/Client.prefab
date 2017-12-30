@@ -173,6 +173,8 @@ MonoBehaviour:
   scale: 1
   playerID: 0
   fox: {fileID: 1865246729117672, guid: a4d4e615528016c40a9c6dee267365aa, type: 2}
+  targetPrefab: {fileID: 1080203863466444, guid: 1281d4780ed413649b2ad953b7845085,
+    type: 2}
   time_UI: {fileID: 114690094600198542}
   command_UI: {fileID: 114628214586994804}
 --- !u!114 &114628214586994804
