@@ -29,7 +29,6 @@ public class Health : MonoBehaviour
 	{
 		//當敵人碰到塔就受傷
 		if ((other.gameObject.tag != "Sphere" && other.gameObject.tag != "Enemy") || !alive) {
-			print ("jizz");
 			return;
 		}
 		

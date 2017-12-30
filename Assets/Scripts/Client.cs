@@ -363,8 +363,8 @@ public class Client : MonoBehaviour
 				animals [0].player.GetComponent<Health> ().DecreaseHealth (1);
 				animals [1].player.GetComponent<Health> ().DecreaseHealth (1);
 
-				for (int i = 0; i < maxCharacterNum; i++)
-                    actionObjects[i].isSet = false;
+				//for (int i = 0; i < maxCharacterNum; i++)
+                //    actionObjects[i].isSet = false;
                 for (int i = 0; i < maxCharacterNum * 2; i++)
 					animals[i].SetFinish(false);
 
@@ -385,12 +385,12 @@ public class Client : MonoBehaviour
 					if (animals [i].player != null) {
 						flags [1] = false;
 						if (playerID == 1)
-							actionObjects [i].isSet = true;
+							actionObjects [i].isSet = false;
 					}
 					if (animals [maxCharacterNum + i].player != null) {
 						flags [0] = false;
 						if (playerID == 0)
-							actionObjects [maxCharacterNum - 1 - i].isSet = true;
+							actionObjects [maxCharacterNum - 1 - i].isSet = false;
 					}
 				}
 
