@@ -40,7 +40,8 @@ public class Client : MonoBehaviour
         Attack,
         Complete,
         WaitOpponent,
-        Replay
+        Replay,
+		GameOver
     };
 
     private stage nowStage = stage.Character;
@@ -340,19 +341,20 @@ public class Client : MonoBehaviour
             //Destroy shadows
             for (int i = 0; i < maxCharacterNum; i++)
             {
-                Destroy(shadows[i]);
+                Destroy(shadows [i]);
 				Destroy(targets [i]);
             }
 
             nowStage = stage.Character;
 			foreach (Animal animal in animals)
             {
-				if (!animal.IsFinish())
+				if (animal.player != null && !animal.IsFinish())
                 {
                     nowStage = stage.Replay;
                     break;
                 }
             }
+
             if (nowStage == stage.Character)
             {
                 for (int i = 0; i < maxCharacterNum; i++)
@@ -368,11 +370,41 @@ public class Client : MonoBehaviour
                 //set timer
                 time_int = periodTime;
                 InvokeRepeating("Timecount", 1, 1);
-                time_UI.text = TimeTextFormat();
-            }
-        }
+				time_UI.text = TimeTextFormat();
 
-    }
+				//check game over
+				bool[] flags = { true, true };
+
+				for (int i = 0; i < maxCharacterNum; i++) {
+					if (animals [i].player != null) {
+						flags [1] = false;
+						if (playerID == 1)
+							actionObjects [i].isSet = true;
+					}
+					if (animals [maxCharacterNum + i].player != null) {
+						flags [0] = false;
+						if (playerID == 0)
+							actionObjects [maxCharacterNum - 1 - i].isSet = true;
+					}
+				}
+				for (int i = 0; i < 2; i++) {
+					if (flags [i]) {
+						command_UI.text = CommandTextFormat ("", "Player " + i.ToString + " win!!\nPlease press enter to restart game,\n Or press esc to quit.");
+						time_UI.text = TimeTextFormat ();
+						CancelInvoke ("Timecount");
+						nowStage = stage.GameOver;
+					}
+				}
+			}
+		}
+
+		if (nowStage == stage.GameOver) {
+			if (Input.GetKeyDown (KeyCode.Return))
+				Start ();
+			if (Input.GetKeyDown (KeyCode.Escape))
+				Application.Quit ();
+		}
+	}
 
     //receive actionArray from server
     private void SendActions()
