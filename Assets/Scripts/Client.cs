@@ -272,7 +272,6 @@ public class Client : MonoBehaviour
 						if (targets[nowCharacterID] == null)
 						{
 							print ("new targets");
-							int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
 							targets[nowCharacterID] = GameObject.Instantiate(targetPrefab, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
 						}
 					}
