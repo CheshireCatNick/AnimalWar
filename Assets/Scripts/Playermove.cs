@@ -55,6 +55,7 @@ public class Playermove: MonoBehaviour {
             }
             else if (isStart == true)
             {
+				this.GetComponent<Health> ().DecreaseHealth (1);
                 isStart = false;
                 isArrive = true;
             }

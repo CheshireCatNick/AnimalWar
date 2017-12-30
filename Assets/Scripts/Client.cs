@@ -305,9 +305,6 @@ public class Client : MonoBehaviour
         }
         if (nowStage == stage.Complete)
         {
-			animals [0].player.GetComponent<Health> ().DecreaseHealth (1);
-			animals [1].player.GetComponent<Health> ().DecreaseHealth (1);
-            
 			time_UI.text = TimeTextFormat();
             CancelInvoke("Timecount");
             SendActions();
