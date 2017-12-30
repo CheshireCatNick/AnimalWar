@@ -44,5 +44,10 @@ public class Health : MonoBehaviour
 
 	public void DecreaseHealth (int damage) {
 		currentLives -= damage;
+		//如果沒血了
+		if (currentLives <= 0)
+		{
+			Destroy(this.gameObject);
+		}
 	}
 }
