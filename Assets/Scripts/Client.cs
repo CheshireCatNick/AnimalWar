@@ -132,7 +132,8 @@ public class Client : MonoBehaviour
                 {
                     moveDelta += Vector2.up * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.up * scale;
-                    if (animals[nowCharacterID].CanMove(dst))
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    if (animals[playerIndex].CanMove(dst))
                         shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 
@@ -153,7 +154,8 @@ public class Client : MonoBehaviour
                 {
                     moveDelta += Vector2.down * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.down * scale;
-                    if (animals[nowCharacterID].CanMove(dst))
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    if (animals[playerIndex].CanMove(dst))
                         shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 
@@ -174,7 +176,8 @@ public class Client : MonoBehaviour
                 {
                     moveDelta += Vector2.left * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.left * scale;
-                    if (animals[nowCharacterID].CanMove(dst))
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    if (animals[playerIndex].CanMove(dst))
                         shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 
@@ -195,7 +198,8 @@ public class Client : MonoBehaviour
                 {
                     moveDelta += Vector2.right * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.right * scale;
-                    if (animals[nowCharacterID].CanMove(dst))
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    if (animals[playerIndex].CanMove(dst))
                         shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 

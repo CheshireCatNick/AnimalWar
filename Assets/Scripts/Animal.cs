@@ -93,13 +93,10 @@ public class Animal{
     {
         // check ability move limit
         Vector2 pos = this.player.transform.localPosition;
-        int scale = (characterID <= 1) ? 1 : -1;
-        Vector2 rPos = new Vector2(pos.x * scale, pos.y);
-        Vector2 moveDelta = shadowPos - rPos;
+        Vector2 moveDelta = shadowPos - pos;
         if (Mathf.Abs(moveDelta.x) > this.ability.moveLimit.x ||
             Mathf.Abs(moveDelta.y) > this.ability.moveLimit.y)
             return false;
-        Debug.Log("boundary");
         // check boundary
         Vector2 leftBoundary = new Vector2(-11.8f, 4.2f);
         Vector2 rightBoundary = new Vector2(11.8f, 4.2f);
