@@ -351,8 +351,10 @@ public class Client : MonoBehaviour
             nowStage = stage.Character;
 			foreach (Animal animal in animals)
             {
+				print (animal.player == null);
 				if (animal.player != null && !animal.IsFinish())
-                {
+				{
+					print ("in " + (animal.player == null));
                     nowStage = stage.Replay;
                     break;
                 }
@@ -360,25 +362,10 @@ public class Client : MonoBehaviour
 
             if (nowStage == stage.Character)
             {
-
-				//for (int i = 0; i < maxCharacterNum; i++)
-                //    actionObjects[i].isSet = false;
-                for (int i = 0; i < maxCharacterNum * 2; i++)
-					animals[i].SetFinish(false);
-
-                nowCharacterID = 0;
-                nowWeapon = weapons[0];
-                moveDelta = Vector2.zero;
-                attackDelta = Vector2.zero;
-
-                //set timer
-                time_int = periodTime;
-                InvokeRepeating("Timecount", 1, 1);
-				time_UI.text = TimeTextFormat();
-
 				//check game over
 				bool[] flags = { true, true };
 
+				print ("init player 0 : " + flags[0] + " player 1: " + flags [1]);
 				for (int i = 0; i < maxCharacterNum; i++) {
 					if (animals [i].player != null) {
 						flags [1] = false;
@@ -391,20 +378,33 @@ public class Client : MonoBehaviour
 							actionObjects [maxCharacterNum - 1 - i].isSet = false;
 					}
 				}
-				print ("player 1: " + flags [1]);
+				print ("player 0 : " + flags[0] + " player 1: " + flags [1]);
 				for (int i = 0; i < 2; i++) {
 					if (flags [i]) {
-						command_UI.text = CommandTextFormat ("", "Player " + i.ToString() + " win!!\nPlease press enter to restart game,\n Or press esc to quit.");
-						time_UI.text = TimeTextFormat ();
-						CancelInvoke ("Timecount");
+						command_UI.text = CommandTextFormat ("", "Player " + i.ToString() + " win!!\nPlease press enter to restart game,\nOr press esc to quit.");
 						nowStage = stage.GameOver;
 					}
 				}
 				if (flags [0] && flags [1]) {
-					command_UI.text = CommandTextFormat ("", "Draw!!\nPlease press enter to restart game,\n Or press esc to quit.");
-					time_UI.text = TimeTextFormat ();
-					CancelInvoke ("Timecount");
+					command_UI.text = CommandTextFormat ("", "Draw!!\nPlease press enter to restart game,\nOr press esc to quit.");
 					nowStage = stage.GameOver;
+				}
+
+				if (nowStage != stage.GameOver) {
+					//for (int i = 0; i < maxCharacterNum; i++)
+					//    actionObjects[i].isSet = false;
+					for (int i = 0; i < maxCharacterNum * 2; i++)
+						animals [i].SetFinish (false);
+
+					nowCharacterID = 0;
+					nowWeapon = weapons [0];
+					moveDelta = Vector2.zero;
+					attackDelta = Vector2.zero;
+
+					//set timer
+					time_int = periodTime;
+					InvokeRepeating ("Timecount", 1, 1);
+					time_UI.text = TimeTextFormat ();
 				}
 			}
 		}
