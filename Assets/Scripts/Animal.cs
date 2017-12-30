@@ -20,7 +20,7 @@ public class Animal{
         }
     };
     public Ability[] animalAbilities = {
-        new Ability(new Vector2(0.5f, 0.5f)),
+        new Ability(new Vector2(5f, 5f)),
         new Ability(new Vector2(0, 0)),
         new Ability(new Vector2(0, 0))
     };
@@ -84,26 +84,21 @@ public class Animal{
 	}
 
     // return limited move range
-    public bool CanMove(Vector2 moveDelta)
+    public bool CanMove(Vector2 shadowPos)
     {
-        /*
         // check ability move limit
-        if (moveDelta.x > this.ability.moveLimit.x ||
-            moveDelta.y > this.ability.moveLimit.y)
-            return false;*/
+        Vector2 pos = this.player.transform.localPosition;
+        Vector2 scale = this.player.transform.localScale;
+        Vector2 rPos = new Vector2(pos.x * scale.x, pos.y);
+        Vector2 moveDelta = shadowPos - rPos;
+        if (Mathf.Abs(moveDelta.x) > this.ability.moveLimit.x ||
+            Mathf.Abs(moveDelta.y) > this.ability.moveLimit.y)
+            return false;
         // check boundary
-        Vector3 pos = new Vector2(
-            this.player.transform.localPosition.x * this.player.transform.localScale.x,
-            this.player.transform.localPosition.y)
-            + new Vector2(moveDelta[0], moveDelta[1]);
-
-        Vector2 leftBoundary = new Vector2(-11.5f, 4.2f);
-        Vector2 rightBoundary = new Vector2(11.5f, 4.2f);
-
-        Debug.Log(pos.x);
-        
-        if (pos.x < leftBoundary.x || pos.x > rightBoundary.x ||
-            pos.y > leftBoundary.y || pos.y > rightBoundary.y)
+        Vector2 leftBoundary = new Vector2(-11.8f, 4.2f);
+        Vector2 rightBoundary = new Vector2(11.8f, 4.2f);
+        if (shadowPos.x < leftBoundary.x || shadowPos.x > rightBoundary.x ||
+            shadowPos.y > leftBoundary.y || shadowPos.y > rightBoundary.y)
             return false;
         return true;
     }

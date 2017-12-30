@@ -130,10 +130,9 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Move)
                 {
                     moveDelta += Vector2.up * scale;
-                    if (animals[nowCharacterID].CanMove(moveDelta))
-                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.up * scale);
-                    else
-                        moveDelta -= Vector2.up * scale;
+                    Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.up * scale;
+                    if (animals[nowCharacterID].CanMove(dst))
+                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 
                 //weapon target
@@ -152,10 +151,9 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Move)
                 {
                     moveDelta += Vector2.down * scale;
-                    if (animals[nowCharacterID].CanMove(moveDelta))
-                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.down * scale);
-                    else
-                        moveDelta -= Vector2.down * scale;
+                    Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.down * scale;
+                    if (animals[nowCharacterID].CanMove(dst))
+                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 
                 //weapon target
@@ -174,10 +172,9 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Move)
                 {
                     moveDelta += Vector2.left * scale;
-                    if (animals[nowCharacterID].CanMove(moveDelta))
-                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.left * scale);
-                    else
-                        moveDelta -= Vector2.left * scale;
+                    Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.left * scale;
+                    if (animals[nowCharacterID].CanMove(dst))
+                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 
                 //weapon target
@@ -196,10 +193,9 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Move)
                 {
                     moveDelta += Vector2.right * scale;
-                    if (animals[nowCharacterID].CanMove(moveDelta))
-                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = shadows[nowCharacterID].transform.localPosition + (Vector3.right * scale);
-                    else
-                        moveDelta -= Vector2.right * scale;
+                    Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.right * scale;
+                    if (animals[nowCharacterID].CanMove(dst))
+                        shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
 
                 //weapon target
