@@ -13,16 +13,18 @@ public class Animal{
     public struct Ability
     {
         public Vector2 moveLimit;
+        public Vector2 attackLimit;
 
-        public Ability(Vector2 ml)
+        public Ability(Vector2 ml, Vector2 al)
         {
             moveLimit = ml;
+            attackLimit = al;
         }
     };
     public Ability[] animalAbilities = {
-        new Ability(new Vector2(5f, 5f)),
-        new Ability(new Vector2(0, 0)),
-        new Ability(new Vector2(0, 0))
+        new Ability(new Vector2(5f, 0f), new Vector2(0, 0)),
+        new Ability(new Vector2(5f, 0f), new Vector2(0, 0)),
+        new Ability(new Vector2(5f, 0f), new Vector2(0, 0)),
     };
 
     public int characterID;
