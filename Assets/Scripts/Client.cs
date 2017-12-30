@@ -413,6 +413,7 @@ public class Client : MonoBehaviour
 			if (Input.GetKeyDown (KeyCode.Return)) {
 				connectionManager.Close ();
 				Start ();
+				nowStage = stage.Character;
 			}
 			if (Input.GetKeyDown (KeyCode.Escape))
 				Application.Quit ();
