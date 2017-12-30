@@ -410,8 +410,10 @@ public class Client : MonoBehaviour
 		}
 
 		if (nowStage == stage.GameOver) {
-			if (Input.GetKeyDown (KeyCode.Return))
+			if (Input.GetKeyDown (KeyCode.Return)) {
+				connectionManager.Close ();
 				Start ();
+			}
 			if (Input.GetKeyDown (KeyCode.Escape))
 				Application.Quit ();
 		}
