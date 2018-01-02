@@ -40,7 +40,8 @@ public class Client : MonoBehaviour
         Attack,
         Complete,
         WaitOpponent,
-        Replay,
+        ReplayMove,
+		ReplayAttack,
 		GameOver
     };
 
@@ -50,6 +51,8 @@ public class Client : MonoBehaviour
     private ActionObject[] replayActionObjects = new ActionObject[maxCharacterNum * 2];
 
     private GameObject[] shadows = new GameObject[maxCharacterNum];
+
+	private float attackTimer;
 
     private void Start()
     {
@@ -347,37 +350,52 @@ public class Client : MonoBehaviour
                 }
                 
                 Replay(replayActionObjects);
-                nowStage = stage.Replay;
+                nowStage = stage.ReplayMove;
             }
         }
-        if (nowStage == stage.Replay)
-        {
-            time_UI.text = TimeTextFormat();
+		if (nowStage == stage.ReplayMove) {
+			time_UI.text = TimeTextFormat ();
 
-            //Destroy shadows
-            for (int i = 0; i < maxCharacterNum; i++)
-            {
-                Destroy(shadows [i]);
-				Destroy(targets [i]);
-            }
+			//Destroy shadows
+			for (int i = 0; i < maxCharacterNum; i++) {
+				Destroy (shadows [i]);
+				Destroy (targets [i]);
+			}
 
-            nowStage = stage.Character;
-			foreach (Animal animal in animals)
-            {
-				print (animal.player == null);
-				if (animal.player != null && !animal.IsFinish())
-				{
-                    nowStage = stage.Replay;
-                    break;
-                }
-            }
+			nowStage = stage.ReplayAttack;
+			foreach (Animal animal in animals) {
+				if (animal.player != null && !animal.IsFinish ()) {
+					nowStage = stage.ReplayMove;
+					break;
+				}
+			}
+			if (nowStage == stage.ReplayAttack) {
+				for (int i = 0; i < 2 * maxCharacterNum; i++) {
+					if (animals [i].player != null) {
+						if (replayActionObjects [i].weapon.name == "gun") {
+							animals [i].player.GetComponentInChildren<Gun> ().Shoot (replayActionObjects [i].attackTarget);
 
-            if (nowStage == stage.Character)
-            {
+						}
+					}
+				}
+				attackTimer = Time.time;
+			}
+		}
+            
+		if (nowStage == stage.ReplayAttack) {
+			nowStage = stage.Character;
+			if (Time.time - attackTimer < 4.0f)
+				nowStage = stage.ReplayAttack;
+			
+			if (nowStage == stage.Character) {
+				//hide your big gun!!!
+				for (int i = 0; i < 2 * maxCharacterNum; i++) {
+					animals [i].player.transform.GetChild (3).gameObject.SetActive (false);
+				}
 				//check game over
 				bool[] flags = { true, true };
 
-				print ("init player 0 : " + flags[0] + " player 1: " + flags [1]);
+				print ("init player 0 : " + flags [0] + " player 1: " + flags [1]);
 				for (int i = 0; i < maxCharacterNum; i++) {
 					if (animals [i].player != null) {
 						flags [1] = false;
@@ -390,10 +408,10 @@ public class Client : MonoBehaviour
 							actionObjects [maxCharacterNum - 1 - i].isSet = false;
 					}
 				}
-				print ("player 0 : " + flags[0] + " player 1: " + flags [1]);
+				print ("player 0 : " + flags [0] + " player 1: " + flags [1]);
 				for (int i = 0; i < 2; i++) {
 					if (flags [i]) {
-						command_UI.text = CommandTextFormat ("", "Player " + i.ToString() + " win!!\nPlease press enter to restart game,\nOr press esc to quit.");
+						command_UI.text = CommandTextFormat ("", "Player " + i.ToString () + " win!!\nPlease press enter to restart game,\nOr press esc to quit.");
 						nowStage = stage.GameOver;
 					}
 				}
@@ -420,7 +438,6 @@ public class Client : MonoBehaviour
 				}
 			}
 		}
-
 		if (nowStage == stage.GameOver) {
 			if (Input.GetKeyDown (KeyCode.Return)) {
 				connectionManager.Close ();
