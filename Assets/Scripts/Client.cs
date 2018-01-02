@@ -14,7 +14,7 @@ public class Client : MonoBehaviour
 
 	public Animal[] animals = new Animal[2*maxCharacterNum];
 
-	public GameObject fox;
+	public GameObject fox, eagle, frog;
 
 	public GameObject targetPrefab;
 	private GameObject [] targets = new GameObject[maxCharacterNum];
@@ -69,7 +69,13 @@ public class Client : MonoBehaviour
 				actionObjects [i].moveTarget = new Vector2 (7.5f - i * 5, -0.5f);
 				scale.x *= -1;
 			}
-			animals [i] = new Animal (i, scale, fox);
+			//animals [i] = new Animal (i, scale, fox, "fox");
+
+			if (i == 0 || i == 3)
+				animals [i] = new Animal (i, scale, frog, "frog");
+			else
+				animals [i] = new Animal (i, scale, eagle, "eagle");
+
 		}
 
         weapons[0] = new Weapons("skip");
