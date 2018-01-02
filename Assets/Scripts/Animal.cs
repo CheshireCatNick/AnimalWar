@@ -37,13 +37,17 @@ public class Animal{
     public ActionObject action;
     public Ability ability;
 
-    public Animal(int ID, Vector3 scale, GameObject prefab)
+	public Animal(int ID, Vector3 scale, GameObject prefab, string type)
     {
         this.characterID = ID;
         this.isSet = false;
-        this.type = AnimalType.Fox;
-        this.ability = animalAbilities[(int)this.type];
-        //this.animal = new GameObject();
+		if (type == "fox")
+			this.type = AnimalType.Fox;
+		else if (type == "eagle")
+			this.type = AnimalType.Eagle;
+		else if (type == "frog")
+			this.type = AnimalType.Frog;
+		this.ability = animalAbilities[(int)this.type];
         this.action = new ActionObject(this.characterID);
 
 		this.player = (GameObject)GameObject.Instantiate(prefab, new Vector3(7.5f-ID*5,-0.5f,0.0f), prefab.transform.rotation);
@@ -52,9 +56,9 @@ public class Animal{
 		this.player.gameObject.layer = 10 + ID;
         if (scale.x < 0)
         {
-            Vector3 childscale = this.player.transform.GetChild(3).transform.localScale;
+            Vector3 childscale = this.player.transform.GetChild(2).transform.localScale;
             childscale.x *= -1;
-            this.player.transform.GetChild(3).transform.localScale = childscale;
+            this.player.transform.GetChild(2).transform.localScale = childscale;
         }
     }
 

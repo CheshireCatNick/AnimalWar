@@ -172,7 +172,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: 1
   playerID: 0
-  fox: {fileID: 1865246729117672, guid: a4d4e615528016c40a9c6dee267365aa, type: 2}
+  fox: {fileID: 1021787833608450, guid: cad8c5b7418b7664a8ebb2693814f200, type: 2}
+  eagle: {fileID: 1094822936967858, guid: 07c88b6c3be0b774ea2a27c5c181740a, type: 2}
+  frog: {fileID: 1441642093324284, guid: 44140e68474cf6a449e47070e469c421, type: 2}
   targetPrefab: {fileID: 1080203863466444, guid: 1281d4780ed413649b2ad953b7845085,
     type: 2}
   time_UI: {fileID: 114690094600198542}
