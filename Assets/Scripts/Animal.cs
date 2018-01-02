@@ -51,10 +51,15 @@ public class Animal{
         this.action = new ActionObject(this.characterID);
 
 		this.player = (GameObject)GameObject.Instantiate(prefab, new Vector3(7.5f-ID*5,-0.5f,0.0f), prefab.transform.rotation);
-		this.player.transform.localScale = scale;
+
+        bool flip = false;
+        if (this.player.transform.localScale != scale)
+            flip = true;
+
+        this.player.transform.localScale = scale;
 		this.player.name = "player" + ID.ToString();
 		this.player.gameObject.layer = 10 + ID;
-        if (scale.x < 0)
+        if (flip)
         {
             Vector3 childscale = this.player.transform.GetChild(2).transform.localScale;
             childscale.x *= -1;
