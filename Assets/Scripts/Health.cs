@@ -20,7 +20,11 @@ public class Health : MonoBehaviour
 	}	
 	void Update () {
 		life.transform.localPosition= new Vector3 (( -2 + 2*(currentLives/maxhp)), 0.0f, 0.0f);
-	}
+        if (currentLives <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     public float GetHP()
     {
         return currentLives;
@@ -28,13 +32,15 @@ public class Health : MonoBehaviour
 	void OnCollisionEnter2D (Collision2D other)
 	{
 		//當敵人碰到塔就受傷
-		if ((other.gameObject.tag != "Sphere" && other.gameObject.tag != "Enemy") || !alive) {
+		if ((other.gameObject.tag != "Bumb" && other.gameObject.tag != "Cannonball") || !alive) {
 			return;
 		}
-		
-		currentLives -= 1;
+        if (other.gameObject.tag == "Bumb") 
+		    currentLives -= 20;
+        else if(other.gameObject.tag == "Cannonball")
+            currentLives -= 15;
 
-		print (currentLives);
+        print (currentLives);
         //如果沒血了
         if (currentLives <= 0)
 		{
