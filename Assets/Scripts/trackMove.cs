@@ -6,8 +6,8 @@ public class trackMove : MonoBehaviour {
 
 	public GameObject barrel;//砲管
 	float barrelSpeed = 30;
-	float maxAngle = 80;
-	float minAngle = -5;
+	//float maxAngle = 80;
+	//float minAngle = -5;
 	float angle;
 	
 	// Update is called once per frame

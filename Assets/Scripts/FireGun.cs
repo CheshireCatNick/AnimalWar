@@ -14,7 +14,7 @@ public class FireGun : MonoBehaviour {
         {
             GameObject shoot = (GameObject)Instantiate(projcetile, firePoint.position, firePoint.rotation);
             shoot.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(new Vector2(speed, 0));
-            Physics.IgnoreCollision (transform.root.GetComponent<Collider> (), shoot.GetComponent<Collider> ());
+            //Physics.IgnoreCollision (transform.root.GetComponent<Collider> (), shoot.GetComponent<Collider> ());
         }
     }
 }

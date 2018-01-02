@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4801018501285946}
   - component: {fileID: 212943357182851750}
   - component: {fileID: 50783688904561056}
-  - component: {fileID: 61211594707584888}
   - component: {fileID: 114899873592354654}
+  - component: {fileID: 58487874478543278}
   m_Layer: 0
   m_Name: Cannonball
   m_TagString: Untagged
@@ -63,8 +63,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61211594707584888
-BoxCollider2D:
+--- !u!58 &58487874478543278
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -76,18 +76,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.15, y: 0.15}
-    newSize: {x: 0.25, y: 0.28333333}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.28333333}
-  m_EdgeRadius: 0
+  m_Radius: 0.075
 --- !u!114 &114899873592354654
 MonoBehaviour:
   m_ObjectHideFlags: 1
