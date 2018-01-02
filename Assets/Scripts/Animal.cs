@@ -23,9 +23,9 @@ public class Animal{
     };
     public Ability[] animalAbilities = {
         // Fox
-        new Ability(new Vector2(5f, 0.001f), new Vector2(0, 0)),
+        new Ability(new Vector2(5f, 0.005f), new Vector2(0, 0)),
         // Frog
-        new Ability(new Vector2(5f, 0.001f), new Vector2(0, 0)),
+        new Ability(new Vector2(5f, 0.005f), new Vector2(0, 0)),
         // Eagle
         new Ability(new Vector2(5f, 10f), new Vector2(0, 0)),
     };
@@ -50,7 +50,7 @@ public class Animal{
 		this.ability = animalAbilities[(int)this.type];
         this.action = new ActionObject(this.characterID);
 
-		this.player = (GameObject)GameObject.Instantiate(prefab, new Vector3(7.5f-ID*5,-0.5f,0.0f), prefab.transform.rotation);
+		this.player = (GameObject)GameObject.Instantiate(prefab, new Vector3(12f-ID*4.8f,-0.5f,0.0f), prefab.transform.rotation);
 
         bool flip = false;
         if (this.player.transform.localScale != scale)
@@ -103,12 +103,12 @@ public class Animal{
         // check ability move limit
         Vector2 pos = this.player.transform.localPosition;
         Vector2 moveDelta = shadowPos - pos;
-        if (Mathf.Abs(moveDelta.x) > this.ability.moveLimit.x ||
-            Mathf.Abs(moveDelta.y) > this.ability.moveLimit.y)
-            return false;
-        // check boundary
-        Vector2 leftBoundary = new Vector2(-11.8f, 4.2f);
-        Vector2 rightBoundary = new Vector2(11.8f, 4.2f);
+		if (Mathf.Abs (moveDelta.x) > this.ability.moveLimit.x ||
+		          Mathf.Abs (moveDelta.y) > this.ability.moveLimit.y)
+			return false;
+		// check boundary
+        Vector2 leftBoundary = new Vector2(-12f, 4.2f);
+        Vector2 rightBoundary = new Vector2(12f, 4.2f);
         if (shadowPos.x < leftBoundary.x || shadowPos.x > rightBoundary.x ||
             shadowPos.y > leftBoundary.y || shadowPos.y > rightBoundary.y)
             return false;

@@ -6,7 +6,7 @@ using UnityEngine.UI; //使用Unity UI程式庫。
 public class Client : MonoBehaviour
 {
 
-    private const int maxCharacterNum = 2, maxWeaponNum = 2, periodTime = 45;
+    private const int maxCharacterNum = 3, maxWeaponNum = 2, periodTime = 45;
 
     public int scale;
 
@@ -66,16 +66,15 @@ public class Client : MonoBehaviour
         { 
 			Vector3 scale = transform.localScale;
 			if (i >= 0 && i < maxCharacterNum) {
-				actionObjects [i].moveTarget = new Vector2 (7.5f - i * 5, -0.5f);
+				actionObjects [i].moveTarget = new Vector2 (12f - i * 4.8f, -0.5f);
 				scale.x *= -1;
 			}
-			//animals [i] = new Animal (i, scale, fox, "fox");
-
-			if (i == 0 || i == 3)
+			if (i == 0 || i == 2*maxCharacterNum-1)
+				animals [i] = new Animal (i, scale, fox, "fox");
+			else if (i == 1 || i == 2*maxCharacterNum-2)
 				animals [i] = new Animal (i, scale, frog, "frog");
 			else
 				animals [i] = new Animal (i, scale, eagle, "eagle");
-
 		}
 
         weapons[0] = new Weapons("skip");
@@ -205,6 +204,7 @@ public class Client : MonoBehaviour
                     moveDelta += Vector2.right * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.right * scale;
                     int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+					print (animals [playerIndex].CanMove (dst));
                     if (animals[playerIndex].CanMove(dst))
                         shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
@@ -236,7 +236,6 @@ public class Client : MonoBehaviour
                 command_UI.text = CommandTextFormat("Enter", "");
                 if (nowStage == stage.Character)
                 {
-                    print("in " + nowCharacterID);
                     actionObjects[nowCharacterID].characterID = nowCharacterID;
 					if (shadows[nowCharacterID] == null)
 					{
@@ -245,7 +244,6 @@ public class Client : MonoBehaviour
                         shadows[nowCharacterID].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
                     }
                     nowStage = stage.Move;
-                    print("after " + nowStage);
                     command_UI.text = CommandTextFormat("", "Please use the arrow key to move your animal.");
                 }
 
@@ -328,15 +326,19 @@ public class Client : MonoBehaviour
                 {
                     replayActionObjects[0] = new ActionObject(opponentActions[0]);
                     replayActionObjects[1] = new ActionObject(opponentActions[1]);
-                    replayActionObjects[2] = actionObjects[1];
-                    replayActionObjects[3] = actionObjects[0];
+					replayActionObjects[2] = new ActionObject(opponentActions[2]);
+					replayActionObjects[3] = actionObjects[2];
+                    replayActionObjects[4] = actionObjects[1];
+                    replayActionObjects[5] = actionObjects[0];
                 }
                 else if (playerID == 1)
                 {
                     replayActionObjects[0] = actionObjects[0];
                     replayActionObjects[1] = actionObjects[1];
-                    replayActionObjects[2] = new ActionObject(opponentActions[1]);
-                    replayActionObjects[3] = new ActionObject(opponentActions[0]);
+					replayActionObjects[2] = actionObjects[2];
+					replayActionObjects[3] = new ActionObject(opponentActions [2]);
+                    replayActionObjects[4] = new ActionObject(opponentActions[1]);
+                    replayActionObjects[5] = new ActionObject(opponentActions[0]);
                 }
                 
                 Replay(replayActionObjects);
