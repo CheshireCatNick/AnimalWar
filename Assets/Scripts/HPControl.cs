@@ -11,13 +11,13 @@ public class HPControl : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_hp = Health.Instance.GetHP();
+        m_hp = this.GetComponent<Health>().GetHP();
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_hp = Health.Instance.GetHP();
+        m_hp = this.GetComponent<Health>().GetHP();
         m_text.text ="HP : "+ m_hp.ToString();
     }
 }
