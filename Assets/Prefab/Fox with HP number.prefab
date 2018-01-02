@@ -634,7 +634,7 @@ MonoBehaviour:
   firePoint: {fileID: 4182721179640466}
   whatToHit:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64512
 --- !u!114 &114878035605308254
 MonoBehaviour:
   m_ObjectHideFlags: 1
