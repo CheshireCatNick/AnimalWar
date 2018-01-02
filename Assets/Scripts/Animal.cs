@@ -51,7 +51,7 @@ public class Animal{
         this.action = new ActionObject(this.characterID);
 
 		this.player = (GameObject)GameObject.Instantiate(prefab, new Vector3(12f-ID*4.8f,-0.5f,0.0f), prefab.transform.rotation);
-
+		this.player.transform.GetChild (3).gameObject.SetActive (false);
         bool flip = false;
         if (this.player.transform.localScale != scale)
             flip = true;

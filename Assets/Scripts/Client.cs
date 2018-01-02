@@ -282,6 +282,11 @@ public class Client : MonoBehaviour
 							print ("new targets");
 							targets[nowCharacterID] = GameObject.Instantiate(targetPrefab, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
 						}
+						//show how big is my gun!!!
+						if (nowWeapon == weapons [1]) {
+							shadows [nowCharacterID].transform.GetChild (3).gameObject.SetActive (true);
+							shadows[nowCharacterID].transform.GetChild(3).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+						}
 					}
                 }
 
@@ -362,7 +367,6 @@ public class Client : MonoBehaviour
 				print (animal.player == null);
 				if (animal.player != null && !animal.IsFinish())
 				{
-					print ("in " + (animal.player == null));
                     nowStage = stage.Replay;
                     break;
                 }
@@ -447,13 +451,19 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
+			//show how big is my gun!!!
+			if (actionArray [i].weapon.name == "gun") {
+				animals [i].player.transform.GetChild (3).gameObject.SetActive (true);
+			}
 			animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
         }
         
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
-//            if(actionArray[i].weapon.name == "gun")
-//                animals[i].player.GetComponentInChildren<Gun>().Shoot(actionArray[i].attackTarget);
+			if (actionArray [i].weapon.name == "gun") {
+				animals [i].player.GetComponentInChildren<Gun> ().Shoot (actionArray [i].attackTarget);
+				animals [i].player.transform.GetChild (3).gameObject.SetActive (false);
+			}
         }
        
     }
