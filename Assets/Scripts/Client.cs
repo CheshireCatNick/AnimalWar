@@ -452,8 +452,8 @@ public class Client : MonoBehaviour
         
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
-            if(actionArray[i].weapon.name == "gun")
-                animals[i].player.GetComponentInChildren<Gun>().Shoot(actionArray[i].attackTarget);
+//            if(actionArray[i].weapon.name == "gun")
+//                animals[i].player.GetComponentInChildren<Gun>().Shoot(actionArray[i].attackTarget);
         }
        
     }
