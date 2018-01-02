@@ -362,10 +362,6 @@ public class Client : MonoBehaviour
 				Destroy (targets [i]);
 			}
 
-			for (int i = 0; i < 2 * maxCharacterNum; i++) {
-				
-			}
-
 			nowStage = stage.ReplayAttack;
 			foreach (Animal animal in animals) {
 				if (animal.player != null && !animal.IsFinish ()) {
@@ -481,15 +477,6 @@ public class Client : MonoBehaviour
 				animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
 			}
         }
-        /*
-        for (int i = 0; i < maxCharacterNum*2; i++)
-        {
-			if (actionArray [i].weapon.name == "gun") {
-				animals [i].player.GetComponentInChildren<Gun> ().Shoot (actionArray [i].attackTarget);
-				animals [i].player.transform.GetChild (3).gameObject.SetActive (false);
-			}
-        }
-        */
     }
 
     private void OnDestroy()
