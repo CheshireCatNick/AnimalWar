@@ -344,7 +344,7 @@ public class Client : MonoBehaviour
                     replayActionObjects[0] = actionObjects[0];
                     replayActionObjects[1] = actionObjects[1];
 					replayActionObjects[2] = actionObjects[2];
-					replayActionObjects[3] = new ActionObject(opponentActions [2]);
+					replayActionObjects[3] = new ActionObject(opponentActions[2]);
                     replayActionObjects[4] = new ActionObject(opponentActions[1]);
                     replayActionObjects[5] = new ActionObject(opponentActions[0]);
                 }
@@ -362,6 +362,10 @@ public class Client : MonoBehaviour
 				Destroy (targets [i]);
 			}
 
+			for (int i = 0; i < 2 * maxCharacterNum; i++) {
+				
+			}
+
 			nowStage = stage.ReplayAttack;
 			foreach (Animal animal in animals) {
 				if (animal.player != null && !animal.IsFinish ()) {
@@ -374,7 +378,6 @@ public class Client : MonoBehaviour
 					if (animals [i].player != null) {
 						if (replayActionObjects [i].weapon.name == "gun") {
 							animals [i].player.GetComponentInChildren<Gun> ().Shoot (replayActionObjects [i].attackTarget);
-
 						}
 					}
 				}
@@ -390,7 +393,9 @@ public class Client : MonoBehaviour
 			if (nowStage == stage.Character) {
 				//hide your big gun!!!
 				for (int i = 0; i < 2 * maxCharacterNum; i++) {
-					animals [i].player.transform.GetChild (3).gameObject.SetActive (false);
+					if (animals [i].player != null) {
+						animals [i].player.transform.GetChild (3).gameObject.SetActive (false);
+					}
 				}
 				//check game over
 				bool[] flags = { true, true };
@@ -468,13 +473,15 @@ public class Client : MonoBehaviour
 
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
-			//show how big is my gun!!!
-			if (actionArray [i].weapon.name == "gun") {
-				animals [i].player.transform.GetChild (3).gameObject.SetActive (true);
+			if (animals [i].player != null) {
+				//show how big is my gun!!!
+				if (actionArray [i].weapon.name == "gun") {
+					animals [i].player.transform.GetChild (3).gameObject.SetActive (true);
+				}
+				animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
 			}
-			animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
         }
-        
+        /*
         for (int i = 0; i < maxCharacterNum*2; i++)
         {
 			if (actionArray [i].weapon.name == "gun") {
@@ -482,7 +489,7 @@ public class Client : MonoBehaviour
 				animals [i].player.transform.GetChild (3).gameObject.SetActive (false);
 			}
         }
-       
+        */
     }
 
     private void OnDestroy()
