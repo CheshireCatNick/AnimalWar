@@ -13,21 +13,19 @@ public class Animal{
     public struct Ability
     {
         public Vector2 moveLimit;
-        public Vector2 attackLimit;
 
-        public Ability(Vector2 ml, Vector2 al)
+        public Ability(Vector2 ml)
         {
             moveLimit = ml;
-            attackLimit = al;
         }
     };
     public Ability[] animalAbilities = {
         // Fox
-        new Ability(new Vector2(5f, 0.005f), new Vector2(0, 0)),
+        new Ability(new Vector2(5f, 0.005f)),
         // Frog
-        new Ability(new Vector2(5f, 0.005f), new Vector2(0, 0)),
+        new Ability(new Vector2(5f, 0.005f)),
         // Eagle
-        new Ability(new Vector2(5f, 10f), new Vector2(0, 0)),
+        new Ability(new Vector2(5f, 10f)),
     };
 
     public int characterID;
@@ -113,6 +111,24 @@ public class Animal{
         Vector2 rightBoundary = new Vector2(12f, 4.2f);
         if (shadowPos.x < leftBoundary.x || shadowPos.x > rightBoundary.x ||
             shadowPos.y > leftBoundary.y || shadowPos.y > rightBoundary.y)
+            return false;
+        return true;
+    }
+
+    public bool CanMoveTarget(Vector2 shadowPos, Vector2 targetPos, Weapons weapon)
+    {
+        // check ability move target limit
+        Vector2 moveDelta = targetPos - shadowPos;
+        Debug.Log("move" + moveDelta.x * moveDelta.x + moveDelta.y * moveDelta.y);
+        Debug.Log("ww" + weapon.attackRadius * weapon.attackRadius);
+        if (moveDelta.x * moveDelta.x + moveDelta.y * moveDelta.y
+            > weapon.attackRadius * weapon.attackRadius)
+            return false;
+        // check boundary
+        Vector2 leftBoundary = new Vector2(-12f, 4.2f);
+        Vector2 rightBoundary = new Vector2(12f, 4.2f);
+        if (targetPos.x < leftBoundary.x || targetPos.x > rightBoundary.x ||
+            targetPos.y > leftBoundary.y || targetPos.y > rightBoundary.y)
             return false;
         return true;
     }

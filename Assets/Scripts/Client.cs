@@ -154,7 +154,11 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.up * scale;
-					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.up * scale);
+                    Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.up * scale);
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
+                    if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                        targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
             }
 
@@ -176,7 +180,11 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.down * scale;
-					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.down * scale);
+                    Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.down * scale);
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
+                    if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                        targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
             }
 
@@ -198,7 +206,11 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.left * scale;
-					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.left * scale);
+                    Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.left * scale);
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
+                    if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                        targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
             }
 
@@ -221,7 +233,11 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     attackDelta += Vector2.right * scale;
-					targets[nowCharacterID].GetComponent<Playermove>().Destination = targets[nowCharacterID].transform.localPosition + (Vector3.right * scale);
+                    Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.right * scale);
+                    int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                    Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
+                    if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                        targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
             }
 
