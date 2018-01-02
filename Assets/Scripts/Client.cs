@@ -6,7 +6,7 @@ using UnityEngine.UI; //使用Unity UI程式庫。
 public class Client : MonoBehaviour
 {
 
-    private const int maxCharacterNum = 3, maxWeaponNum = 2, periodTime = 45;
+    private const int maxCharacterNum = 3, maxWeaponNum = 4, periodTime = 45;
 
     public int scale;
 
@@ -82,6 +82,8 @@ public class Client : MonoBehaviour
 
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
+		weapons[2] = new Weapons("firegun");
+		weapons[3] = new Weapons("bumb");
         nowWeapon = weapons[0];
         nowCharacterID = 0;
         moveDelta = Vector2.zero;
@@ -91,7 +93,7 @@ public class Client : MonoBehaviour
         time_int = periodTime;
         InvokeRepeating("Timecount", 1, 1);
         time_UI.text = TimeTextFormat();
-        command_UI.text = CommandTextFormat("", "0 : first Character\n1 : second Character");
+        command_UI.text = CommandTextFormat("", "1 : first Character\n2 : second Character\n3 : third Character");
     }
 
     private void Update()
@@ -100,7 +102,7 @@ public class Client : MonoBehaviour
         print(nowStage);
         if (nowStage == stage.Character || nowStage == stage.Weapon)
         {
-            for (KeyCode i = KeyCode.Alpha0; i < KeyCode.Alpha0 + maxCharacterNum; i++)
+            for (KeyCode i = KeyCode.Alpha1; i < KeyCode.Alpha1 + maxCharacterNum; i++)
             {
                 if (Input.GetKey(i))
                 {
@@ -108,10 +110,10 @@ public class Client : MonoBehaviour
                     //use select target Character
                     if (nowStage == stage.Character)
                     {
-						if ((i - KeyCode.Alpha0 < maxCharacterNum) && (animals[i - KeyCode.Alpha0].player != null))
+						if ((i - KeyCode.Alpha1 < maxCharacterNum) && (animals[i - KeyCode.Alpha1].player != null))
                         {
-                            command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : first Character\n1 : second Character");
-                            nowCharacterID = i - KeyCode.Alpha0;
+							command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "1 : first Character\n2 : second Character\n3 : third Character");
+                            nowCharacterID = i - KeyCode.Alpha1;
                         }
                     }
 
@@ -119,10 +121,10 @@ public class Client : MonoBehaviour
                     else if (nowStage == stage.Weapon)
                     {
 
-                        if (i - KeyCode.Alpha0 < maxWeaponNum)
+                        if (i - KeyCode.Alpha1 < maxWeaponNum)
                         {
-                            command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "0 : skip attack\n1 : gun");
-                            nowWeapon = weapons[i - KeyCode.Alpha0];
+                            command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "1 : skip attack\n2 : gun\n3 : firegun\n4 : bump");
+                            nowWeapon = weapons[i - KeyCode.Alpha1];
                         }
                     }
 
@@ -254,7 +256,7 @@ public class Client : MonoBehaviour
                 {
                     actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
                     nowStage = stage.Weapon;
-                    command_UI.text = CommandTextFormat("", "0 : skip attack\n1 : gun");
+					command_UI.text = CommandTextFormat("", "1 : skip attack\n2 : gun\n3 : firegun\n4 : bump");
                 }
 
                 else if (nowStage == stage.Weapon)
@@ -274,7 +276,7 @@ public class Client : MonoBehaviour
 								moveDelta = Vector2.zero;
 								attackDelta = Vector2.zero;
 								nowWeapon = weapons [0];
-								command_UI.text = CommandTextFormat ("", "0 : first Character\n1 : second Character");
+								command_UI.text = CommandTextFormat ("", "1 : first Character\n2 : second Character\n3 : third Character");
 								break;
 							}
 						}
@@ -288,7 +290,17 @@ public class Client : MonoBehaviour
 						//show how big is my gun!!!
 						if (nowWeapon == weapons [1]) {
 							shadows [nowCharacterID].transform.GetChild (3).gameObject.SetActive (true);
-							shadows[nowCharacterID].transform.GetChild(3).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+							shadows [nowCharacterID].transform.GetChild (3).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
+						}
+						//show firegun
+						else if (nowWeapon == weapons [2]) {
+							shadows [nowCharacterID].transform.GetChild (4).gameObject.SetActive (true);
+							shadows [nowCharacterID].transform.GetChild (4).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
+						}
+						//show bump
+						else if (nowWeapon == weapons [3]) {
+							shadows [nowCharacterID].transform.GetChild (5).gameObject.SetActive (true);
+							shadows[nowCharacterID].transform.GetChild(5).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
 						}
 					}
                 }
@@ -308,7 +320,7 @@ public class Client : MonoBehaviour
                             moveDelta = Vector2.zero;
                             attackDelta = Vector2.zero;
                             nowWeapon = weapons[0];
-                            command_UI.text = CommandTextFormat("", "0 : first Character\n1 : second Character");
+                            command_UI.text = CommandTextFormat("", "1 : first Character\n2 : second Character\n3 : third Character");
                             break;
                         }
                     }
@@ -374,6 +386,7 @@ public class Client : MonoBehaviour
 					if (animals [i].player != null) {
 						if (replayActionObjects [i].weapon.name == "gun") {
 							animals [i].player.GetComponentInChildren<Gun> ().Shoot (replayActionObjects [i].attackTarget);
+						} else if (replayActionObjects [i].weapon.name == "firegun") {
 						}
 					}
 				}
@@ -391,6 +404,8 @@ public class Client : MonoBehaviour
 				for (int i = 0; i < 2 * maxCharacterNum; i++) {
 					if (animals [i].player != null) {
 						animals [i].player.transform.GetChild (3).gameObject.SetActive (false);
+						animals [i].player.transform.GetChild (4).gameObject.SetActive (false);
+						animals [i].player.transform.GetChild (5).gameObject.SetActive (false);
 					}
 				}
 				//check game over
@@ -473,6 +488,10 @@ public class Client : MonoBehaviour
 				//show how big is my gun!!!
 				if (actionArray [i].weapon.name == "gun") {
 					animals [i].player.transform.GetChild (3).gameObject.SetActive (true);
+				} else if (actionArray [i].weapon.name == "firegun") {
+					animals [i].player.transform.GetChild (4).gameObject.SetActive (true);
+				} else if (actionArray [i].weapon.name == "bump") {
+					animals [i].player.transform.GetChild (5).gameObject.SetActive (true);
 				}
 				animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
 			}
