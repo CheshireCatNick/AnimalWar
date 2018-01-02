@@ -92,7 +92,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4514785076773196}
   - component: {fileID: 114802028347254148}
-  - component: {fileID: 114759771774795222}
   - component: {fileID: 212089807248188976}
   m_Layer: 0
   m_Name: bumbhand
@@ -563,8 +562,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac026b343ea6e442b4efbff4c518772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projcetile: {fileID: 1978048045711248, guid: 1020a37343cca364f92dcc395a9356ae, type: 2}
+  Cannonball: {fileID: 1932810338598848, guid: 8031a19c187b3c549adcd8d772a5c259, type: 2}
   firePoint: {fileID: 4249368995538570}
+  firegun: {fileID: 1708903330422076}
 --- !u!114 &114624946701648460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -581,18 +581,6 @@ MonoBehaviour:
   isArrive: 0
   isFinish: 0
   isStart: 0
---- !u!114 &114759771774795222
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1578222528952368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b7875cce55c6574382cae6bcefb0ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barrel: {fileID: 1578222528952368}
 --- !u!114 &114802028347254148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -604,8 +592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac026b343ea6e442b4efbff4c518772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projcetile: {fileID: 1386976282514968, guid: d3f7f03546d8bd84d94dfa04752750fc, type: 2}
+  Cannonball: {fileID: 1386976282514968, guid: d3f7f03546d8bd84d94dfa04752750fc, type: 2}
   firePoint: {fileID: 4514785076773196}
+  firegun: {fileID: 1578222528952368}
 --- !u!114 &114807156345354898
 MonoBehaviour:
   m_ObjectHideFlags: 1

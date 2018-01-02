@@ -29,13 +29,13 @@ public class Gun : MonoBehaviour {
 		Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
 		//滑鼠所在的世界座標
 		//Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(target).x, Camera.main.ScreenToWorldPoint(target).y);
+        Vector2 targetPosition = new Vector2(Camera.main.ScreenToWorldPoint(target).x, Camera.main.ScreenToWorldPoint(target).y);
 
         //用發射點到滑鼠位置的向量做Raycast
-        RaycastHit2D hit = Physics2D.Raycast (firePointPosition, mousePosition-firePointPosition, 100, whatToHit);
+        RaycastHit2D hit = Physics2D.Raycast (firePointPosition, targetPosition-firePointPosition, 100, whatToHit);
 		//如果命中物體且是敵人則刪除他
 		if (hit.collider != null && hit.collider.tag == "Enemy") {
-			//Destroy(hit.collider.gameObject);
+            hit.collider.gameObject.GetComponent<Health>().DecreaseHealth(10);
 		}
 	}
 }

@@ -110,7 +110,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4273124307263280}
   - component: {fileID: 114669692139903658}
-  - component: {fileID: 114218013891545560}
   - component: {fileID: 212582019505343770}
   m_Layer: 0
   m_Name: bumbhand
@@ -418,8 +417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac026b343ea6e442b4efbff4c518772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projcetile: {fileID: 1978048045711248, guid: 1020a37343cca364f92dcc395a9356ae, type: 2}
+  Cannonball: {fileID: 1978048045711248, guid: 1020a37343cca364f92dcc395a9356ae, type: 2}
   firePoint: {fileID: 4998334758337878}
+  firegun: {fileID: 1994803771218626}
 --- !u!114 &114085218427327226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -506,18 +506,6 @@ MonoBehaviour:
   numberOfLives: 100
   life: {fileID: 114758362060209424}
   maxhp: 100
---- !u!114 &114218013891545560
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1525400452112736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b7875cce55c6574382cae6bcefb0ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barrel: {fileID: 1525400452112736}
 --- !u!114 &114287283528248138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -583,8 +571,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac026b343ea6e442b4efbff4c518772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projcetile: {fileID: 1386976282514968, guid: d3f7f03546d8bd84d94dfa04752750fc, type: 2}
+  Cannonball: {fileID: 1319211490225874, guid: 3f7bb7d97dd492e40b96e202a55eb6ab, type: 2}
   firePoint: {fileID: 4273124307263280}
+  firegun: {fileID: 1525400452112736}
 --- !u!114 &114687978612393024
 MonoBehaviour:
   m_ObjectHideFlags: 1
