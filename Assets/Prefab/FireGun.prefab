@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac026b343ea6e442b4efbff4c518772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projcetile: {fileID: 0}
+  projcetile: {fileID: 1978048045711248, guid: 1020a37343cca364f92dcc395a9356ae, type: 2}
   firePoint: {fileID: 4247196427181544}
 --- !u!114 &114716956127222504
 MonoBehaviour:

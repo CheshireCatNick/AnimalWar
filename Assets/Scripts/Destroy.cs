@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Destroy : MonoBehaviour {
-
+    public GameObject me;
 	// Use this for initialization
-	void Start () {
-        Destroy(this,1.0f);
+	void Update () {
+        Destroy(me,2.0f);
     }
 }
