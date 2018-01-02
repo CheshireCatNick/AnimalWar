@@ -80,8 +80,11 @@ public class Client : MonoBehaviour
 				animals [i] = new Animal (i, scale, eagle, "eagle");
 		}
 
-		for (int i = maxCharacterNum; i < 2 * maxCharacterNum; i++)
-			animals [i].player.tag = "Enemy";
+        for (int i = 0; i < maxCharacterNum; i++)
+            if (playerID == 0)
+                animals[i].player.tag = "Enemy";
+            else
+                animals[i + maxCharacterNum].player.tag = "Enemy";
 
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
