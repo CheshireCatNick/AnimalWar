@@ -6,7 +6,7 @@ public class Destroy_ray : MonoBehaviour
 {
     public GameObject ray;
     // Use this for initialization
-    void Update()
+    void OnCollisionEnter2D(Collision2D other)
     {
         Destroy(ray);
     }
