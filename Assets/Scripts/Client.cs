@@ -227,7 +227,6 @@ public class Client : MonoBehaviour
                     moveDelta += Vector2.right * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.right * scale;
                     int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
-					print (animals [playerIndex].CanMove (dst));
                     if (animals[playerIndex].CanMove(dst))
                         shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }

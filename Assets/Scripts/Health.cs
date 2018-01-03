@@ -32,10 +32,11 @@ public class Health : MonoBehaviour
 	void OnCollisionEnter2D (Collision2D other)
 	{
 		//當敵人碰到塔就受傷
-		if ((other.gameObject.tag != "bomb" && other.gameObject.tag != "Cannonball") || !alive) {
+		print ("name : " + other.gameObject.name + "tag : " + other.gameObject.tag);
+		if ((other.gameObject.tag != "Bomb" && other.gameObject.tag != "Cannonball") || !alive) {
 			return;
 		}
-        if (other.gameObject.tag == "bomb") 
+        if (other.gameObject.tag == "Bomb") 
 		    currentLives -= 40;
         else if(other.gameObject.tag == "Cannonball")
             currentLives -= 30;
