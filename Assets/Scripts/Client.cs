@@ -463,12 +463,17 @@ public class Client : MonoBehaviour
 							animals [i].SetFinish (false);
 					if (playerID == 0) {
 						for (int i = 0; i < maxCharacterNum; i++)
-							if (animals [2 * maxCharacterNum - 1 - i].player != null)
+							if (animals [2 * maxCharacterNum - 1 - i].player != null) {
 								nowCharacterID = i;
+								break;
+							}
+						
 					} else {
 						for (int i = 0; i < maxCharacterNum; i++)
-							if (animals [i].player != null)
+							if (animals [i].player != null) {
 								nowCharacterID = i;
+								break;
+							}
 					}
 				
 					nowWeapon = weapons [0];
