@@ -129,7 +129,7 @@ public class Client : MonoBehaviour
 
                         if (i - KeyCode.Alpha1 < maxWeaponNum)
                         {
-                            command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "1 : skip attack\n2 : gun\n3 : firegun\n4 : bump");
+                            command_UI.text = CommandTextFormat((i - KeyCode.Alpha0).ToString(), "1 : skip attack\n2 : gun\n3 : firegun\n4 : bomb");
                             nowWeapon = weapons[i - KeyCode.Alpha1];
                         }
                     }
@@ -278,7 +278,7 @@ public class Client : MonoBehaviour
                 {
                     actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
                     nowStage = stage.Weapon;
-					command_UI.text = CommandTextFormat("", "1 : skip attack\n2 : gun\n3 : firegun\n4 : bump");
+					command_UI.text = CommandTextFormat("", "1 : skip attack\n2 : gun\n3 : firegun\n4 : bomb");
                 }
 
                 else if (nowStage == stage.Weapon)
@@ -319,7 +319,7 @@ public class Client : MonoBehaviour
 							shadows [nowCharacterID].transform.GetChild (4).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (4).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
 						}
-						//show bump
+						//show bomb
 						else if (nowWeapon == weapons [3]) {
 							shadows [nowCharacterID].transform.GetChild (5).gameObject.SetActive (true);
 							shadows[nowCharacterID].transform.GetChild(5).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
@@ -410,7 +410,7 @@ public class Client : MonoBehaviour
 							animals [i].player.transform.GetChild (3).GetComponent<Gun> ().Shoot (replayActionObjects [i].attackTarget);
 						} else if (replayActionObjects [i].weapon.name == "firegun") {
 							animals [i].player.transform.GetChild (4).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
-						} else if (replayActionObjects [i].weapon.name == "bump") {
+						} else if (replayActionObjects [i].weapon.name == "bomb") {
 							animals [i].player.transform.GetChild (5).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
 						}
 					}
@@ -515,7 +515,7 @@ public class Client : MonoBehaviour
 					animals [i].player.transform.GetChild (3).gameObject.SetActive (true);
 				} else if (actionArray [i].weapon.name == "firegun") {
 					animals [i].player.transform.GetChild (4).gameObject.SetActive (true);
-				} else if (actionArray [i].weapon.name == "bump") {
+				} else if (actionArray [i].weapon.name == "bomb") {
 					animals [i].player.transform.GetChild (5).gameObject.SetActive (true);
 				}
 				animals [i].Move (actionArray [i].moveTarget, actionArray [i].attackTarget);
