@@ -407,8 +407,11 @@ public class Client : MonoBehaviour
 				for (int i = 0; i < 2 * maxCharacterNum; i++) {
 					if (animals [i].player != null) {
 						if (replayActionObjects [i].weapon.name == "gun") {
-							animals [i].player.GetComponentInChildren<Gun> ().Shoot (replayActionObjects [i].attackTarget);
+							animals [i].player.transform.GetChild (3).GetComponent<Gun> ().Shoot (replayActionObjects [i].attackTarget);
 						} else if (replayActionObjects [i].weapon.name == "firegun") {
+							animals [i].player.transform.GetChild (4).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
+						} else if (replayActionObjects [i].weapon.name == "bump") {
+							animals [i].player.transform.GetChild (5).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
 						}
 					}
 				}
