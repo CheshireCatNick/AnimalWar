@@ -41,7 +41,6 @@ public class Gun : MonoBehaviour {
         //用發射點到滑鼠位置的向量做Raycast
         RaycastHit2D hit = Physics2D.Raycast (firePointPosition, target-firePointPosition, 100, whatToHit);
 		//如果命中物體且是敵人則刪除他
-		print ("hit tag : " + hit.collider.tag + " parent tag : " + this.transform.parent.gameObject.tag);
 		if (hit.collider != null && (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") && hit.collider.tag != this.transform.parent.gameObject.tag) {
             hit.collider.gameObject.GetComponent<Health>().DecreaseHealth(10);
 		}
