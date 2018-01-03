@@ -468,7 +468,9 @@ public class Client : MonoBehaviour
 						if (animals [i].player != null)
 							animals [i].SetFinish (false);
 
-					nowCharacterID = 0;
+					for (int i = 0; i < maxCharacterNum; i++)
+						if (animals[i].player != null)
+							nowCharacterID = i;
 					nowWeapon = weapons [0];
 					moveDelta = Vector2.zero;
 					attackDelta = Vector2.zero;
