@@ -433,12 +433,12 @@ public class Client : MonoBehaviour
 				print ("init player 0 : " + flags [0] + " player 1: " + flags [1]);
 				for (int i = 0; i < maxCharacterNum; i++) {
 					if (animals [i].player != null) {
-						flags [1] = false;
+						flags [0] = false;
 						if (playerID == 1)
 							actionObjects [i].isSet = false;
 					}
 					if (animals [maxCharacterNum + i].player != null) {
-						flags [0] = false;
+						flags [1] = false;
 						if (playerID == 0)
 							actionObjects [maxCharacterNum - 1 - i].isSet = false;
 					}
@@ -490,6 +490,8 @@ public class Client : MonoBehaviour
 		if (nowStage == stage.GameOver) {
 			if (Input.GetKeyDown (KeyCode.Return)) {
 				connectionManager.Close ();
+				foreach (Animal animal in animals)
+					Destroy (animal);
 				Start ();
 				nowStage = stage.Character;
 			}
