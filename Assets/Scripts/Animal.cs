@@ -119,8 +119,6 @@ public class Animal{
     {
         // check ability move target limit
         Vector2 moveDelta = targetPos - shadowPos;
-        Debug.Log("move" + moveDelta.x * moveDelta.x + moveDelta.y * moveDelta.y);
-        Debug.Log("ww" + weapon.attackRadius * weapon.attackRadius);
         if (moveDelta.x * moveDelta.x + moveDelta.y * moveDelta.y
             > weapon.attackRadius * weapon.attackRadius)
             return false;
