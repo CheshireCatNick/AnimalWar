@@ -561,10 +561,10 @@ public class Client : MonoBehaviour
         {
             if (!actionObjects[i].isSet)
 			{
-				if (shadows[nowCharacterID] == null)
+				if (shadows[i] == null)
 				{
-					int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
-					shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
+					int playerIndex = (playerID == 1) ? i : maxCharacterNum * 2 - 1 - i;
+					shadows[i] = GameObject.Instantiate(animals[playerIndex].player);
 				}
 				actionObjects [i].moveTarget = shadows [i].transform.localPosition;
                 actionObjects[i].weapon = weapons[0];
