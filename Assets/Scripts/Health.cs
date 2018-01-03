@@ -36,9 +36,9 @@ public class Health : MonoBehaviour
 			return;
 		}
         if (other.gameObject.tag == "bomb") 
-		    currentLives -= 20;
+		    currentLives -= 40;
         else if(other.gameObject.tag == "Cannonball")
-            currentLives -= 15;
+            currentLives -= 30;
 
         print (currentLives);
         //如果沒血了
