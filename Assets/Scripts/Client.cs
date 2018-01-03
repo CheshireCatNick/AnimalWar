@@ -108,7 +108,7 @@ public class Client : MonoBehaviour
         print(nowStage);
         if (nowStage == stage.Character || nowStage == stage.Weapon)
         {
-            for (KeyCode i = KeyCode.Alpha1; i < KeyCode.Alpha1 + maxCharacterNum; i++)
+			for (KeyCode i = KeyCode.Alpha1; i < KeyCode.Alpha1 + Mathf.Max(maxCharacterNum, maxWeaponNum); i++)
             {
                 if (Input.GetKey(i))
                 {
