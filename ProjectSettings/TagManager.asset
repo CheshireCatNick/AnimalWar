@@ -7,7 +7,6 @@ TagManager:
   - Enemy
   - Cannonball
   - Bomb
-  - Bumb
   layers:
   - Default
   - TransparentFX
