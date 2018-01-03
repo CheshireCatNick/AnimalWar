@@ -560,7 +560,13 @@ public class Client : MonoBehaviour
         for (int i = 0; i < maxCharacterNum; i++)
         {
             if (!actionObjects[i].isSet)
-            {
+			{
+				if (shadows[nowCharacterID] == null)
+				{
+					int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+					shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
+				}
+				actionObjects [i].moveTarget = shadows [i].transform.localPosition;
                 actionObjects[i].weapon = weapons[0];
             }
         }
