@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Cannonball
+  - Bomb
   - Bumb
   layers:
   - Default
