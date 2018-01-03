@@ -24,7 +24,7 @@ public class FireGun : MonoBehaviour {
         temp.z = angle;
         firegun.transform.localEulerAngles = temp;//上下旋轉砲管
         GameObject shoot = (GameObject)Instantiate(Cannonball, firePoint.position, firePoint.rotation);
-        shoot.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(new Vector2(speed, 0));
+		shoot.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(new Vector2(speed * (target.x * target.x + target.y * target.y), 0));
         Physics2D.IgnoreCollision (transform.root.GetComponent<Collider2D> (), shoot.GetComponent<Collider2D> ());
     }
 }
