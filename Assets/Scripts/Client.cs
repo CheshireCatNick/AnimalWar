@@ -269,6 +269,7 @@ public class Client : MonoBehaviour
 						int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
 						shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
                         shadows[nowCharacterID].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+						shadows [nowCharacterID].transform.GetChild (2).gameObject.SetActive (false);
                     }
                     nowStage = stage.Move;
                     command_UI.text = CommandTextFormat("", "Please use the arrow key to move your animal.");
