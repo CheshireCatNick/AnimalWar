@@ -465,7 +465,8 @@ public class Client : MonoBehaviour
 					//for (int i = 0; i < maxCharacterNum; i++)
 					//    actionObjects[i].isSet = false;
 					for (int i = 0; i < maxCharacterNum * 2; i++)
-						animals [i].SetFinish (false);
+						if (animals [i].player != null)
+							animals [i].SetFinish (false);
 
 					nowCharacterID = 0;
 					nowWeapon = weapons [0];
