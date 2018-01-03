@@ -21,9 +21,9 @@ public class Animal{
     };
     public Ability[] animalAbilities = {
         // Fox
-        new Ability(new Vector2(5f, 0.005f)),
-        // Frog
-        new Ability(new Vector2(5f, 0.005f)),
+        new Ability(new Vector2(5f, 10f)),
+        // Frog 0.005
+        new Ability(new Vector2(5f, 10f)),
         // Eagle
         new Ability(new Vector2(5f, 10f)),
     };
