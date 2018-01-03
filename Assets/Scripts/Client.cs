@@ -89,7 +89,7 @@ public class Client : MonoBehaviour
         weapons[0] = new Weapons("skip");
         weapons[1] = new Weapons("gun");
 		weapons[2] = new Weapons("firegun");
-		weapons[3] = new Weapons("bumb");
+		weapons[3] = new Weapons("bomb");
         nowWeapon = weapons[0];
         nowCharacterID = 0;
         moveDelta = Vector2.zero;
