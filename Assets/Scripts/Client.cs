@@ -491,7 +491,7 @@ public class Client : MonoBehaviour
 			if (Input.GetKeyDown (KeyCode.Return)) {
 				connectionManager.Close ();
 				foreach (Animal animal in animals)
-					Destroy (animal);
+					Destroy (animal.player);
 				Start ();
 				nowStage = stage.Character;
 			}
