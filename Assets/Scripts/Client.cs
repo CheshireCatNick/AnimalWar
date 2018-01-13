@@ -15,9 +15,12 @@ public class Client : MonoBehaviour
 	public Animal[] animals = new Animal[2*maxCharacterNum];
 
 	public GameObject fox, eagle, frog;
+    // targets
+	public GameObject gun_target;
+    public GameObject bomb_target;
+    public GameObject firegun_target;
 
-	public GameObject targetPrefab;
-	private GameObject [] targets = new GameObject[maxCharacterNum];
+    private GameObject [] targets = new GameObject[maxCharacterNum];
 
     private Vector2 moveDelta, attackDelta;
 
@@ -298,25 +301,38 @@ public class Client : MonoBehaviour
 						}
 					}
 					else {
+                        /* 
 						if (targets[nowCharacterID] == null)
 						{
 							print ("new targets");
-							targets[nowCharacterID] = GameObject.Instantiate(targetPrefab, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
-						}
+							targets[nowCharacterID] = GameObject.Instantiate(gun_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
+                        }*/
 						//show how big is my gun!!!
+                        shadows [nowCharacterID].transform.GetChild (3).gameObject.SetActive (false);
+                        shadows [nowCharacterID].transform.GetChild (4).gameObject.SetActive (false);
+                        shadows [nowCharacterID].transform.GetChild (5).gameObject.SetActive (false);
 						if (nowWeapon == weapons [1]) {
+                            if (targets[nowCharacterID] != null)
+                                Destroy(targets[nowCharacterID]);
+                            targets[nowCharacterID] = GameObject.Instantiate(gun_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
 							shadows [nowCharacterID].transform.GetChild (3).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (3).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
 						}
 						//show firegun
 						else if (nowWeapon == weapons [2]) {
+                            if (targets[nowCharacterID] != null)
+                                Destroy(targets[nowCharacterID]);
+                            targets[nowCharacterID] = GameObject.Instantiate(firegun_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
 							shadows [nowCharacterID].transform.GetChild (4).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (4).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
 						}
 						//show bomb
 						else if (nowWeapon == weapons [3]) {
+                            if (targets[nowCharacterID] != null)
+                                Destroy(targets[nowCharacterID]);
+                            targets[nowCharacterID] = GameObject.Instantiate(bomb_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
 							shadows [nowCharacterID].transform.GetChild (5).gameObject.SetActive (true);
-							shadows[nowCharacterID].transform.GetChild(5).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+							shadows [nowCharacterID].transform.GetChild (5).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
 						}
 					}
                 }
