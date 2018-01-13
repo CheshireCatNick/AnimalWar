@@ -20,6 +20,9 @@ public class Client : MonoBehaviour
     public GameObject bomb_target;
     public GameObject firegun_target;
 
+	private float replayTargetTimer;
+	private GameObject[] replayTargets = new GameObject[2 * maxCharacterNum];
+
     private GameObject [] targets = new GameObject[maxCharacterNum];
 
     private Vector2 moveDelta, attackDelta;
@@ -97,6 +100,8 @@ public class Client : MonoBehaviour
         nowCharacterID = 0;
         moveDelta = Vector2.zero;
         attackDelta = Vector2.zero;
+
+		replayTargetTimer = 0;
 
         //set timer
         time_int = periodTime;
@@ -414,18 +419,36 @@ public class Client : MonoBehaviour
 				}
 			}
 			if (nowStage == stage.ReplayAttack) {
-				for (int i = 0; i < 2 * maxCharacterNum; i++) {
-					if (animals [i].player != null) {
-						if (replayActionObjects [i].weapon.name == "gun") {
-							animals [i].player.transform.GetChild (3).GetComponent<Gun> ().Shoot (replayActionObjects [i].attackTarget);
-						} else if (replayActionObjects [i].weapon.name == "firegun") {
-							animals [i].player.transform.GetChild (4).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
-						} else if (replayActionObjects [i].weapon.name == "bomb") {
-							animals [i].player.transform.GetChild (5).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
+				replayTargetTimer += Time.deltaTime;
+				if (replayTargetTimer > 2.0f) {
+					for (int i = 0; i < 2 * maxCharacterNum; i++) {
+						Destroy (replayTargets [i]);
+						if (animals [i].player != null) {
+							if (replayActionObjects [i].weapon.name == "gun") {
+								animals [i].player.transform.GetChild (3).GetComponent<Gun> ().Shoot (replayActionObjects [i].attackTarget);
+							} else if (replayActionObjects [i].weapon.name == "firegun") {
+								animals [i].player.transform.GetChild (4).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
+							} else if (replayActionObjects [i].weapon.name == "bomb") {
+								animals [i].player.transform.GetChild (5).GetComponent<FireGun> ().Shoot (replayActionObjects [i].attackTarget);
+							}
 						}
 					}
+					replayTargetTimer = 0;
+					attackTimer = Time.time;
+				} else {
+					for (int i = 0; i < 2 * maxCharacterNum; i++) {
+						if (animals[i].player != null && replayTargets [i] == null) {
+							if (replayActionObjects [i].weapon.name == "gun") {
+								replayTargets [i] = GameObject.Instantiate (gun_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
+							} else if (replayActionObjects [i].weapon.name == "firegun") {
+								replayTargets [i] = GameObject.Instantiate (firegun_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
+							} else if (replayActionObjects [i].weapon.name == "bomb") {
+								replayTargets [i] = GameObject.Instantiate (bomb_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
+							}
+						}
+					}
+					nowStage = stage.ReplayMove;
 				}
-				attackTimer = Time.time;
 			}
 		}
             
