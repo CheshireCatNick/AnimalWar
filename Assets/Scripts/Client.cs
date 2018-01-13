@@ -245,16 +245,19 @@ public class Client : MonoBehaviour
                 }
             }
 
-            /*
+            
             //get mouse left click
             if (Input.GetMouseButtonDown(0))
             {
-                print(Input.mousePosition);
+				print("Mouse input: " + Camera.main.ScreenToWorldPoint(Input.mousePosition).ToString());
                 if (nowStage == stage.Attack)
                 {
-                    moveDelta = Input.mousePosition;
+                    //moveDelta = Input.mousePosition;
+					Vector2 dst = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+					Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
+					targets [nowCharacterID].GetComponent<Playermove>().Destination = animals [playerIndex].MoveTarget (shadowPos, dst, actionObjects [nowCharacterID].weapon);
                 }
-            }*/
+            }
         }
         if (nowStage >= stage.Character && nowStage <= stage.Attack)
         {

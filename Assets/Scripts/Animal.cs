@@ -137,4 +137,17 @@ public class Animal{
 		this.player.GetComponent<Playermove> ().target = attackTarget;
 		this.player.GetComponent<Playermove> ().isStart = true;
 	}
+
+	public Vector2 MoveTarget(Vector2 moveTarget, Vector2 attackTarget, Weapons weapon)
+	{
+		if (this.CanMoveTarget (moveTarget, attackTarget, weapon)) {
+			return attackTarget;
+		}
+		float x = attackTarget.x - moveTarget.x;
+		float y = attackTarget.y - moveTarget.y;
+		float x_2 = x * x;
+		float y_2 = y * y;
+		Vector2 dst = new Vector2 (moveTarget.x + weapon.attackRadius * (x / Mathf.Sqrt(x_2 + y_2)), moveTarget.y + weapon.attackRadius * (y / Mathf.Sqrt(x_2 + y_2)));
+		return dst;
+	}
 }
