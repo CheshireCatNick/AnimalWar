@@ -587,7 +587,7 @@ public class Client : MonoBehaviour
 
     private string TimeTextFormat ()
     {
-        return "Time : " + time_int + "\nNow Stage : " + nowStage.ToString("g");
+        return "Time : " + time_int + "\nStage : " + nowStage.ToString("g");
     }
 
     void Timecount()
