@@ -361,7 +361,8 @@ public class Client : MonoBehaviour
                                 Destroy(targets[nowCharacterID]);
                             targets[nowCharacterID] = GameObject.Instantiate(gun_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
                             targets[nowCharacterID].GetComponent<PowerControl_gun>().start_point = shadows[nowCharacterID].transform.localPosition;
-							shadows [nowCharacterID].transform.GetChild (3).gameObject.SetActive (true);
+                            targets[nowCharacterID].GetComponent<PowerControl_gun>().end_point = shadows[nowCharacterID].transform.localPosition;
+                            shadows [nowCharacterID].transform.GetChild (3).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (3).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
 						}
 						//show firegun
@@ -370,6 +371,7 @@ public class Client : MonoBehaviour
                                 Destroy(targets[nowCharacterID]);
                             targets[nowCharacterID] = GameObject.Instantiate(firegun_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
                             targets[nowCharacterID].GetComponent<PowerControl_firegun>().start_point = shadows[nowCharacterID].transform.localPosition;
+                            targets[nowCharacterID].GetComponent<PowerControl_firegun>().end_point = shadows[nowCharacterID].transform.localPosition;
                             shadows [nowCharacterID].transform.GetChild (4).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (4).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
 						}
@@ -379,6 +381,7 @@ public class Client : MonoBehaviour
                                 Destroy(targets[nowCharacterID]);
                             targets[nowCharacterID] = GameObject.Instantiate(bomb_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
                             targets[nowCharacterID].GetComponent<PowerControl_bomb>().start_point = shadows[nowCharacterID].transform.localPosition;
+                            targets[nowCharacterID].GetComponent<PowerControl_bomb>().end_point = shadows[nowCharacterID].transform.localPosition;
                             shadows [nowCharacterID].transform.GetChild (5).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (5).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
 						}
