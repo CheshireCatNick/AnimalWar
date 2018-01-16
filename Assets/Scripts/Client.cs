@@ -612,12 +612,15 @@ public class Client : MonoBehaviour
         {
             if (!actionObjects[i].isSet)
 			{
-				if (shadows[i] == null)
-				{
-					int playerIndex = (playerID == 1) ? i : maxCharacterNum * 2 - 1 - i;
-					shadows[i] = GameObject.Instantiate(animals[playerIndex].player);
-				}
-				actionObjects [i].moveTarget = shadows [i].transform.localPosition;
+                if (shadows[i] == null)
+                {
+                    int playerIndex = (playerID == 1) ? i : maxCharacterNum * 2 - 1 - i;
+                    actionObjects[i].moveTarget = animals[playerIndex].player.transform.localPosition;
+                }
+                else
+                {
+                    actionObjects[i].moveTarget = shadows[i].transform.localPosition;
+                }
                 actionObjects[i].weapon = weapons[0];
             }
         }
@@ -627,12 +630,15 @@ public class Client : MonoBehaviour
                 actionObjects[nowCharacterID].weapon = nowWeapon;
             else
                 actionObjects[nowCharacterID].weapon = weapons[0];
-			if (shadows[nowCharacterID] == null)
-			{
-				int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
-				shadows[nowCharacterID] = GameObject.Instantiate(animals[playerIndex].player);
-			}
-            actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
+            if (shadows[nowCharacterID] == null)
+            {
+                int playerIndex = (playerID == 1) ? nowCharacterID : maxCharacterNum * 2 - 1 - nowCharacterID;
+                actionObjects[nowCharacterID].moveTarget = animals[playerIndex].player.transform.localPosition;
+            }
+            else
+            {
+                actionObjects[nowCharacterID].moveTarget = shadows[nowCharacterID].transform.localPosition;
+            }
 			if (actionObjects[nowCharacterID].weapon != weapons[0])
 				actionObjects[nowCharacterID].attackTarget = targets[nowCharacterID].transform.localPosition;
         }
