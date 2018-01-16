@@ -157,7 +157,6 @@ public class Client : MonoBehaviour
                 {
                     moveDelta += Vector2.up * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.up * scale;
-                    
                     if (animals[playerIndex].CanMove(dst))
                         shadows[nowCharacterID].GetComponent<Playermove>().Destination = dst;
                 }
@@ -169,7 +168,15 @@ public class Client : MonoBehaviour
                     Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.up * scale);
                     Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
                     if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                    {
                         targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
+                        if (nowWeapon.name == "gun")
+                            targets[nowCharacterID].GetComponent<PowerControl_gun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "firegun")
+                            targets[nowCharacterID].GetComponent<PowerControl_firegun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "bomb")
+                            targets[nowCharacterID].GetComponent<PowerControl_bomb>().end_point = new Vector3(dst.x, dst.y);
+                    }
                 }
             }
 
@@ -178,7 +185,7 @@ public class Client : MonoBehaviour
                 print("DownArrow");
                 command_UI.text = CommandTextFormat("Down", "");
                 //Character move
-				if (nowStage == stage.Move && animals[playerIndex].type == Animal.AnimalType.Eagle)
+                if (nowStage == stage.Move && animals[playerIndex].type == Animal.AnimalType.Eagle)
                 {
                     moveDelta += Vector2.down * scale;
                     Vector2 dst = shadows[nowCharacterID].transform.localPosition + Vector3.down * scale;
@@ -193,7 +200,15 @@ public class Client : MonoBehaviour
                     Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.down * scale);
                     Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
                     if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                    {
                         targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
+                        if (nowWeapon.name == "gun")
+                            targets[nowCharacterID].GetComponent<PowerControl_gun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "firegun")
+                            targets[nowCharacterID].GetComponent<PowerControl_firegun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "bomb")
+                            targets[nowCharacterID].GetComponent<PowerControl_bomb>().end_point = new Vector3(dst.x, dst.y);
+                    }
                 }
             }
 
@@ -217,7 +232,15 @@ public class Client : MonoBehaviour
                     Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.left * scale);
                     Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
                     if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                    {
                         targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
+                        if (nowWeapon.name == "gun")
+                            targets[nowCharacterID].GetComponent<PowerControl_gun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "firegun")
+                            targets[nowCharacterID].GetComponent<PowerControl_firegun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "bomb")
+                            targets[nowCharacterID].GetComponent<PowerControl_bomb>().end_point = new Vector3(dst.x, dst.y);
+                    }
                 }
             }
 
@@ -241,7 +264,15 @@ public class Client : MonoBehaviour
                     Vector2 dst = targets[nowCharacterID].transform.localPosition + (Vector3.right * scale);
                     Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
                     if (animals[playerIndex].CanMoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon))
+                    {
                         targets[nowCharacterID].GetComponent<Playermove>().Destination = dst;
+                        if (nowWeapon.name == "gun")
+                            targets[nowCharacterID].GetComponent<PowerControl_gun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "firegun")
+                            targets[nowCharacterID].GetComponent<PowerControl_firegun>().end_point = new Vector3(dst.x, dst.y);
+                        else if (nowWeapon.name == "bomb")
+                            targets[nowCharacterID].GetComponent<PowerControl_bomb>().end_point = new Vector3(dst.x, dst.y);
+                    }
                 }
             }
 
@@ -253,9 +284,15 @@ public class Client : MonoBehaviour
                 if (nowStage == stage.Attack)
                 {
                     //moveDelta = Input.mousePosition;
-					Vector2 dst = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-					Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
-					targets [nowCharacterID].GetComponent<Playermove>().Destination = animals [playerIndex].MoveTarget (shadowPos, dst, actionObjects [nowCharacterID].weapon);
+                    Vector2 dst = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 shadowPos = shadows[nowCharacterID].transform.localPosition;
+                    targets[nowCharacterID].GetComponent<Playermove>().Destination = animals[playerIndex].MoveTarget(shadowPos, dst, actionObjects[nowCharacterID].weapon);
+                    if (nowWeapon.name == "gun")
+                        targets[nowCharacterID].GetComponent<PowerControl_gun>().end_point = new Vector3(dst.x, dst.y);
+                    else if (nowWeapon.name == "firegun")
+                        targets[nowCharacterID].GetComponent<PowerControl_firegun>().end_point = new Vector3(dst.x, dst.y);
+                    else if (nowWeapon.name == "bomb")
+                        targets[nowCharacterID].GetComponent<PowerControl_bomb>().end_point = new Vector3(dst.x, dst.y);
                 }
             }
         }
@@ -323,6 +360,7 @@ public class Client : MonoBehaviour
                             if (targets[nowCharacterID] != null)
                                 Destroy(targets[nowCharacterID]);
                             targets[nowCharacterID] = GameObject.Instantiate(gun_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
+                            targets[nowCharacterID].GetComponent<PowerControl_gun>().start_point = shadows[nowCharacterID].transform.localPosition;
 							shadows [nowCharacterID].transform.GetChild (3).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (3).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
 						}
@@ -331,7 +369,8 @@ public class Client : MonoBehaviour
                             if (targets[nowCharacterID] != null)
                                 Destroy(targets[nowCharacterID]);
                             targets[nowCharacterID] = GameObject.Instantiate(firegun_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
-							shadows [nowCharacterID].transform.GetChild (4).gameObject.SetActive (true);
+                            targets[nowCharacterID].GetComponent<PowerControl_firegun>().start_point = shadows[nowCharacterID].transform.localPosition;
+                            shadows [nowCharacterID].transform.GetChild (4).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (4).GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0.5f);
 						}
 						//show bomb
@@ -339,7 +378,8 @@ public class Client : MonoBehaviour
                             if (targets[nowCharacterID] != null)
                                 Destroy(targets[nowCharacterID]);
                             targets[nowCharacterID] = GameObject.Instantiate(bomb_target, shadows[nowCharacterID].transform.localPosition, shadows[nowCharacterID].transform.localRotation);
-							shadows [nowCharacterID].transform.GetChild (5).gameObject.SetActive (true);
+                            targets[nowCharacterID].GetComponent<PowerControl_bomb>().start_point = shadows[nowCharacterID].transform.localPosition;
+                            shadows [nowCharacterID].transform.GetChild (5).gameObject.SetActive (true);
 							shadows [nowCharacterID].transform.GetChild (5).GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
 						}
 					}
@@ -443,10 +483,16 @@ public class Client : MonoBehaviour
 						if (animals[i].player != null && replayTargets [i] == null) {
 							if (replayActionObjects [i].weapon.name == "gun") {
 								replayTargets [i] = GameObject.Instantiate (gun_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
+                                replayTargets[i].GetComponent<PowerControl_gun>().start_point = animals[i].player.transform.localPosition;
+                                replayTargets[i].GetComponent<PowerControl_gun>().end_point = replayActionObjects[i].attackTarget;
 							} else if (replayActionObjects [i].weapon.name == "firegun") {
 								replayTargets [i] = GameObject.Instantiate (firegun_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
+                                replayTargets[i].GetComponent<PowerControl_firegun>().start_point = animals[i].player.transform.localPosition;
+                                replayTargets[i].GetComponent<PowerControl_firegun>().end_point = replayActionObjects[i].attackTarget;
                             } else if (replayActionObjects [i].weapon.name == "bomb") {
 								replayTargets [i] = GameObject.Instantiate (bomb_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
+                                replayTargets[i].GetComponent<PowerControl_bomb>().start_point = animals[i].player.transform.localPosition;
+                                replayTargets[i].GetComponent<PowerControl_bomb>().end_point = replayActionObjects[i].attackTarget;
                             }
 						}
 					}
