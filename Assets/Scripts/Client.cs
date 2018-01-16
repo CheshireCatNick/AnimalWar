@@ -443,11 +443,14 @@ public class Client : MonoBehaviour
 						if (animals[i].player != null && replayTargets [i] == null) {
 							if (replayActionObjects [i].weapon.name == "gun") {
 								replayTargets [i] = GameObject.Instantiate (gun_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
+                                replayTargets[i].GetComponent<PowerControl_gun>().Update_power(animals[i].player.transform.position, replayActionObjects[i].attackTarget);
 							} else if (replayActionObjects [i].weapon.name == "firegun") {
 								replayTargets [i] = GameObject.Instantiate (firegun_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
-							} else if (replayActionObjects [i].weapon.name == "bomb") {
+                                replayTargets[i].GetComponent<PowerControl_firegun>().Update_power(animals[i].player.transform.position, replayActionObjects[i].attackTarget);
+                            } else if (replayActionObjects [i].weapon.name == "bomb") {
 								replayTargets [i] = GameObject.Instantiate (bomb_target, replayActionObjects [i].attackTarget, animals [i].player.transform.localRotation);
-							}
+                                replayTargets[i].GetComponent<PowerControl_bomb>().Update_power(animals[i].player.transform.position, replayActionObjects[i].attackTarget);
+                            }
 						}
 					}
 					nowStage = stage.ReplayMove;
